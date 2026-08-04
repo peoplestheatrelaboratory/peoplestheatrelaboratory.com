@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peoples Theatre Laboratory — Vadodara</title>
+<meta name="description" content="Peoples Theatre Laboratory, Vadodara. Three decades of Total Theatre. Home of Baithak and Kabir Sang Ruhdaari. A new website is on its way.">
+<meta name="theme-color" content="#0A0908">
+
+<meta property="og:title" content="Peoples Theatre Laboratory — Vadodara">
+<meta property="og:description" content="Three decades of Total Theatre. Home of Baithak and Kabir Sang Ruhdaari.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Tiro+Devanagari+Hindi:ital@0;1&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0A0908;
+  --ink-lift:#131110;
+  --paper:#F2EDDC;
+  --paper-60:rgba(242,237,220,.60);
+  --paper-38:rgba(242,237,220,.38);
+  --paper-18:rgba(242,237,220,.18);
+  --paper-08:rgba(242,237,220,.08);
+  --ember:#D08A3E;
+  --gold:#E3B23C;
+
+  --display:"Bodoni Moda",Georgia,serif;
+  --body:"Newsreader",Georgia,serif;
+  --deva:"Tiro Devanagari Hindi",Georgia,serif;
+  --mono:"Courier Prime",ui-monospace,monospace;
+
+  --gut:clamp(1.25rem,5vw,5.5rem);
+  --rule:1px solid var(--paper-18);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  font-weight:300;
+  font-size:clamp(1rem,.95rem + .25vw,1.125rem);
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── atmosphere ─────────────────────────────────────── */
+.grain{
+  position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.16;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.vignette{
+  position:fixed;inset:0;z-index:59;pointer-events:none;
+  background:radial-gradient(130% 90% at 50% 32%,transparent 42%,rgba(0,0,0,.72) 100%);
+}
+/* the breath — echoes the circular emblem and the warm vignette of their photographs */
+.breath{
+  position:fixed;z-index:0;pointer-events:none;
+  top:26vh;left:50%;width:min(78vw,760px);aspect-ratio:1;
+  translate:-50% -30%;
+  background:radial-gradient(circle,rgba(208,138,62,.20) 0%,rgba(208,138,62,.07) 42%,transparent 68%);
+  animation:breathe 11s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(.94);opacity:.62}
+  50%    {transform:scale(1.07);opacity:1}
+}
+
+/* ── reveal ─────────────────────────────────────────── */
+.up{opacity:0;transform:translateY(14px);animation:up 1.15s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes up{to{opacity:1;transform:none}}
+
+/* ── shell ──────────────────────────────────────────── */
+.wrap{position:relative;z-index:10;padding-inline:var(--gut);width:100%;max-width:1440px;margin-inline:auto}
+
+/* ── masthead ───────────────────────────────────────── */
+.masthead{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;flex-wrap:wrap;
+  padding-block:clamp(1.4rem,3vw,2.4rem);
+  border-bottom:var(--rule);
+}
+.sigil{
+  font-family:var(--display);font-weight:500;font-size:.95rem;
+  letter-spacing:.42em;text-transform:uppercase;
+}
+.meta{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--paper-38);
+  display:flex;gap:1.5rem;flex-wrap:wrap;
+}
+
+/* ── hero ───────────────────────────────────────────── */
+.hero{padding-block:clamp(4rem,13vh,9rem) clamp(3rem,8vh,6rem)}
+
+.status{
+  display:inline-flex;align-items:center;gap:.7rem;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);
+  padding:.45rem .95rem .45rem .8rem;
+  border:1px solid rgba(227,178,60,.34);border-radius:100px;
+  margin-bottom:clamp(1.8rem,4vw,2.8rem);
+}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 2.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.wordmark{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(2.9rem,11.5vw,9.5rem);
+  line-height:.92;
+  letter-spacing:-.022em;
+  text-transform:uppercase;
+  font-variation-settings:"opsz" 96;
+}
+.wordmark span{display:block}
+.wordmark .lab{
+  font-style:italic;font-weight:500;
+  color:var(--ember);
+  letter-spacing:-.03em;
+  /* the grid-break: the word that names them leans out past the measure */
+  margin-left:clamp(0rem,6vw,7rem);
+}
+
+.quote{
+  margin-top:clamp(2.6rem,6vw,4.2rem);
+  max-width:44ch;
+  font-size:clamp(1.15rem,.98rem + .8vw,1.6rem);
+  line-height:1.5;
+  font-style:italic;
+  color:var(--paper-60);
+  border-left:1px solid var(--paper-18);
+  padding-left:clamp(1rem,2.5vw,2rem);
+}
+.quote cite{
+  display:block;margin-top:1rem;font-style:normal;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--paper-38);
+}
+
+/* ── what we are ────────────────────────────────────── */
+.creed{
+  border-top:var(--rule);
+  padding-block:clamp(2.5rem,6vw,4rem);
+  display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1.2rem,3vw,3rem);
+}
+@media(min-width:820px){.creed{grid-template-columns:14rem minmax(0,1fr)}}
+.creed h2{
+  font-family:var(--mono);font-size:.68rem;font-weight:400;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--paper-38);
+}
+.creed p{max-width:62ch;color:var(--paper-60)}
+.creed p + p{margin-top:1rem}
+.creed em{color:var(--paper);font-style:italic}
+
+/* ── events ─────────────────────────────────────────── */
+.events{border-top:var(--rule);padding-block:clamp(2.5rem,6vw,4rem)}
+.events > h2{
+  font-family:var(--mono);font-size:.68rem;font-weight:400;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--paper-38);
+  margin-bottom:clamp(1.8rem,4vw,3rem);
+}
+.list{display:grid;gap:0}
+
+.ev{
+  display:grid;gap:.4rem clamp(1.5rem,4vw,3.5rem);
+  grid-template-columns:minmax(0,1fr);
+  padding-block:clamp(1.8rem,4vw,2.6rem);
+  border-top:1px solid var(--paper-08);
+  position:relative;
+  transition:padding-left .5s cubic-bezier(.2,.7,.2,1);
+}
+.ev:first-child{border-top:0}
+@media(min-width:820px){
+  .ev{grid-template-columns:14rem minmax(0,1fr) 15rem;align-items:start}
+  .ev:hover{padding-left:1.1rem}
+  .ev::before{
+    content:"";position:absolute;left:0;top:clamp(1.8rem,4vw,2.6rem);
+    width:2px;height:0;background:var(--ember);
+    transition:height .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .ev:hover::before{height:calc(100% - clamp(3.6rem,8vw,5.2rem))}
+}
+
+.ev-cadence{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);padding-top:.55rem;
+}
+.ev-name{
+  font-family:var(--deva);
+  font-size:clamp(1.9rem,1.4rem + 2.4vw,3.4rem);
+  line-height:1.18;font-weight:400;
+}
+.ev-latin{
+  font-family:var(--display);font-weight:400;font-style:italic;
+  font-size:clamp(.95rem,.9rem + .3vw,1.2rem);
+  letter-spacing:.02em;color:var(--paper-38);
+  margin-top:.15rem;
+}
+.ev-note{margin-top:.9rem;max-width:52ch;color:var(--paper-60);font-size:.98rem;line-height:1.6}
+.ev-where{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--paper-38);
+  padding-top:.6rem;line-height:2;
+}
+@media(min-width:820px){.ev-where{text-align:right}}
+
+/* ── repertoire ticker: songs actually sung at Ruhdaari ── */
+.ticker{
+  border-top:var(--rule);border-bottom:var(--rule);
+  padding-block:clamp(1.1rem,2.4vw,1.6rem);
+  overflow:hidden;position:relative;z-index:10;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+}
+.ticker-track{display:flex;width:max-content;animation:slide 62s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.ticker-track ul{display:flex;list-style:none}
+.ticker-track li{
+  font-family:var(--deva);font-size:clamp(1rem,.95rem + .35vw,1.3rem);
+  color:var(--paper-38);white-space:nowrap;
+  padding-inline:clamp(1.1rem,2.4vw,2rem);
+  display:flex;align-items:center;gap:clamp(1.1rem,2.4vw,2rem);
+  transition:color .4s ease;
+}
+.ticker-track li::after{content:"◦";color:var(--ember);opacity:.5;font-size:.8em}
+.ticker:hover .ticker-track li{color:var(--paper-60)}
+
+/* ── footer ─────────────────────────────────────────── */
+footer{margin-top:auto}
+.foot{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;
+  padding-block:clamp(2rem,5vw,3.2rem);
+}
+.social{display:flex;gap:2rem;flex-wrap:wrap}
+.social a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--paper-60);text-decoration:none;
+  padding-bottom:.3rem;border-bottom:1px solid transparent;
+  transition:color .35s ease,border-color .35s ease;
+}
+.social a:hover,.social a:focus-visible{color:var(--gold);border-bottom-color:var(--gold)}
+.colophon{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--paper-38);text-align:right;line-height:2;
+}
+
+:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+::selection{background:var(--ember);color:var(--ink)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .up{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="breath" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="masthead up" style="animation-delay:.05s">
+    <div class="sigil">PTL</div>
+    <div class="meta">
+      <span>Vadodara &middot; Gujarat</span>
+      <span>Total Theatre since three decades</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="status up" style="animation-delay:.2s">
+        <span class="dot" aria-hidden="true"></span>
+        New site in rehearsal
+      </div>
+
+      <h1 class="wordmark up" style="animation-delay:.32s">
+        <span>Peoples</span>
+        <span>Theatre</span>
+        <span class="lab">Laboratory</span>
+      </h1>
+
+      <blockquote class="quote up" style="animation-delay:.5s">
+        We have reached so far, enjoying the cacophony on the outside
+        and ignoring the symphony inside.
+        <cite>— Kabir Sang Ruhdaari</cite>
+      </blockquote>
+    </section>
+
+    <section class="creed up" style="animation-delay:.62s">
+      <h2>Who we are</h2>
+      <div>
+        <p>Peoples Theatre Laboratory is an experimental theatre collective in Vadodara, working in the spirit of <em>Total Theatre</em> — where painters, sculptors, musicians, art historians and people from social practice build a production together, and no single form is allowed to hold the room alone.</p>
+        <p>We have been staging plays, running residential workshops and experimenting with people of every age for three decades.</p>
+      </div>
+    </section>
+
+    <section class="events up" style="animation-delay:.72s">
+      <h2>What we gather for</h2>
+
+      <div class="list">
+
+        <article class="ev">
+          <div class="ev-cadence">Every month</div>
+          <div>
+            <h3 class="ev-name">बैठक</h3>
+            <div class="ev-latin">Baithak</div>
+            <p class="ev-note">Our monthly sitting. Music, readings and work-in-progress, shared in a room small enough that nobody is only an audience.</p>
+          </div>
+          <div class="ev-where">
+            Vadodara<br>
+            Next date to be announced
+          </div>
+        </article>
+
+        <article class="ev">
+          <div class="ev-cadence">Every year</div>
+          <div>
+            <h3 class="ev-name">कबीर संग रुहदारी</h3>
+            <div class="ev-latin">Kabir Sang Ruhdaari</div>
+            <p class="ev-note">An intimate gathering around the voices of Kabir, Meera, Bulleh Shah, Raidaas and Lalon Fakir — original compositions, folk songs and live painting, held on Jyestha Poornima. Not a cultural presentation. A shared space of reflection. Come as you are. Sing along. Paint. Breathe.</p>
+          </div>
+          <div class="ev-where">
+            Vadodara &middot; Ahmedabad<br>
+            2026 editions concluded
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="ticker up" style="animation-delay:.85s" aria-label="Songs from the Kabir Sang Ruhdaari repertoire">
+  <div class="ticker-track">
+    <ul>
+      <li>साँई बिन दरद</li><li>मिर्गा ने खेत उजाडा</li><li>प्रेम न खेतो निपजे</li>
+      <li>जात भी ओछी, कर्म भी ओछा</li><li>भीगे चुनरिया</li><li>जाग पियारी</li>
+      <li>हंसा करो पुरातन बात</li><li>निताई चाँदेर</li><li>मैं गुलाम</li>
+      <li>साँई संग ससुराल</li><li>प्रेम न बाड़ी उपजे रे</li><li>मैं कासौं कहौं</li>
+      <li>झीनी झीनी</li><li>समझ देख</li><li>मोको कहाँ ढूंढें बन्दे</li>
+    </ul>
+    <ul aria-hidden="true">
+      <li>साँई बिन दरद</li><li>मिर्गा ने खेत उजाडा</li><li>प्रेम न खेतो निपजे</li>
+      <li>जात भी ओछी, कर्म भी ओछा</li><li>भीगे चुनरिया</li><li>जाग पियारी</li>
+      <li>हंसा करो पुरातन बात</li><li>निताई चाँदेर</li><li>मैं गुलाम</li>
+      <li>साँई संग ससुराल</li><li>प्रेम न बाड़ी उपजे रे</li><li>मैं कासौं कहौं</li>
+      <li>झीनी झीनी</li><li>समझ देख</li><li>मोको कहाँ ढूंढें बन्दे</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot up" style="animation-delay:.95s">
+      <nav class="social">
+        <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/ptlvadodara/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+      </nav>
+      <div class="colophon">
+        Peoples Theatre Laboratory<br>
+        Vadodara, Gujarat, India
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
