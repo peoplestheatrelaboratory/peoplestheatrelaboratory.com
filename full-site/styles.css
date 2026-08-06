@@ -76,6 +76,7 @@ body{
   padding-block:clamp(1.2rem,2.6vw,2rem);
   border-bottom:var(--rule);
   position:relative;
+  z-index:40;
 }
 .sigil{
   font-family:var(--display);font-weight:500;font-size:.95rem;
