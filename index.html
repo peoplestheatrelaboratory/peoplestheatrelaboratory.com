@@ -43,11 +43,18 @@ body{
   font-family:var(--body);
   font-weight:300;
   line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* the reveal starts every block 14px low; .page clips that transient
+   overflow so it never raises a scrollbar on load */
+.page{
   min-height:100svh;
   display:flex;
   flex-direction:column;
   padding-inline:var(--gut);
-  overflow-x:hidden;
+  overflow:hidden;
+  overflow:clip;
 }
 
 /* ── atmosphere ─────────────────────────────────────── */
@@ -171,6 +178,8 @@ footer{
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
+<div class="page">
+
 <main>
   <h1 class="wordmark up" style="animation-delay:.15s">
     Peoples Theatre
@@ -202,6 +211,8 @@ footer{
   </nav>
   <div class="colophon">Vadodara, Gujarat, India</div>
 </footer>
+
+</div>
 
 </body>
 </html>
