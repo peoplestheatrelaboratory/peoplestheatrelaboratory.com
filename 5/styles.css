@@ -1,0 +1,404 @@
+/* ============================================================
+   POORNIMA — sample direction 5 for Peoples Theatre Laboratory
+   An indigo night courtyard that waxes toward the full moon.
+   Palette: dyer's indigo · moon-white · sindoor vermillion
+   Type: Fraunces (grand serif) · Yatra One (brush Devanagari)
+        · Tiro Devanagari Hindi (verse) · Kalam (margin hand)
+   ============================================================ */
+
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: vt-leave .55s ease both; }
+::view-transition-new(root) { animation: vt-arrive .55s ease both; }
+::view-transition-group(moon) { animation-duration: .7s; }
+
+@keyframes vt-leave  { to   { opacity: 0; } }
+@keyframes vt-arrive { from { opacity: 0; } }
+
+:root {
+  --night-deep: #0A0E20;
+  --night:      #111936;
+  --night-hi:   #1B2549;
+  --line:       #2B3560;
+  --moon:       #F1EBDC;
+  --silver:     #9FA8C4;
+  --faint:      #66709A;
+  --sindoor:    #E8512D;
+  --sindoor-hi: #FF7247;
+  --flame:      #FFC061;
+  --serif: "Fraunces", "Georgia", serif;
+  --dev-display: "Yatra One", "Tiro Devanagari Hindi", serif;
+  --dev-text: "Tiro Devanagari Hindi", serif;
+  --hand: "Kalam", cursive;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { overflow-x: clip; scroll-behavior: smooth; }
+
+body {
+  overflow-x: clip;
+  background:
+    radial-gradient(120% 55% at 50% 108%, #232b52 0%, rgba(35,43,82,0) 60%),
+    linear-gradient(180deg, var(--night-deep) 0%, var(--night) 55%, #141C3D 100%);
+  background-attachment: fixed;
+  color: var(--moon);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-weight: 340;
+  line-height: 1.6;
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- stars ---- */
+.sky {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 8% 12%,  rgba(241,235,220,.9) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 22% 28%, rgba(241,235,220,.55) 45%, transparent 55%),
+    radial-gradient(1.4px 1.4px at 33% 8%,  rgba(241,235,220,.8) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 44% 21%, rgba(241,235,220,.5) 45%, transparent 55%),
+    radial-gradient(1.1px 1.1px at 58% 6%,  rgba(241,235,220,.75) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 69% 17%, rgba(241,235,220,.5) 45%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 81% 10%, rgba(241,235,220,.85) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 91% 26%, rgba(241,235,220,.6) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 14% 44%, rgba(241,235,220,.4) 45%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 87% 42%, rgba(241,235,220,.45) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 51% 38%, rgba(241,235,220,.35) 45%, transparent 55%),
+    radial-gradient(1px 1px     at 75% 33%, rgba(241,235,220,.4) 45%, transparent 55%);
+  animation: twinkle 9s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: .55; } to { opacity: 1; } }
+
+/* ---- film grain ---- */
+body::after {
+  content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: .045; mix-blend-mode: screen;
+}
+
+/* ---- lamp glow (appears when the diya is lit) ---- */
+.lamp-glow {
+  position: fixed; inset: auto 0 0 0; height: 62svh; z-index: 1; pointer-events: none;
+  background: radial-gradient(60% 90% at 50% 105%, rgba(255,150,64,.16) 0%, rgba(255,150,64,0) 70%);
+  opacity: 0; transition: opacity 2.4s ease;
+}
+html.lit .lamp-glow { opacity: 1; }
+html.lit { --night: #131A38; }
+
+::selection { background: var(--sindoor); color: var(--night-deep); }
+
+a { color: inherit; }
+
+/* ============ ink drawings ============ */
+.ink { filter: url(#boil1); }
+html.boil-2 .ink { filter: url(#boil2); }
+html.boil-3 .ink { filter: url(#boil3); }
+
+.ink .s {
+  fill: none; stroke: var(--moon); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.ink .s.thin { stroke-width: 1.2; opacity: .8; }
+.ink .s.sindoor { stroke: var(--sindoor); }
+
+/* draw-in on scroll */
+.draw .s { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.draw.drawn .s { stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s cubic-bezier(.4,0,.3,1); }
+.draw.drawn .s:nth-of-type(2n) { transition-delay: .35s; }
+.draw.drawn .s:nth-of-type(3n) { transition-delay: .7s; }
+
+/* ============ the moon ============ */
+.moon-face { fill: var(--moon); }
+.moon-rim  { fill: none; stroke: rgba(241,235,220,.22); stroke-width: 1; }
+.crater    { fill: rgba(120,116,100,.16); }
+.moon-halo { fill: none; stroke: rgba(241,235,220,.05); stroke-width: 26; }
+
+/* ============ masthead (inner pages) ============ */
+.masthead {
+  position: relative; z-index: 5;
+  display: flex; align-items: center; gap: 1.1rem;
+  padding: 1.4rem clamp(1.2rem, 4vw, 3rem);
+}
+.masthead .moonlink { display: block; width: 44px; height: 44px; flex: none; }
+.masthead .moonlink svg { width: 100%; height: 100%; view-transition-name: moon; }
+.masthead .wordmark {
+  font-size: .72rem; letter-spacing: .34em; text-transform: uppercase;
+  color: var(--silver); text-decoration: none; line-height: 1.75;
+}
+.masthead nav {
+  margin-left: auto; display: flex; gap: clamp(.9rem, 2.5vw, 2rem);
+  font-style: italic; font-size: .95rem;
+}
+.masthead nav a { color: var(--silver); text-decoration: none; transition: color .3s; }
+.masthead nav a:hover, .masthead nav a[aria-current] { color: var(--sindoor-hi); }
+.masthead nav a[aria-current] { font-style: normal; }
+
+/* ============ threshold (index) ============ */
+.threshold {
+  position: relative; z-index: 2;
+  min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  padding: clamp(1rem, 3vh, 2.5rem) 1.4rem 0;
+}
+
+.threshold .moonwrap { margin-top: 2svh; width: clamp(110px, 16vh, 170px); }
+.threshold .moonwrap svg { width: 100%; height: auto; view-transition-name: moon; }
+
+.tithi {
+  margin-top: .6rem;
+  font-family: var(--hand); font-weight: 300; font-size: .85rem;
+  color: var(--faint); letter-spacing: .06em;
+}
+.tithi .sep { color: var(--sindoor); }
+
+.oracle { margin: auto 0; max-width: 46rem; padding: 3svh 0; }
+
+.oracle .invocation {
+  font-size: .7rem; letter-spacing: .42em; text-transform: uppercase;
+  color: var(--faint); margin-bottom: 2.2rem;
+}
+
+.doha-dev {
+  font-family: var(--dev-display);
+  font-size: clamp(1.7rem, 4.6vw, 3.1rem);
+  line-height: 1.65; font-weight: 400;
+  transition: opacity .5s ease, transform .5s ease;
+}
+.doha-en {
+  margin-top: 1.6rem;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(1rem, 1.9vw, 1.2rem);
+  color: var(--silver); max-width: 34rem; margin-inline: auto;
+  transition: opacity .5s ease .06s, transform .5s ease .06s;
+}
+.doha-poet {
+  margin-top: 1.4rem;
+  font-size: .8rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--sindoor);
+  transition: opacity .5s ease .12s;
+}
+.oracle.turning .doha-dev, .oracle.turning .doha-en { opacity: 0; transform: translateY(10px); }
+.oracle.turning .doha-poet { opacity: 0; }
+
+.draw-again {
+  margin-top: 2.4rem;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--hand); font-weight: 400; font-size: 1.02rem;
+  color: var(--sindoor-hi);
+  border-bottom: 1px dashed rgba(232,81,45,.55);
+  padding-bottom: .15rem;
+  transition: color .3s, border-color .3s;
+}
+.draw-again:hover { color: var(--moon); border-color: var(--moon); }
+
+/* paths */
+.paths {
+  position: relative; z-index: 3;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: .4rem clamp(1.2rem, 4vw, 2.8rem);
+  padding-bottom: 1rem;
+  font-style: italic; font-size: clamp(.98rem, 1.8vw, 1.12rem);
+}
+.paths a { color: var(--silver); text-decoration: none; transition: color .35s; }
+.paths a:hover { color: var(--sindoor-hi); }
+.paths .dot { color: var(--sindoor); font-style: normal; }
+
+/* courtyard skyline */
+.courtyard { width: 100%; max-width: 1100px; margin-top: .5rem; }
+.courtyard svg { width: 100%; height: auto; display: block; }
+
+/* the diya */
+.diya-seat { position: relative; z-index: 4; padding: .4rem 0 2.6rem; }
+.diya {
+  background: none; border: none; cursor: pointer; width: 82px;
+  transition: transform .4s ease;
+}
+.diya:hover { transform: translateY(-3px); }
+.diya svg { width: 100%; height: auto; overflow: visible; }
+.diya .flame-g { opacity: 0; transition: opacity 1.2s ease; }
+html.lit .diya .flame-g { opacity: 1; }
+.flame-body, .flame-core { transform-box: fill-box; transform-origin: 50% 95%; }
+.flame-body { fill: var(--flame); opacity: .95; }
+html.lit .flame-body { animation: flicker 2.8s ease-in-out infinite; }
+.flame-core { fill: #FFF3D0; }
+html.lit .flame-core { animation: flicker 2.1s ease-in-out infinite reverse; }
+.flame-halo { fill: rgba(255,178,80,.14); }
+html.lit .flame-halo { animation: halo 3.4s ease-in-out infinite; }
+@keyframes flicker {
+  0%,100% { transform: scaleY(1) skewX(0deg); }
+  30%     { transform: scaleY(1.12) skewX(-2.4deg); }
+  55%     { transform: scaleY(.94) skewX(1.8deg); }
+  78%     { transform: scaleY(1.06) skewX(-1.2deg); }
+}
+@keyframes halo { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+.diya-note {
+  margin-top: .4rem;
+  font-family: var(--hand); font-weight: 300; font-size: .82rem;
+  color: var(--faint); transition: opacity .8s;
+}
+html.lit .diya-note { opacity: .55; }
+
+/* ============ inner pages shared ============ */
+.leaf {
+  position: relative; z-index: 2;
+  max-width: 62rem; margin: 0 auto;
+  padding: clamp(1.5rem, 5vh, 4rem) clamp(1.3rem, 5vw, 3rem) 4rem;
+}
+
+.page-koan {
+  font-family: var(--hand); font-weight: 300;
+  color: var(--faint); font-size: .95rem; letter-spacing: .04em;
+  margin-bottom: .9rem;
+}
+.page-koan em { color: var(--sindoor-hi); font-style: normal; }
+
+h1.leaf-title {
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  font-weight: 380; line-height: 1.08; letter-spacing: -.01em;
+  max-width: 18ch;
+}
+h1 .dev { font-family: var(--dev-display); font-weight: 400; color: var(--sindoor-hi); }
+
+.leaf-lede {
+  margin-top: 1.6rem; max-width: 38rem;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--silver);
+}
+
+.rule { border: none; height: 1px; background: linear-gradient(90deg, var(--line), transparent); margin: 3rem 0; }
+
+/* moon strip (gatherings) */
+.moon-strip {
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  margin-top: 2.4rem; padding: 1rem 1.2rem;
+  border: 1px solid var(--line); border-radius: 2px;
+  font-family: var(--hand); font-weight: 300; font-size: .92rem; color: var(--silver);
+}
+.moon-strip .mini-moon { width: 34px; height: 34px; flex: none; }
+.moon-strip b { font-weight: 400; color: var(--moon); }
+.moon-strip .toward { color: var(--sindoor-hi); }
+
+/* gatherings sections */
+.when {
+  font-size: .68rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--sindoor); margin: 3.4rem 0 1.4rem;
+}
+.sit {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 1.5rem 3rem; align-items: start;
+  padding: 2rem 0;
+}
+.sit + .sit { border-top: 1px dashed var(--line); }
+.sit h2 {
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 400; line-height: 1.15;
+}
+.sit h2 .dev { font-family: var(--dev-display); display: block; font-size: .78em; color: var(--sindoor-hi); margin-top: .25rem; font-weight: 400; }
+.sit .koan {
+  margin-top: 1.1rem; font-style: italic; font-weight: 300;
+  font-size: 1.08rem; color: var(--silver); max-width: 30rem;
+}
+.sit .facts { font-size: .92rem; color: var(--silver); line-height: 2; }
+.sit .facts .k { color: var(--faint); font-style: italic; margin-right: .5rem; }
+.sit .facts a { color: var(--sindoor-hi); text-decoration: none; border-bottom: 1px dashed rgba(232,81,45,.4); }
+.sit.passed { opacity: .62; }
+.sit.passed h2 { font-weight: 340; }
+
+.chip {
+  display: inline-block; font-family: var(--hand); font-weight: 300;
+  font-size: .72rem; color: var(--sindoor-hi);
+  border: 1px dashed rgba(232,81,45,.5); border-radius: 2px;
+  padding: .05rem .5rem; margin-left: .4rem; vertical-align: middle;
+}
+
+.gather-art { margin: 3.5rem auto 0; max-width: 520px; }
+.gather-art svg { width: 100%; height: auto; }
+
+/* ============ song page ============ */
+.song-grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: 2rem 3.5rem; margin-top: 3rem; align-items: start;
+}
+.verse { margin-bottom: 2.6rem; }
+.verse .dev-line {
+  font-family: var(--dev-text);
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem); line-height: 2.05;
+}
+.verse .en-line {
+  margin-top: .5rem; font-style: italic; font-weight: 300;
+  font-size: .98rem; color: var(--silver); max-width: 34rem;
+}
+.margin-notes { position: sticky; top: 2rem; }
+.note {
+  font-family: var(--hand); font-weight: 300; font-size: .9rem;
+  color: var(--silver); line-height: 1.75;
+  border-left: 2px solid var(--sindoor); padding-left: .9rem;
+  margin-bottom: 1.8rem;
+  transform: rotate(-.6deg);
+}
+.note b { font-weight: 400; color: var(--sindoor-hi); }
+.tanpura-seat { margin: 1rem auto 0; width: 90px; }
+.tanpura-seat svg { width: 100%; height: auto; }
+
+.song-meta {
+  margin-top: 1rem; font-size: .8rem; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--faint);
+}
+
+/* ============ laboratory page ============ */
+.creed { margin-top: 3.4rem; max-width: 44rem; }
+.creed p {
+  font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 340; line-height: 1.5;
+  margin-bottom: 2.2rem;
+}
+.creed p em { font-style: italic; color: var(--silver); }
+.creed p .dev { font-family: var(--dev-display); color: var(--sindoor-hi); font-size: .92em; }
+.creed .small {
+  font-size: 1rem; color: var(--silver); font-weight: 300; line-height: 1.9;
+}
+.figure-seat { margin: 3.5rem 0 0; width: 190px; }
+.figure-seat svg { width: 100%; height: auto; }
+
+.reach {
+  margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 1.8rem;
+  font-style: italic; font-size: .98rem;
+}
+.reach a { color: var(--sindoor-hi); text-decoration: none; border-bottom: 1px dashed rgba(232,81,45,.4); padding-bottom: .1rem; }
+.reach a:hover { color: var(--moon); border-color: var(--moon); }
+
+/* ============ footer ============ */
+.close {
+  position: relative; z-index: 2;
+  text-align: center; padding: 3rem 1.4rem 3.4rem;
+  font-size: .7rem; letter-spacing: .34em; text-transform: uppercase; color: var(--faint);
+}
+.close .paths { margin-bottom: 2rem; text-transform: none; letter-spacing: normal; }
+
+/* ============ reveal on scroll (text) ============ */
+.rise { opacity: 0; transform: translateY(22px); transition: opacity 1s ease, transform 1s ease; }
+.rise.drawn { opacity: 1; transform: none; }
+
+/* ============ responsive ============ */
+@media (max-width: 720px) {
+  .sit { grid-template-columns: 1fr; gap: 1.2rem; }
+  .song-grid { grid-template-columns: 1fr; }
+  .margin-notes { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  .masthead nav { font-size: .85rem; }
+  .masthead .wordmark { display: none; }
+}
+@media (max-width: 480px) {
+  .margin-notes { grid-template-columns: 1fr; }
+  .oracle .invocation { letter-spacing: .24em; }
+}
+
+/* ============ reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sky, .flame-body, .flame-core, .flame-halo { animation: none !important; }
+  .rise, .draw .s { transition: none !important; }
+  .rise { opacity: 1; transform: none; }
+  .draw .s { stroke-dashoffset: 0; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .01s; }
+}

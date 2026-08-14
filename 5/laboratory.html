@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Laboratory — Poornima · PTL</title>
+<meta name="description" content="Peoples Theatre Laboratory, Vadodara — thirty years of total theatre in the lineage of Grotowski.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Yatra+One&family=Kalam:wght@300;400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="lamp-glow" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="boil1" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+    <filter id="boil2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+    <filter id="boil3" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="12" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="masthead">
+  <a class="moonlink" href="index.html" aria-label="back to the threshold">
+    <svg class="moon-svg" viewBox="0 0 120 120" role="img" aria-label="tonight's moon">
+      <defs>
+        <mask id="ph">
+          <rect width="120" height="120" fill="#fff"/>
+          <circle class="phase-shadow" cx="60" cy="60" r="53" fill="#000"/>
+        </mask>
+      </defs>
+      <circle class="moon-rim" cx="60" cy="60" r="50"/>
+      <g mask="url(#ph)">
+        <circle class="moon-face" cx="60" cy="60" r="50"/>
+        <circle class="crater" cx="46" cy="45" r="7"/>
+        <circle class="crater" cx="70" cy="61" r="10"/>
+      </g>
+    </svg>
+  </a>
+  <a class="wordmark" href="index.html">Peoples<br>Theatre<br>Laboratory</a>
+  <nav aria-label="paths">
+    <a href="gatherings.html">the gatherings</a>
+    <a href="song.html">a song</a>
+    <a href="laboratory.html" aria-current="page">the laboratory</a>
+  </nav>
+</header>
+
+<main class="leaf">
+
+  <p class="page-koan rise">no stage — <em>a floor that remembers.</em></p>
+  <h1 class="leaf-title rise">A laboratory, <br>not a company.</h1>
+
+  <div class="creed">
+    <p class="rise">For thirty years in Vadodara we have worked in the idiom of
+    <em>total theatre</em> — in the lineage of Grotowski — where nothing is
+    decoration, and no single artform is allowed to win.</p>
+
+    <p class="rise">Painters, sculptors, musicians, art historians, people from
+    social practice. <span class="dev" lang="hi">सब साथ में, एक ही कमरे में।</span></p>
+
+    <p class="rise">We hold residential workshops. We work with every age.
+    While the room sings, painters paint — and what is painted stays with
+    the laboratory. <em>It is not for sale.</em></p>
+
+    <hr class="rule">
+
+    <p class="small rise">Work that has passed through this floor:
+    <span class="dev" lang="hi">टोबा टेक सिंह</span> · <span class="dev" lang="hi">उल्टी वा</span> ·
+    Sharad Poonam · Baithak, month after month · Kabir Sang Ruhdaari, moon after moon.</p>
+  </div>
+
+  <div class="figure-seat rise" aria-hidden="true">
+    <svg class="ink draw" viewBox="0 0 200 200">
+      <circle class="s" pathLength="1" cx="100" cy="100" r="88"/>
+      <circle class="s" pathLength="1" cx="100" cy="62" r="10"/>
+      <path class="s" pathLength="1" d="M100,73 C100,95 100,116 100,138"/>
+      <path class="s" pathLength="1" d="M100,86 C88,95 78,103 70,113 M100,86 C112,95 122,103 130,113"/>
+      <path class="s" pathLength="1" d="M100,138 C93,152 88,162 84,173 M100,138 C107,152 112,162 116,173"/>
+    </svg>
+  </div>
+
+  <div class="reach rise">
+    <a href="https://www.instagram.com/peoplestheatrelaboratory/">@peoplestheatrelaboratory</a>
+    <a href="https://www.instagram.com/kabirsangruhdaari.ptl/">@kabirsangruhdaari.ptl</a>
+    <span>write to us <span class="chip">email to confirm</span></span>
+  </div>
+
+</main>
+
+<footer class="close">
+  <nav class="paths" aria-label="paths">
+    <a href="index.html">the threshold</a><span class="dot">·</span>
+    <a href="gatherings.html">the gatherings</a><span class="dot">·</span>
+    <a href="song.html">a song</a>
+  </nav>
+  Peoples Theatre Laboratory · Vadodara · sample direction 5 — poornima
+</footer>
+
+<script src="poornima.js"></script>
+</body>
+</html>

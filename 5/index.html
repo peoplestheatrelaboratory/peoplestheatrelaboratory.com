@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poornima — Peoples Theatre Laboratory</title>
+<meta name="description" content="Sample direction 5 — an indigo night courtyard that waxes toward the full moon. Every visit begins by drawing a doha.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Yatra+One&family=Kalam:wght@300;400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="lamp-glow" aria-hidden="true"></div>
+
+<!-- boiling-ink filters -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="boil1" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+    <filter id="boil2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+    <filter id="boil3" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="12" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/>
+    </filter>
+  </defs>
+</svg>
+
+<main class="threshold">
+
+  <div class="moonwrap">
+    <svg class="moon-svg" viewBox="0 0 120 120" role="img" aria-label="tonight's moon, at its true phase">
+      <defs>
+        <mask id="ph">
+          <rect width="120" height="120" fill="#fff"/>
+          <circle class="phase-shadow" cx="60" cy="60" r="53" fill="#000"/>
+        </mask>
+      </defs>
+      <circle class="moon-halo" cx="60" cy="60" r="55"/>
+      <circle class="moon-rim" cx="60" cy="60" r="50"/>
+      <g mask="url(#ph)">
+        <circle class="moon-face" cx="60" cy="60" r="50"/>
+        <circle class="crater" cx="46" cy="45" r="7"/>
+        <circle class="crater" cx="70" cy="61" r="10"/>
+        <circle class="crater" cx="51" cy="77" r="5"/>
+      </g>
+    </svg>
+  </div>
+  <p class="tithi"><span class="tithi-text">tonight's moon, over Vadodara</span></p>
+
+  <section class="oracle" id="oracle" aria-live="polite">
+    <p class="invocation">Peoples Theatre Laboratory · Vadodara — a doha drawn for you</p>
+    <p class="doha-dev" id="dohaDev" lang="hi">मोको कहाँ ढूँढे बन्दे,<br>मैं तो तेरे पास में।</p>
+    <p class="doha-en" id="dohaEn">Where do you go looking for me, friend? I am right here beside you.</p>
+    <p class="doha-poet" id="dohaPoet">कबीर — Kabir</p>
+    <button class="draw-again" id="drawAgain">एक और — draw another</button>
+  </section>
+
+  <nav class="paths" aria-label="paths">
+    <a href="gatherings.html">the gatherings</a><span class="dot">·</span>
+    <a href="song.html">a song</a><span class="dot">·</span>
+    <a href="laboratory.html">the laboratory</a>
+  </nav>
+
+  <div class="courtyard" aria-hidden="true">
+    <svg class="ink draw" viewBox="0 0 1200 170">
+      <!-- ground -->
+      <path class="s" pathLength="1" d="M0,150 C60,147 120,152 180,149 C240,146 300,152 360,149 C420,146 480,151 540,148 C600,145 660,151 720,148 C780,145 840,150 900,147 C960,144 1020,150 1080,147 C1140,145 1180,148 1200,147"/>
+      <!-- house, left -->
+      <path class="s" pathLength="1" d="M70,149 C69,131 70,112 70,96 C70,92 74,90 78,90 C112,89 148,89 182,90 C186,90 190,92 190,96 C190,113 191,132 190,149"/>
+      <path class="s" pathLength="1" d="M58,93 C100,84 152,84 202,91"/>
+      <path class="s thin" pathLength="1" d="M115,149 C115,138 114,126 115,117 C115,113 143,113 143,117 C144,127 143,139 143,149"/>
+      <circle class="s thin" pathLength="1" cx="98" cy="106" r="6"/>
+      <!-- neem tree -->
+      <path class="s" pathLength="1" d="M300,149 C298,130 296,115 299,98"/>
+      <path class="s" pathLength="1" d="M312,149 C313,132 314,116 310,99"/>
+      <path class="s" pathLength="1" d="M255,95 C245,75 260,55 281,58 C286,38 316,32 331,45 C351,33 376,45 373,63 C391,70 386,95 366,97 C356,108 321,110 306,100 C286,110 262,108 255,95"/>
+      <path class="s thin" pathLength="1" d="M292,72 C300,80 306,88 305,98"/>
+      <!-- seated figures around a small lamp -->
+      <path class="s" pathLength="1" d="M620,148 C621,127 632,119 637,118 C642,119 654,128 654,148"/>
+      <circle class="s" pathLength="1" cx="637" cy="109" r="8"/>
+      <path class="s" pathLength="1" d="M676,148 C677,129 687,121 693,120 C699,121 710,130 710,148"/>
+      <circle class="s" pathLength="1" cx="693" cy="111" r="8"/>
+      <path class="s" pathLength="1" d="M766,148 C767,128 778,120 783,119 C788,120 800,129 800,148"/>
+      <circle class="s" pathLength="1" cx="783" cy="110" r="8"/>
+      <path class="s" pathLength="1" d="M822,148 C823,130 833,122 839,121 C845,122 856,131 856,148"/>
+      <circle class="s" pathLength="1" cx="839" cy="112" r="8"/>
+      <!-- the little lamp between them -->
+      <path class="s thin" pathLength="1" d="M730,148 C732,153 748,153 750,148"/>
+      <path class="s sindoor" pathLength="1" d="M740,143 C737,138 740,133 740,130 C740,133 743,138 740,143"/>
+      <!-- tulsi planter -->
+      <path class="s thin" pathLength="1" d="M905,149 C905,142 905,135 906,129 C919,128 932,128 944,129 C945,136 945,143 945,149"/>
+      <path class="s thin" pathLength="1" d="M925,128 C923,118 918,112 911,108 M925,128 C927,117 933,112 939,108 M925,128 C925,116 925,109 925,103"/>
+      <!-- flags on a string -->
+      <path class="s thin" pathLength="1" d="M1012,149 C1011,120 1010,90 1009,62"/>
+      <path class="s thin" pathLength="1" d="M1009,63 C1051,71 1111,76 1181,72"/>
+      <path class="s thin" pathLength="1" d="M1030,67 C1034,72 1037,76 1040,81 C1043,76 1046,72 1049,68"/>
+      <path class="s sindoor" pathLength="1" d="M1072,70 C1075,75 1078,80 1081,85 C1084,80 1087,75 1090,71"/>
+      <path class="s thin" pathLength="1" d="M1122,73 C1125,78 1128,82 1131,87 C1134,82 1137,77 1140,73"/>
+    </svg>
+  </div>
+
+  <div class="diya-seat">
+    <button class="diya" id="diya" aria-label="light the diya — a quiet tanpura will begin">
+      <svg class="ink" viewBox="0 0 82 64">
+        <g class="flame-g">
+          <circle class="flame-halo" cx="41" cy="24" r="17"/>
+          <path class="flame-body" d="M41,38 C34,30 36,20 41,11 C46,20 48,30 41,38 Z"/>
+          <path class="flame-core" d="M41,36 C38,31 39,26 41,22 C43,26 44,31 41,36 Z"/>
+        </g>
+        <path class="s" pathLength="1" d="M8,42 C10,56 72,56 74,42"/>
+        <path class="s" pathLength="1" d="M6,42 C20,39 62,39 76,42"/>
+        <path class="s thin" pathLength="1" d="M28,58 C36,61 46,61 54,58"/>
+        <path class="s thin" pathLength="1" d="M41,42 C41,40 41,38 41,36"/>
+      </svg>
+    </button>
+    <p class="diya-note" id="diyaNote">light the diya</p>
+  </div>
+
+</main>
+
+<script src="poornima.js"></script>
+</body>
+</html>
