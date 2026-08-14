@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peoples Theatre Laboratory — The Notice Board</title>
+<meta name="description" content="Sample direction 4 — the rehearsal-room notice board. Peoples Theatre Laboratory, Vadodara.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Yatra+One&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Courier+Prime&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0A0908;
+  --paper:#F2EDDC;
+  --paper-dim:#E7DFC6;
+  --ember:#C4571F;
+  --gold:#E3B23C;
+  --wood:#151210;
+  --head:"Anton",Impact,sans-serif;
+  --deva:"Yatra One",serif;
+  --body:"Newsreader",Georgia,serif;
+  --mono:"Courier Prime",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--wood);
+  color:var(--ink);
+  font-family:var(--body);font-weight:300;line-height:1.6;
+  overflow-x:hidden;
+}
+/* board texture */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection{background:var(--ember);color:var(--paper)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+a{color:inherit}
+
+/* ── call-sheet masthead ────────────────────────────── */
+.callsheet{
+  position:relative;z-index:2;
+  background:var(--paper);
+  border-bottom:4px solid var(--ink);
+  padding:.85rem clamp(1rem,4vw,2.6rem);
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.callsheet .brand{
+  font-family:var(--head);font-size:clamp(1.05rem,2.6vw,1.5rem);
+  letter-spacing:.04em;text-transform:uppercase;line-height:1;
+}
+.callsheet .brand span{color:var(--ember)}
+.callsheet .meta{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase}
+
+/* ── song ticker ────────────────────────────────────── */
+.ticker{
+  position:relative;z-index:2;overflow:hidden;
+  background:var(--ink);color:var(--gold);
+  border-bottom:4px solid var(--ink);
+  padding:.55rem 0;white-space:nowrap;
+}
+.ticker .reel{display:inline-block;animation:reel 46s linear infinite}
+.ticker .reel span{font-family:var(--deva);font-size:1.05rem;margin-right:3.2rem}
+.ticker .reel i{font-style:normal;color:var(--ember);margin-right:3.2rem}
+@keyframes reel{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── the wall ───────────────────────────────────────── */
+.wall{
+  position:relative;z-index:1;
+  max-width:88rem;margin-inline:auto;
+  padding:clamp(2.2rem,6vw,4.5rem) clamp(1rem,4vw,3rem) clamp(3rem,7vw,5rem);
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));
+  gap:clamp(1.6rem,3.5vw,2.8rem);
+  align-items:start;
+}
+
+.poster{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  box-shadow:6px 8px 0 rgba(0,0,0,.55);
+  padding:1.7rem 1.5rem 1.9rem;
+  position:relative;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;
+}
+.wall .poster:nth-child(4n+1){transform:rotate(-1.6deg)}
+.wall .poster:nth-child(4n+2){transform:rotate(1.2deg) translateY(10px)}
+.wall .poster:nth-child(4n+3){transform:rotate(-.7deg)}
+.wall .poster:nth-child(4n){transform:rotate(1.8deg) translateY(-6px)}
+.poster:hover{transform:rotate(0) scale(1.02);box-shadow:10px 14px 0 rgba(0,0,0,.6);z-index:5}
+/* pin */
+.poster::before{
+  content:"";position:absolute;top:10px;left:50%;translate:-50%;
+  width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f0c67a,var(--ember) 65%);
+  box-shadow:0 2px 3px rgba(0,0,0,.45);
+}
+
+.poster .rule{border:none;border-top:2px solid var(--ink);margin:.9rem 0}
+.poster .kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;margin-top:.4rem}
+.poster h2{
+  font-family:var(--head);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.9rem,4vw,2.7rem);line-height:.98;letter-spacing:.01em;
+  text-align:center;margin:.7rem 0 .3rem;
+}
+.poster h2 .deva{font-family:var(--deva);display:block;font-size:.88em;line-height:1.25;margin-bottom:.15rem}
+.poster h2 .em{color:var(--ember)}
+.poster .sub{font-style:italic;text-align:center;font-size:.98rem;margin-bottom:.9rem}
+.poster p{font-size:.92rem;margin-bottom:.7rem}
+.poster p:last-child{margin-bottom:0}
+.poster .fine{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;text-align:center;margin-top:1rem}
+.poster .fine a{color:var(--ember);text-decoration:none;border-bottom:1px solid var(--ember)}
+
+/* stamps */
+.stamp{
+  position:absolute;z-index:3;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ember);border:2.5px solid var(--ember);
+  padding:.32rem .7rem;border-radius:3px;
+  transform:rotate(-10deg);
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.35' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .82 0'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23r)'/%3E%3C/svg%3E");
+  mask-size:cover;
+}
+.stamp.tr{top:-.85rem;right:-.9rem}
+.stamp.br{bottom:1.2rem;right:.9rem;transform:rotate(7deg)}
+.stamp.gold{color:var(--gold);border-color:var(--gold)}
+
+/* moon poster (ruhdaari 2027) */
+.poster.moon{background:var(--ink);color:var(--paper);border-color:var(--paper)}
+.poster.moon .rule{border-top-color:var(--paper)}
+.poster.moon h2{color:var(--paper)}
+.poster.moon h2 .em{color:var(--gold)}
+.poster.moon .disc{
+  width:96px;height:96px;border-radius:50%;margin:0.9rem auto .4rem;
+  background:radial-gradient(circle at 38% 34%,#fdf6de,var(--gold) 78%);
+  box-shadow:0 0 34px rgba(227,178,60,.5);
+}
+.poster.moon .fine a{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* wanted poster */
+.poster.wanted h2{font-size:clamp(2.3rem,5vw,3.1rem)}
+.poster.wanted ul{list-style:none;text-align:center;margin:.6rem 0 .2rem}
+.poster.wanted li{font-style:italic;font-size:1.02rem;line-height:1.9;border-bottom:1px dotted rgba(10,9,8,.25)}
+.poster.wanted li:last-child{border-bottom:none}
+
+/* tear-off tabs */
+.poster.tearoff{padding-bottom:.4rem}
+.tabs{
+  display:flex;margin-top:1.1rem;border-top:1.5px dashed var(--ink);
+}
+.tabs a{
+  flex:1;display:block;text-align:center;text-decoration:none;
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;
+  writing-mode:vertical-rl;
+  padding:.7rem .1rem .5rem;height:6.2rem;
+  border-right:1.5px dashed var(--ink);
+  color:var(--ink);
+  transition:background .25s,transform .25s;
+}
+.tabs a:last-child{border-right:none}
+.tabs a:hover{background:var(--ember);color:var(--paper);transform:translateY(4px) rotate(1.5deg)}
+
+/* ── footer strip ───────────────────────────────────── */
+.footstrip{
+  position:relative;z-index:2;
+  background:var(--paper);border-top:4px solid var(--ink);
+  padding:1rem clamp(1rem,4vw,2.6rem);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;
+}
+.footstrip .links{display:flex;gap:1.6rem;flex-wrap:wrap}
+.footstrip a{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid transparent}
+.footstrip a:hover{border-bottom-color:var(--ember);color:var(--ember)}
+.footstrip .colophon{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;opacity:.65}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .ticker .reel{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="callsheet">
+  <div class="brand">Peoples Theatre <span>Laboratory</span></div>
+  <div class="meta">Notice board · Vadodara · Three decades of Total Theatre</div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="reel">
+    <span>मोको कहाँ ढूंढें बन्दे</span><i>●</i><span>झीनी झीनी</span><i>●</i><span>साँई बिन दरद</span><i>●</i><span>प्रेम न खेतो निपजे</span><i>●</i><span>जात भी ओछी, कर्म भी ओछा</span><i>●</i><span>भीगे चुनरिया</span><i>●</i><span>हंसा करो पुरातन बात</span><i>●</i><span>निताई चाँदेर मैं गुलाम</span><i>●</i>
+    <span>मोको कहाँ ढूंढें बन्दे</span><i>●</i><span>झीनी झीनी</span><i>●</i><span>साँई बिन दरद</span><i>●</i><span>प्रेम न खेतो निपजे</span><i>●</i><span>जात भी ओछी, कर्म भी ओछा</span><i>●</i><span>भीगे चुनरिया</span><i>●</i><span>हंसा करो पुरातन बात</span><i>●</i><span>निताई चाँदेर मैं गुलाम</span><i>●</i>
+  </div>
+</div>
+
+<main class="wall">
+
+  <!-- BAITHAK -->
+  <article class="poster">
+    <span class="stamp tr">All ages</span>
+    <p class="kicker">Every month · a different room</p>
+    <hr class="rule">
+    <h2><span class="deva">बैठक</span><span class="em">The Sitting</span></h2>
+    <p class="sub">a room small enough that nobody is only an audience</p>
+    <hr class="rule">
+    <p>Music, readings and work-in-progress, shown unfinished on purpose — the room's response is part of the making. No stage. No green room. Chai follows.</p>
+    <p class="fine">Dates on <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a></p>
+  </article>
+
+  <!-- RUHDAARI 2027 -->
+  <article class="poster moon">
+    <span class="stamp gold tr">Registration soon</span>
+    <p class="kicker">2027 · Jyestha Poornima</p>
+    <div class="disc" aria-hidden="true"></div>
+    <h2><span class="deva">कबीर संग रुहदारी</span><span class="em">rises with the moon</span></h2>
+    <p class="sub">Kabir · Meera · Bulleh Shah · Raidaas · Lalon Fakir</p>
+    <p>Original compositions and folk songs, sung in a room that sings back. Painters at the edge of the stage. Silence allowed to do its work.</p>
+    <p class="fine">Contribution-based · <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">follow Ruhdaari</a></p>
+  </article>
+
+  <!-- WANTED -->
+  <article class="poster wanted">
+    <p class="kicker">Notice · year-round</p>
+    <hr class="rule">
+    <h2>Wanted<span class="em">:</span> forms</h2>
+    <ul>
+      <li>singers &amp; players</li>
+      <li>painters &amp; sculptors</li>
+      <li>poets &amp; dancers</li>
+      <li>art historians who argue</li>
+      <li>forms we haven't met yet</li>
+    </ul>
+    <hr class="rule">
+    <p class="fine">Collaboration is not a department here — it is the method.</p>
+  </article>
+
+  <!-- RUHDAARI 2026 VADODARA -->
+  <article class="poster">
+    <span class="stamp br">Concluded</span>
+    <p class="kicker">27 June 2026 · MilanKunj Club</p>
+    <hr class="rule">
+    <h2><span class="deva">रुहदारी</span>Vadodara</h2>
+    <p class="sub">held on Jyestha Poornima</p>
+    <p>A room of nearly four hundred people singing along while painters worked at the edge of the stage. The canvases stay with the collective — an archive of what the night looked like from the inside.</p>
+  </article>
+
+  <!-- COLLECTIVE -->
+  <article class="poster">
+    <p class="kicker">The company · est. three decades ago</p>
+    <hr class="rule">
+    <h2>Not a cast <span class="em">&amp;</span> a crew</h2>
+    <p class="sub">the spirit of Total Theatre</p>
+    <p>The painter is in the rehearsal, the musician is in the workshop, the art historian argues with the director — and the production belongs to all of them at once. Plays, residential workshops, people of every age.</p>
+    <p class="fine">Best introduction: come to a बैठक</p>
+  </article>
+
+  <!-- RUHDAARI AHMEDABAD -->
+  <article class="poster">
+    <span class="stamp br">Concluded</span>
+    <p class="kicker">2026 · Kanoria Centre for Arts</p>
+    <hr class="rule">
+    <h2><span class="deva">रुहदारी</span>Ahmedabad</h2>
+    <p class="sub">the travelling edition</p>
+    <p>The same songs in a different city — the same breath. If you can gather a room in yours, we can bring the songs.</p>
+  </article>
+
+  <!-- HOST — tear-off tabs -->
+  <article class="poster tearoff">
+    <p class="kicker">Take a tab · host a sitting</p>
+    <hr class="rule">
+    <h2>Your room <span class="em">here</span></h2>
+    <p class="sub">a living room, a studio, a terrace, a courtyard</p>
+    <p>Floor seating, mostly. A small circle of people. We bring musicians, songs from the Ruhdaari repertoire, readings from the laboratory — and the chai that carries the conversation.</p>
+    <div class="tabs" aria-label="Tear-off contact tabs">
+      <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">@ptl</a>
+      <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">@ptl</a>
+      <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">@ruhdaari</a>
+      <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">@ptl</a>
+      <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">@ruhdaari</a>
+      <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">@ptl</a>
+    </div>
+  </article>
+
+  <!-- MOTTO -->
+  <article class="poster">
+    <p class="kicker">House rule № 1</p>
+    <hr class="rule">
+    <h2><span class="deva">महफ़िल है जनाब</span><span class="em">dil khol kar aana</span></h2>
+    <p class="sub">it is a gathering, friend — come with an open heart</p>
+    <hr class="rule">
+    <p class="fine">No tickets · No rows of passive seats</p>
+  </article>
+
+</main>
+
+<footer class="footstrip">
+  <div class="links">
+    <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/ptlvadodara/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+  </div>
+  <div class="colophon">Peoples Theatre Laboratory · Vadodara, Gujarat, India</div>
+</footer>
+
+</body>
+</html>

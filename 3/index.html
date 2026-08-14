@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peoples Theatre Laboratory — The Wandering Page</title>
+<meta name="description" content="Sample direction 3 — an ink-and-paper archive you wander through. Peoples Theatre Laboratory, Vadodara.">
+<meta name="theme-color" content="#F2EDDC">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,500;1,6..72,300;1,6..72,400&family=Tiro+Devanagari+Hindi:ital@0;1&family=Kalam:wght@300;400&family=Courier+Prime&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#F2EDDC;
+  --paper-deep:#E9E2CB;
+  --ink:#0A0908;
+  --ink-60:rgba(10,9,8,.6);
+  --ink-38:rgba(10,9,8,.38);
+  --ink-14:rgba(10,9,8,.14);
+  --ember:#B96F28;
+  --gold:#9A7419;
+  --body:"Newsreader",Georgia,serif;
+  --deva:"Tiro Devanagari Hindi",serif;
+  --hand:"Kalam",cursive;
+  --mono:"Courier Prime",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-weight:300;
+  font-size:clamp(1.02rem,.98rem + .25vw,1.18rem);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+/* paper fibre */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .72 0 0 0 0 .68 0 0 0 0 .58 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+main,header,footer{position:relative;z-index:1}
+
+a{color:var(--ember);text-decoration:none;border-bottom:1px solid rgba(185,111,40,.35)}
+a:hover,a:focus-visible{border-bottom-color:var(--ember)}
+:focus-visible{outline:1px solid var(--ember);outline-offset:3px}
+::selection{background:var(--ink);color:var(--paper)}
+
+/* ── masthead ───────────────────────────────────────── */
+header{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1.4rem clamp(1.2rem,5vw,3.4rem);
+  border-bottom:1px solid var(--ink-14);
+}
+.wordmark{font-family:var(--body);font-weight:500;font-size:1.02rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark em{font-style:italic;color:var(--ember);letter-spacing:.06em}
+header .tag{font-family:var(--hand);font-weight:300;color:var(--ink-60);font-size:.95rem;transform:rotate(-1.2deg)}
+
+/* ── the doha ───────────────────────────────────────── */
+#doha{
+  text-align:center;
+  padding:clamp(4rem,11vh,7rem) clamp(1.2rem,6vw,3rem) clamp(3rem,8vh,5rem);
+  max-width:52rem;margin-inline:auto;
+}
+#doha .label{font-family:var(--mono);font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-38);margin-bottom:2.2rem}
+#doha .deva{
+  font-family:var(--deva);
+  font-size:clamp(1.5rem,1.2rem + 2.2vw,2.7rem);
+  line-height:1.75;
+}
+#doha .trans{font-style:italic;color:var(--ink-60);margin-top:1.2rem;font-size:1.06em}
+#doha .attr{font-family:var(--mono);font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ember);margin-top:1.4rem}
+#doha .again{
+  display:inline-block;margin-top:2.2rem;cursor:pointer;background:none;
+  font-family:var(--hand);font-size:1rem;color:var(--ember);
+  border:none;border-bottom:1px dashed var(--ember);
+  transform:rotate(-.8deg);
+}
+#doha.turn .deva,#doha.turn .trans,#doha.turn .attr{animation:page 1s ease}
+@keyframes page{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+
+/* ── doorways ───────────────────────────────────────── */
+#doors{
+  display:flex;justify-content:center;gap:clamp(1.4rem,5vw,4rem);flex-wrap:wrap;
+  padding:0 1.4rem clamp(4rem,10vh,6rem);
+}
+.door{
+  text-align:center;border-bottom:none;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.door:hover{transform:translateY(-6px)}
+.door svg{display:block;margin-inline:auto;width:clamp(96px,14vw,138px);height:auto}
+.door .arch-fill{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
+.door:hover .arch-fill{stroke:var(--ember)}
+.door .deva-l{font-family:var(--deva);font-size:1.28rem;margin-top:.7rem;color:var(--ink)}
+.door .latin-l{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-38);margin-top:.15rem}
+
+/* ── sections of the lane ───────────────────────────── */
+section.lane{
+  max-width:72rem;margin-inline:auto;
+  padding:clamp(3.4rem,8vh,5.5rem) clamp(1.2rem,5vw,3.4rem);
+  border-top:1px solid var(--ink-14);
+}
+.lane-head{display:flex;align-items:baseline;gap:1.4rem;flex-wrap:wrap;margin-bottom:2.8rem}
+.lane-head h2{font-weight:500;font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1.15}
+.lane-head h2 .deva{font-family:var(--deva);font-weight:400;color:var(--ember);margin-right:.5rem}
+.lane-head .note{font-family:var(--hand);font-weight:300;color:var(--ink-60);font-size:.98rem;transform:rotate(-1deg)}
+
+/* fragment wall */
+.wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:clamp(1.2rem,3vw,2.4rem);align-items:start}
+.frag{
+  background:var(--paper-deep);
+  border:1px solid var(--ink-14);
+  padding:1.5rem 1.4rem 1.6rem;
+  position:relative;
+  box-shadow:2px 3px 0 rgba(10,9,8,.08);
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease;
+}
+.wall .frag:nth-child(3n+1){transform:rotate(-1.1deg)}
+.wall .frag:nth-child(3n+2){transform:rotate(.9deg)}
+.wall .frag:nth-child(3n){transform:rotate(-.4deg)}
+.frag:hover{transform:rotate(0) translateY(-4px);box-shadow:4px 7px 0 rgba(10,9,8,.1)}
+.frag.found{outline:2px solid var(--ember);outline-offset:4px}
+/* tape */
+.frag::before{
+  content:"";position:absolute;top:-9px;left:50%;translate:-50%;
+  width:74px;height:20px;transform:rotate(-2deg);
+  background:rgba(185,111,40,.18);
+  border-left:1px dashed rgba(185,111,40,.35);
+  border-right:1px dashed rgba(185,111,40,.35);
+}
+.frag .kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ember);margin-bottom:.7rem}
+.frag h3{font-weight:500;font-size:1.18rem;line-height:1.3;margin-bottom:.5rem}
+.frag h3 .deva{font-family:var(--deva);font-weight:400}
+.frag p{font-size:.94em;color:var(--ink-60)}
+.frag .hand{font-family:var(--hand);font-weight:300;color:var(--ember);font-size:.95rem;margin-top:.9rem;transform:rotate(-.8deg);display:block}
+.frag.quote p{font-style:italic;font-size:1.05em;color:var(--ink)}
+.frag.photo{min-height:11rem;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,var(--paper-deep),var(--paper-deep) 10px,rgba(10,9,8,.03) 10px,rgba(10,9,8,.03) 20px)}
+.frag.photo span{font-family:var(--hand);color:var(--ink-38)}
+
+/* song list */
+.songs{columns:2;column-gap:3rem;max-width:56rem}
+@media(max-width:640px){.songs{columns:1}}
+.songs li{
+  list-style:none;font-family:var(--deva);font-size:1.16rem;line-height:2.15;
+  border-bottom:1px dotted var(--ink-14);
+  break-inside:avoid;
+  display:flex;justify-content:space-between;gap:1rem;
+}
+.songs li i{font-family:var(--mono);font-style:normal;font-size:.6rem;letter-spacing:.2em;color:var(--ink-38);align-self:center}
+
+/* ── wander button ──────────────────────────────────── */
+#wander{
+  position:fixed;right:clamp(.9rem,3vw,2.2rem);bottom:clamp(.9rem,3vw,2.2rem);z-index:10;
+  background:var(--ink);color:var(--paper);border:none;cursor:pointer;
+  border-radius:50%;width:92px;height:92px;
+  font-family:var(--hand);font-size:.95rem;line-height:1.25;
+  box-shadow:0 6px 20px rgba(10,9,8,.3);
+  transform:rotate(6deg);
+  transition:transform .4s cubic-bezier(.2,.7,.2,1),background .3s;
+}
+#wander:hover{transform:rotate(0) scale(1.06);background:var(--ember)}
+#wander .deva{font-family:var(--deva);display:block;font-size:1.05rem}
+
+/* ── footer ─────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--ink-14);
+  padding:3rem clamp(1.2rem,5vw,3.4rem) 3.4rem;
+  display:flex;justify-content:space-between;gap:1.6rem;flex-wrap:wrap;align-items:baseline;
+}
+footer nav{display:flex;gap:1.8rem;flex-wrap:wrap}
+footer nav a{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;border-bottom-color:transparent}
+footer nav a:hover{border-bottom-color:var(--ember)}
+footer .colophon{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-38)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">Peoples Theatre <em>Laboratory</em></div>
+  <div class="tag">a page that wanders, like the songs do</div>
+</header>
+
+<!-- ── the doha of this visit ── -->
+<section id="doha" aria-live="polite">
+  <p class="label">On today's page</p>
+  <p class="deva" id="doha-deva">मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।</p>
+  <p class="trans" id="doha-trans">Where do you search for me? I am right beside you.</p>
+  <p class="attr" id="doha-attr">— Kabir</p>
+  <button class="again" id="doha-again" type="button">turn the page, another doha →</button>
+</section>
+
+<!-- ── doorways ── -->
+<nav id="doors" aria-label="Doorways">
+  <a class="door" href="#songs-lane">
+    <svg viewBox="0 0 100 110" aria-hidden="true"><path class="arch-fill" d="M14 104 L14 52 Q14 12 50 10 Q86 12 86 52 L86 104 M7 104 L93 104 M22 104 L22 54 Q22 20 50 18 Q78 20 78 54 L78 104"/></svg>
+    <div class="deva-l">गीत</div>
+    <div class="latin-l">The Songs</div>
+  </a>
+  <a class="door" href="#rooms-lane">
+    <svg viewBox="0 0 100 110" aria-hidden="true"><path class="arch-fill" d="M14 104 L14 48 L50 12 L86 48 L86 104 M7 104 L93 104 M22 104 L22 52 L50 24 L78 52 L78 104"/></svg>
+    <div class="deva-l">बैठक</div>
+    <div class="latin-l">The Rooms</div>
+  </a>
+  <a class="door" href="#people-lane">
+    <svg viewBox="0 0 100 110" aria-hidden="true"><path class="arch-fill" d="M14 104 L14 44 Q30 34 34 18 Q50 30 66 18 Q70 34 86 44 L86 104 M7 104 L93 104 M22 104 L22 49 Q34 41 38 30 Q50 39 62 30 Q66 41 78 49 L78 104"/></svg>
+    <div class="deva-l">लोग</div>
+    <div class="latin-l">The People</div>
+  </a>
+</nav>
+
+<!-- ── SONGS ── -->
+<section class="lane" id="songs-lane">
+  <div class="lane-head">
+    <h2><span class="deva">गीत</span>The Songs</h2>
+    <span class="note">carried from edition to edition — Kabir, Meera, Bulleh Shah, Raidaas, Lalon Fakir</span>
+  </div>
+  <ul class="songs">
+    <li>मोको कहाँ ढूंढें बन्दे <i>Kabir</i></li>
+    <li>झीनी झीनी <i>Kabir</i></li>
+    <li>साँई बिन दरद <i>folk</i></li>
+    <li>मिर्गा ने खेत उजाडा <i>folk</i></li>
+    <li>प्रेम न खेतो निपजे <i>Kabir</i></li>
+    <li>जात भी ओछी, कर्म भी ओछा <i>Meera</i></li>
+    <li>भीगे चुनरिया <i>folk</i></li>
+    <li>जाग पियारी <i>Kabir</i></li>
+    <li>हंसा करो पुरातन बात <i>Kabir</i></li>
+    <li>निताई चाँदेर मैं गुलाम <i>Lalon</i></li>
+    <li>साँई संग ससुराल <i>folk</i></li>
+    <li>प्रेम न बाड़ी उपजे रे <i>Kabir</i></li>
+    <li>मैं कासौं कहौं <i>Meera</i></li>
+    <li>समझ देख <i>Kabir</i></li>
+  </ul>
+</section>
+
+<!-- ── ROOMS ── -->
+<section class="lane" id="rooms-lane">
+  <div class="lane-head">
+    <h2><span class="deva">बैठक</span>The Rooms</h2>
+    <span class="note">our gatherings live in rooms that belong to people, not institutions</span>
+  </div>
+  <div class="wall">
+    <article class="frag" data-frag>
+      <p class="kicker">Every month · Vadodara</p>
+      <h3><span class="deva">बैठक</span> — the sitting</h3>
+      <p>Musicians try a new composition, an actor reads a scene still in rehearsal, a painter shows a canvas. Everyone is close enough to answer back. No stage, no green room.</p>
+      <span class="hand">dates announced on Instagram ↗</span>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">2027 · Jyestha Poornima</p>
+      <h3><span class="deva">कबीर संग रुहदारी</span></h3>
+      <p>The annual gathering rises with the full moon of Jyestha — songs, live painting, reflection. Contribution-based, by registration only.</p>
+      <span class="hand">registration not open yet — soon</span>
+    </article>
+    <article class="frag photo" data-frag>
+      <span>photo to come — Vadodara, June 2026</span>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">Concluded · June 2026</p>
+      <h3>MilanKunj Club, Vadodara</h3>
+      <p>Held on 27 June, Jyestha Poornima. A room of nearly four hundred people singing along while painters worked at the edge of the stage.</p>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">Concluded · 2026</p>
+      <h3>Kanoria Centre for Arts, Ahmedabad</h3>
+      <p>The same songs, a different room, the same breath.</p>
+    </article>
+    <article class="frag quote" data-frag>
+      <p class="kicker">A scrap from the room</p>
+      <p>"An evening that did not feel like an audience and a stage — it felt like one room breathing together."</p>
+      <span class="hand">— a listener, Vadodara</span>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">An open door</p>
+      <h3>Bring a <span class="deva">बैठक</span> to your space</h3>
+      <p>A living room, a studio, a terrace, a courtyard. Floor seating, mostly. We bring the songs, the readings, and the chai that carries the conversation.</p>
+      <span class="hand"><a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">write to us ↗</a></span>
+    </article>
+  </div>
+</section>
+
+<!-- ── PEOPLE ── -->
+<section class="lane" id="people-lane">
+  <div class="lane-head">
+    <h2><span class="deva">लोग</span>The People</h2>
+    <span class="note">the best introduction is a baithak — come meet everyone mid-song</span>
+  </div>
+  <div class="wall">
+    <article class="frag" data-frag>
+      <p class="kicker">The collective</p>
+      <h3>Not a cast and a crew</h3>
+      <p>Painters, sculptors, musicians, art historians and people from social practice — the painter is in the rehearsal, the musician is in the workshop, the art historian argues with the director, and the production belongs to all of them at once.</p>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">Three decades</p>
+      <h3>The spirit of Total Theatre</h3>
+      <p>Plays, residential workshops, and experiments with people of every age in Vadodara — no single form allowed to hold the room alone.</p>
+    </article>
+    <article class="frag quote" data-frag>
+      <p class="kicker">A scrap from the room</p>
+      <p>"I came for the songs of Kabir and left having painted for the first time."</p>
+      <span class="hand">— a first-time painter</span>
+    </article>
+    <article class="frag" data-frag>
+      <p class="kicker">An invitation</p>
+      <h3>Carry a form we haven't met</h3>
+      <p>Singers, players, painters, poets, dancers, makers of any kind — bring your practice into a room that will not leave it unchanged.</p>
+      <span class="hand"><a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">step in ↗</a></span>
+    </article>
+  </div>
+</section>
+
+<button id="wander" type="button" aria-label="Wander to a random fragment">
+  <span class="deva">भटको</span>wander
+</button>
+
+<footer>
+  <nav>
+    <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/ptlvadodara/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+  </nav>
+  <div class="colophon">Peoples Theatre Laboratory · Vadodara, Gujarat, India</div>
+</footer>
+
+<script>
+(function(){
+  var dohas=[
+    {d:"मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।",t:"Where do you search for me? I am right beside you.",a:"— Kabir"},
+    {d:"महफ़िल है जनाब, दिल खोल कर आना।",t:"It is a gathering, friend — come with an open heart.",a:"— from the room"},
+    {d:"झीनी झीनी बीनी चदरिया।",t:"Finely, finely woven is this shawl.",a:"— Kabir"},
+    {d:"हंसा, करो पुरातन बात।",t:"O swan, speak of that which is ancient.",a:"— Kabir"},
+    {d:"प्रेम न बाड़ी उपजे, प्रेम न हाट बिकाय।",t:"Love grows in no field, and is sold in no market.",a:"— Kabir"}
+  ];
+  var i=0,box=document.getElementById('doha');
+  document.getElementById('doha-again').addEventListener('click',function(){
+    i=(i+1)%dohas.length;
+    box.classList.remove('turn');void box.offsetWidth;box.classList.add('turn');
+    document.getElementById('doha-deva').textContent=dohas[i].d;
+    document.getElementById('doha-trans').textContent=dohas[i].t;
+    document.getElementById('doha-attr').textContent=dohas[i].a;
+  });
+
+  var frags=[].slice.call(document.querySelectorAll('[data-frag]')),last=-1;
+  document.getElementById('wander').addEventListener('click',function(){
+    var n;do{n=Math.floor(Math.random()*frags.length);}while(n===last&&frags.length>1);
+    last=n;
+    frags.forEach(function(f){f.classList.remove('found');});
+    frags[n].scrollIntoView({behavior:'smooth',block:'center'});
+    frags[n].classList.add('found');
+    setTimeout(function(){frags[n].classList.remove('found');},2600);
+  });
+})();
+</script>
+</body>
+</html>
