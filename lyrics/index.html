@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lyrics — Peoples Theatre Laboratory</title>
+<meta name="description" content="Songs and lyrics from the gatherings of Peoples Theatre Laboratory, Vadodara — Baithak and Kabir Sang Ruhdaari.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Tiro+Devanagari+Hindi:ital@0;1&family=Courier+Prime&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0A0908;
+  --paper:#F2EDDC;
+  --paper-70:rgba(242,237,220,.70);
+  --paper-45:rgba(242,237,220,.45);
+  --paper-25:rgba(242,237,220,.25);
+  --paper-12:rgba(242,237,220,.12);
+  --ember:#D08A3E;
+  --gold:#E3B23C;
+  --display:"Bodoni Moda",Georgia,serif;
+  --body:"Newsreader",Georgia,serif;
+  --deva:"Tiro Devanagari Hindi",Georgia,serif;
+  --mono:"Courier Prime",ui-monospace,monospace;
+  --lyric-size:1.24rem;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);font-weight:300;line-height:1.7;
+  min-height:100svh;
+  overflow-x:hidden;
+}
+
+/* atmosphere, same family as the holding page */
+.grain{
+  position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.14;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.breath{
+  position:fixed;z-index:0;pointer-events:none;
+  top:36vh;left:50%;width:min(88vw,760px);aspect-ratio:1;
+  translate:-50% -50%;
+  background:radial-gradient(circle,rgba(208,138,62,.16) 0%,rgba(208,138,62,.05) 45%,transparent 70%);
+  animation:breathe 12s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(.95);opacity:.6}50%{transform:scale(1.06);opacity:1}}
+
+a{color:var(--gold);text-decoration:none}
+:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+::selection{background:var(--ember);color:var(--ink)}
+
+/* ── masthead ─────────────────────────────────────── */
+header{
+  position:relative;z-index:10;
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1.3rem clamp(1.2rem,5vw,3rem);
+  border-bottom:1px solid var(--paper-12);
+}
+.wordmark{
+  font-family:var(--display);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--paper);
+}
+.wordmark em{font-style:italic;color:var(--ember)}
+.crumb{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-45)}
+
+/* ── app views ────────────────────────────────────── */
+main{position:relative;z-index:10;max-width:46rem;margin-inline:auto;padding:clamp(2.4rem,7vh,4.5rem) clamp(1.2rem,5vw,2rem) 5rem}
+.view{animation:appear .7s cubic-bezier(.2,.7,.2,1)}
+@keyframes appear{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-family:var(--mono);font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem}
+h1{
+  font-family:var(--deva);font-weight:400;
+  font-size:clamp(1.9rem,5.5vw,3rem);line-height:1.35;
+  margin-bottom:.4rem;
+}
+h1.latin{font-family:var(--display);line-height:1.1}
+.sub{font-style:italic;color:var(--paper-45);margin-bottom:2.2rem}
+
+/* events index */
+.event-card{
+  display:block;border:1px solid var(--paper-12);border-radius:2px;
+  padding:1.5rem 1.6rem;margin-bottom:1.2rem;color:var(--paper);
+  transition:border-color .35s,transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.event-card:hover{border-color:rgba(227,178,60,.45);transform:translateY(-3px)}
+.event-card .when{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ember);margin-bottom:.5rem}
+.event-card .name{font-family:var(--deva);font-size:1.35rem;line-height:1.4}
+.event-card .where{font-style:italic;font-size:.92rem;color:var(--paper-45);margin-top:.3rem}
+.event-card .count{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-45);margin-top:.8rem}
+
+/* song list */
+.songlist{list-style:none;border-top:1px solid var(--paper-12)}
+.songlist a{
+  display:flex;align-items:baseline;gap:1.2rem;
+  padding:.95rem .4rem;border-bottom:1px solid var(--paper-12);
+  color:var(--paper);
+  transition:background .3s,padding-left .3s;
+}
+.songlist a:hover{background:rgba(242,237,220,.04);padding-left:.9rem}
+.songlist .no{font-family:var(--mono);font-size:.68rem;color:var(--ember);min-width:1.6rem;text-align:right}
+.songlist .t{font-family:var(--deva);font-size:1.18rem;line-height:1.5;flex:1}
+.songlist .w{font-style:italic;font-size:.82rem;color:var(--paper-45);white-space:nowrap}
+.songlist .soon{font-family:var(--mono);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-25);border:1px solid var(--paper-12);border-radius:100px;padding:.15rem .55rem;white-space:nowrap}
+
+/* song page */
+.song-head{text-align:center;margin-bottom:2.6rem}
+.song-head .attr{font-family:var(--display);font-style:italic;color:var(--ember);font-size:1.05rem;margin-top:.6rem}
+.song-head .meta{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-45);margin-top:.9rem}
+.lyrics{
+  font-family:var(--deva);
+  font-size:var(--lyric-size);
+  line-height:2.05;
+  text-align:center;
+  white-space:pre-line;
+  color:var(--paper);
+}
+.lyrics .stanza{display:block;margin-bottom:1.9rem}
+.meaning{
+  margin-top:3rem;border:1px solid var(--paper-12);border-radius:2px;
+}
+.meaning summary{
+  cursor:pointer;list-style:none;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);padding:1rem 1.3rem;
+}
+.meaning summary::-webkit-details-marker{display:none}
+.meaning summary::after{content:"+";float:right;color:var(--paper-45)}
+.meaning[open] summary::after{content:"−"}
+.meaning .m-body{
+  padding:0 1.4rem 1.4rem;white-space:pre-line;
+  font-size:1.02rem;color:var(--paper-70);font-style:italic;
+}
+.pending{
+  text-align:center;border:1px dashed var(--paper-25);border-radius:2px;
+  padding:3rem 1.5rem;color:var(--paper-45);font-style:italic;
+}
+.pending .deva{font-family:var(--deva);font-style:normal;font-size:1.3rem;color:var(--paper-70);margin-bottom:.6rem}
+
+/* song nav */
+.songnav{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  margin-top:3.2rem;padding-top:1.4rem;border-top:1px solid var(--paper-12);
+}
+.songnav a,.songnav span{
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+}
+.songnav .back{color:var(--paper-45)}
+.songnav span{color:var(--paper-25)}
+
+/* font size control */
+.sizer{
+  position:fixed;right:clamp(.8rem,2.5vw,1.6rem);bottom:clamp(.8rem,2.5vw,1.6rem);z-index:20;
+  display:none;gap:.5rem;
+}
+.sizer.show{display:flex}
+.sizer button{
+  width:42px;height:42px;border-radius:50%;cursor:pointer;
+  background:rgba(10,9,8,.8);color:var(--paper-70);
+  border:1px solid var(--paper-25);
+  font-family:var(--deva);font-size:1rem;
+  transition:border-color .3s,color .3s;
+}
+.sizer button:hover{border-color:var(--gold);color:var(--gold)}
+.sizer button:first-child{font-size:.78rem}
+
+footer{
+  position:relative;z-index:10;text-align:center;
+  padding:2rem 1.2rem 2.6rem;border-top:1px solid var(--paper-12);
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-25);
+}
+footer a{color:var(--paper-45)}
+footer a:hover{color:var(--gold)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="breath" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header>
+  <a class="wordmark" href="../">Peoples Theatre <em>Laboratory</em></a>
+  <a class="crumb" href="#/">गीत · Lyrics</a>
+</header>
+
+<main id="app"></main>
+
+<div class="sizer" id="sizer" aria-label="Text size">
+  <button type="button" id="sz-down" aria-label="Smaller text">अ</button>
+  <button type="button" id="sz-up" aria-label="Larger text">अ</button>
+</div>
+
+<footer>
+  <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+  &nbsp;·&nbsp; Vadodara
+</footer>
+
+<script src="songs.js"></script>
+<script>
+(function(){
+  var D=window.PTL_DATA, app=document.getElementById('app'), sizer=document.getElementById('sizer');
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+
+  function eventBySlug(s){for(var i=0;i<D.events.length;i++)if(D.events[i].slug===s)return D.events[i];return null;}
+
+  function renderHome(){
+    var h='<div class="view"><p class="eyebrow">The songbook</p>'+
+      '<h1>महफ़िल के गीत</h1>'+
+      '<p class="sub">Every gathering leaves its songs behind. Choose an evening, and sing along.</p>';
+    D.events.forEach(function(e){
+      var n=e.songs.length;
+      h+='<a class="event-card" href="#/e/'+e.slug+'">'+
+        '<div class="when">'+esc(e.date)+'</div>'+
+        '<div class="name">'+esc(e.name)+'</div>'+
+        '<div class="where">'+esc(e.venue)+'</div>'+
+        '<div class="count">'+n+' songs →</div></a>';
+    });
+    h+='</div>';
+    app.innerHTML=h;sizer.classList.remove('show');
+  }
+
+  function renderEvent(slug){
+    var e=eventBySlug(slug);if(!e)return renderHome();
+    var h='<div class="view"><p class="eyebrow">'+esc(e.date)+'</p>'+
+      '<h1>'+esc(e.name)+'</h1>'+
+      '<p class="sub">'+esc(e.note||'')+'</p><ol class="songlist">';
+    e.songs.forEach(function(sid,i){
+      var s=D.songs[sid];if(!s)return;
+      h+='<li><a href="#/e/'+e.slug+'/'+sid+'">'+
+        '<span class="no">'+(i+1)+'</span>'+
+        '<span class="t">'+esc(s.title)+'</span>'+
+        (s.lyrics?'<span class="w">~ '+esc(s.writer||'')+'</span>':'<span class="soon">soon</span>')+
+        '</a></li>';
+    });
+    h+='</ol></div>';
+    app.innerHTML=h;sizer.classList.remove('show');
+  }
+
+  function renderSong(eslug,sid){
+    var e=eventBySlug(eslug), s=D.songs[sid];
+    if(!s)return renderHome();
+    var list=e?e.songs:Object.keys(D.songs);
+    var idx=list.indexOf(sid);
+    var meta=[];
+    if(s.singers)meta.push(esc(s.singers));
+    if(s.language)meta.push(esc(s.language));
+    if(s.geography)meta.push(esc(s.geography));
+
+    var h='<div class="view"><div class="song-head">'+
+      '<p class="eyebrow">'+(e?esc(e.short)+' · Song '+(idx+1)+' of '+list.length:'From the library')+'</p>'+
+      '<h1>'+esc(s.title)+'</h1>'+
+      (s.writer?'<div class="attr">~ '+esc(s.writer)+'</div>':'')+
+      (meta.length?'<div class="meta">'+meta.join(' · ')+'</div>':'')+
+      '</div>';
+
+    if(s.lyrics){
+      var stanzas=s.lyrics.split(/\n\n+/).map(function(st){return '<span class="stanza">'+esc(st)+'</span>';}).join('');
+      h+='<div class="lyrics">'+stanzas+'</div>';
+      if(s.meaning){
+        h+='<details class="meaning"><summary>अर्थ · Meaning</summary><div class="m-body">'+esc(s.meaning)+'</div></details>';
+      }
+    }else{
+      h+='<div class="pending"><div class="deva">बोल जल्द आ रहे हैं</div>'+
+        'The words are still being written into the library. Come sing them with us meanwhile.</div>';
+    }
+
+    var base=e?'#/e/'+e.slug:'#/';
+    h+='<nav class="songnav">'+
+      (idx>0?'<a href="'+base+'/'+list[idx-1]+'">← Previous</a>':'<span>← Previous</span>')+
+      '<a class="back" href="'+(e?'#/e/'+e.slug:'#/')+'">Song list</a>'+
+      (idx<list.length-1?'<a href="'+base+'/'+list[idx+1]+'">Next →</a>':'<span>Next →</span>')+
+      '</nav></div>';
+    app.innerHTML=h;sizer.classList.add('show');
+    scrollTo(0,0);
+  }
+
+  function route(){
+    var p=(location.hash||'#/').replace(/^#\/?/,'').split('/').filter(Boolean);
+    if(p[0]==='e'&&p[1]&&p[2])renderSong(p[1],p[2]);
+    else if(p[0]==='e'&&p[1])renderEvent(p[1]);
+    else renderHome();
+  }
+  addEventListener('hashchange',route);
+  route();
+
+  /* lyric size control, persisted */
+  var size=parseFloat(localStorage.getItem('ptl-lyric-size'))||1.24;
+  function apply(){document.documentElement.style.setProperty('--lyric-size',size+'rem');localStorage.setItem('ptl-lyric-size',size);}
+  document.getElementById('sz-up').addEventListener('click',function(){size=Math.min(2,+(size+.12).toFixed(2));apply();});
+  document.getElementById('sz-down').addEventListener('click',function(){size=Math.max(.9,+(size-.12).toFixed(2));apply();});
+  apply();
+})();
+</script>
+</body>
+</html>
