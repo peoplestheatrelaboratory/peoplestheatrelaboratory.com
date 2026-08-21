@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Floor — Peoples Theatre Laboratory, Vadodara</title>
+<meta name="description" content="Peoples Theatre Laboratory, Vadodara. Three decades of Total Theatre. Home of the monthly Baithak and the annual Kabir Sang Ruhdaari. This site is a rehearsal floor — walk it.">
+<meta name="theme-color" content="#131110">
+
+<meta property="og:title" content="The Floor — Peoples Theatre Laboratory">
+<meta property="og:description" content="Three decades of Total Theatre in Vadodara. Home of Baithak and Kabir Sang Ruhdaari.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   THE FLOOR — concept 6
+   The website as a rehearsal-room stage floor seen from above:
+   spike tape marks, chalk blocking, a cue light.
+   Distinct from concepts 1–5 (poster / black box / paper archive /
+   notice board / poornima night) and from full-site (editorial).
+   ══════════════════════════════════════════════════════════ */
+
+:root{
+  /* the floor */
+  --floor:#161311;
+  --floor-deep:#0E0C0A;
+  --floor-line:rgba(239,232,216,.07);
+
+  /* chalk */
+  --chalk:#EFE8D8;
+  --chalk-70:rgba(239,232,216,.70);
+  --chalk-45:rgba(239,232,216,.45);
+  --chalk-25:rgba(239,232,216,.25);
+  --chalk-12:rgba(239,232,216,.12);
+
+  /* spike tape (gaffer colours) */
+  --tape-pink:#F0619F;
+  --tape-blue:#5BB7D4;
+  --tape-amber:#FFAE3D;
+
+  --display:"Instrument Serif",Georgia,serif;
+  --mono:"Space Mono",ui-monospace,monospace;
+  --deva:"Tiro Devanagari Hindi",Georgia,serif;
+
+  --gut:clamp(1.25rem,5vw,4rem);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+body{
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0 118px,
+      var(--floor-line) 118px 119px),
+    radial-gradient(120% 90% at 50% 30%, var(--floor) 0%, var(--floor-deep) 100%);
+  background-attachment:fixed;
+  color:var(--chalk);
+  font-family:var(--display);
+  font-size:clamp(1.05rem,.95rem + .35vw,1.25rem);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+::selection{background:var(--tape-pink);color:var(--floor-deep)}
+:focus-visible{outline:2px dashed var(--tape-amber);outline-offset:4px}
+a{color:inherit}
+
+.grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;
+  opacity:.13;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.page{position:relative;z-index:10;padding-inline:var(--gut)}
+
+/* ── shared type ─────────────────────────────────────── */
+.kicker{
+  font-family:var(--mono);font-size:.66rem;font-weight:700;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--chalk-45);
+  display:flex;align-items:center;gap:.8rem;
+}
+.kicker::before{
+  content:"";width:.85rem;height:.85rem;flex:none;
+  background:
+    linear-gradient(45deg,transparent 44%,var(--tape-pink) 44% 56%,transparent 56%),
+    linear-gradient(-45deg,transparent 44%,var(--tape-pink) 44% 56%,transparent 56%);
+}
+h2{
+  font-weight:400;font-size:clamp(2rem,1.4rem + 2.6vw,3.6rem);
+  line-height:1.08;letter-spacing:-.01em;
+  margin:.7rem 0 1.2rem;
+}
+h2 em{font-style:italic;color:var(--tape-amber)}
+.deva{font-family:var(--deva);font-weight:400}
+.mono{font-family:var(--mono)}
+
+section{
+  max-width:64rem;margin-inline:auto;
+  padding-block:clamp(4rem,11vh,8rem);
+  border-top:1px solid var(--chalk-12);
+}
+
+/* reveal on scroll */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rise.drawn{opacity:1;transform:none}
+
+/* ══════════ masthead ══════════ */
+header{
+  position:relative;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+  padding:1.15rem 0;
+  border-bottom:1px solid var(--chalk-12);
+}
+.sigil{
+  display:inline-flex;align-items:center;gap:.75rem;text-decoration:none;
+}
+.sigil-x{
+  width:1.5rem;height:1.5rem;flex:none;
+  background:
+    linear-gradient(45deg,transparent 42%,var(--tape-pink) 42% 58%,transparent 58%),
+    linear-gradient(-45deg,transparent 42%,var(--tape-blue) 42% 58%,transparent 58%);
+}
+.sigil b{
+  font-family:var(--mono);font-weight:700;font-size:.82rem;
+  letter-spacing:.26em;text-transform:uppercase;
+}
+nav.top{
+  display:flex;flex-wrap:wrap;gap:.35rem .55rem;
+}
+nav.top a{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;text-decoration:none;
+  color:var(--chalk-70);
+  padding:.42rem .8rem;
+  border:1px solid var(--chalk-12);
+  transform:rotate(-.6deg);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),color .3s,border-color .3s,background .3s;
+}
+nav.top a:nth-child(2n){transform:rotate(.7deg)}
+nav.top a:hover,nav.top a:focus-visible{
+  color:var(--floor-deep);background:var(--tape-amber);
+  border-color:var(--tape-amber);transform:rotate(0) translateY(-2px);
+}
+
+/* ══════════ hero : the blocking diagram ══════════ */
+.hero{
+  position:relative;
+  min-height:calc(100svh - 5rem);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  align-items:center;gap:clamp(2rem,5vw,5rem);
+  padding-block:clamp(3rem,8vh,6rem);
+  max-width:76rem;margin-inline:auto;
+}
+.hero-copy .kicker{color:var(--tape-blue)}
+.hero-title{
+  font-weight:400;
+  font-size:clamp(2.6rem,1.6rem + 5vw,5.6rem);
+  line-height:1.02;letter-spacing:-.02em;
+  margin:1rem 0 1.4rem;
+}
+.hero-title em{font-style:italic;color:var(--tape-pink)}
+.hero-title .deva{display:block;font-size:.42em;color:var(--chalk-45);margin-top:.9rem;line-height:1.5}
+.hero-lede{
+  max-width:34rem;color:var(--chalk-70);
+  margin-bottom:2rem;
+}
+.hero-lede strong{color:var(--chalk);font-weight:400}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.9rem}
+
+.btn{
+  font-family:var(--mono);font-size:.68rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;text-decoration:none;
+  padding:.85rem 1.4rem;border:1px solid var(--chalk-25);
+  color:var(--chalk);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),background .3s,color .3s,border-color .3s;
+}
+.btn:hover,.btn:focus-visible{transform:translateY(-3px)}
+.btn-tape{border:none;background:var(--tape-pink);color:var(--floor-deep)}
+.btn-tape:hover,.btn-tape:focus-visible{background:var(--chalk)}
+
+/* the diagram */
+.diagram-wrap{position:relative}
+.diagram-wrap figcaption{
+  position:absolute;left:0;bottom:-1.9rem;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--chalk-25);
+}
+svg.floor{width:100%;height:auto;display:block}
+
+.floor-rect{fill:rgba(239,232,216,.025);stroke:var(--chalk-25);stroke-width:1.5;stroke-dasharray:6 5}
+.floor-grid line{stroke:var(--chalk-12);stroke-width:1}
+.tape-l{stroke-width:7;fill:none;stroke-linecap:butt}
+.tape-l.pink{stroke:var(--tape-pink)}
+.tape-l.blue{stroke:var(--tape-blue)}
+.tape-l.amber{stroke:var(--tape-amber)}
+.stage-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;
+  fill:var(--chalk-25);text-transform:uppercase;
+}
+.chalk-note{
+  font-family:var(--mono);font-size:10.5px;font-style:italic;
+  fill:var(--chalk-45);
+}
+.props{fill:none;stroke:var(--chalk-25);stroke-width:1.5}
+.props-label{font-family:var(--mono);font-size:10px;letter-spacing:.24em;fill:var(--chalk-25)}
+
+.spot circle.seat{fill:var(--floor-deep);stroke:var(--chalk-45);stroke-width:1.5}
+.spot text{
+  font-family:var(--mono);font-size:13px;font-weight:700;
+  fill:var(--chalk);text-anchor:middle;dominant-baseline:central;
+}
+.spot .halo{fill:none;opacity:0}
+.spot:hover .halo,.spot.on .halo{opacity:1}
+
+.block-path{
+  fill:none;stroke:var(--chalk-70);stroke-width:2;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  transition:stroke-dashoffset 3.2s cubic-bezier(.4,0,.2,1) .4s;
+}
+.drawn .block-path{stroke-dashoffset:0}
+
+/* ══════════ call board : gatherings ══════════ */
+.call-list{list-style:none;margin-top:2.4rem;border-top:1px solid var(--chalk-12)}
+.call-row{
+  position:relative;
+  display:grid;
+  grid-template-columns:9rem minmax(0,1fr) auto;
+  gap:1.4rem;align-items:baseline;
+  padding:1.7rem .4rem;
+  border-bottom:1px solid var(--chalk-12);
+  transition:padding-left .35s cubic-bezier(.2,.7,.2,1);
+}
+.call-row:hover{padding-left:1.4rem}
+.call-row::before{
+  content:"";position:absolute;left:0;top:50%;
+  width:1.1rem;height:.28rem;background:var(--tape-amber);
+  opacity:0;translate:-1.6rem -50%;rotate:-4deg;
+  transition:opacity .3s,translate .35s cubic-bezier(.2,.7,.2,1);
+}
+.call-row:hover::before{opacity:1;translate:-.2rem -50%}
+.call-when{
+  font-family:var(--mono);font-size:.64rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--tape-blue);
+  line-height:1.9;
+}
+.call-name{font-size:clamp(1.4rem,1.1rem + 1vw,2rem);line-height:1.15}
+.call-name .deva{color:var(--chalk-45);font-size:.72em;margin-left:.5rem}
+.call-note{font-style:italic;color:var(--chalk-70);max-width:38rem;margin-top:.45rem;font-size:.86em}
+.stamp{
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:.4rem .75rem;border:1.5px solid currentColor;
+  rotate:3deg;white-space:nowrap;align-self:center;
+}
+.stamp.next{color:var(--tape-pink)}
+.stamp.soon{color:var(--tape-amber)}
+.stamp.done{color:var(--chalk-25)}
+.call-row.done .call-name{text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--chalk-25)}
+.call-row.done .call-note{color:var(--chalk-45)}
+
+/* ══════════ repertoire : tape strips ══════════ */
+.rep-intro{max-width:36rem;color:var(--chalk-70)}
+.tapes{
+  list-style:none;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));
+  gap:1rem 1.2rem;margin-top:2.4rem;
+}
+.tapes li{
+  font-family:var(--deva);font-size:1.06rem;line-height:1.55;
+  padding:.65rem 1rem .65rem 1.2rem;
+  background:rgba(239,232,216,.03);
+  border-left:.3rem solid var(--tape-pink);
+  rotate:-.5deg;
+  transition:rotate .3s cubic-bezier(.2,.7,.2,1),translate .3s,background .3s;
+}
+.tapes li:nth-child(3n){border-left-color:var(--tape-blue);rotate:.5deg}
+.tapes li:nth-child(3n+2){border-left-color:var(--tape-amber);rotate:-.3deg}
+.tapes li:hover{rotate:0deg;translate:0 -3px;background:rgba(239,232,216,.06)}
+.tapes li span{
+  display:block;font-family:var(--mono);font-size:.56rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--chalk-25);margin-top:.3rem;
+}
+
+/* ══════════ collective ══════════ */
+.coll-grid{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  gap:clamp(2rem,5vw,4.5rem);align-items:start;
+}
+.coll-copy p{color:var(--chalk-70);margin-bottom:1.1rem}
+.coll-copy strong{color:var(--chalk);font-weight:400}
+.positions{list-style:none;display:flex;flex-direction:column}
+.positions li{
+  display:flex;align-items:baseline;gap:1.1rem;
+  padding:1rem .2rem;border-bottom:1px solid var(--chalk-12);
+}
+.positions .no{
+  font-family:var(--mono);font-size:.66rem;font-weight:700;color:var(--tape-pink);
+}
+.positions li:nth-child(2) .no{color:var(--tape-blue)}
+.positions li:nth-child(3) .no{color:var(--tape-amber)}
+.positions li:nth-child(4) .no{color:var(--tape-pink)}
+.positions .role{font-size:1.05rem}
+.positions .role small{
+  display:block;font-family:var(--mono);font-size:.58rem;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--chalk-25);margin-top:.2rem;
+}
+
+/* ══════════ host cta ══════════ */
+.host-box{
+  position:relative;
+  border:1.5px solid var(--chalk-25);
+  padding:clamp(2.2rem,6vw,4.5rem);
+  text-align:center;
+}
+.host-box::before,.host-box::after{
+  content:"";position:absolute;width:2.6rem;height:.5rem;
+  background:var(--tape-blue);rotate:-40deg;
+}
+.host-box::before{top:-.28rem;left:1.6rem}
+.host-box::after{bottom:-.28rem;right:1.6rem;background:var(--tape-pink)}
+.host-box h2{margin-top:.4rem}
+.host-box p{max-width:34rem;margin:0 auto 2rem;color:var(--chalk-70)}
+
+/* ══════════ footer ══════════ */
+footer{
+  border-top:1px solid var(--chalk-12);
+  padding:2.4rem 0 7rem;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1.5rem;flex-wrap:wrap;
+  max-width:64rem;margin-inline:auto;
+}
+.social{display:flex;gap:1.6rem;flex-wrap:wrap}
+.social a{
+  font-family:var(--mono);font-size:.64rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;text-decoration:none;
+  color:var(--chalk-45);transition:color .3s;
+}
+.social a:hover,.social a:focus-visible{color:var(--tape-amber)}
+.colophon{
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--chalk-25);
+}
+
+/* ══════════ cue light ══════════ */
+.cue{
+  position:fixed;right:1.2rem;bottom:1.2rem;z-index:90;
+  display:flex;align-items:center;gap:.8rem;
+  background:var(--floor-deep);
+  border:1px solid var(--chalk-25);
+  padding:.6rem .8rem;
+}
+.lamp{
+  width:1.15rem;height:1.15rem;border-radius:50%;
+  background:var(--tape-amber);
+  box-shadow:0 0 14px rgba(255,174,61,.55);
+  animation:lampPulse 2.4s ease-in-out infinite;
+}
+@keyframes lampPulse{0%,100%{opacity:1}50%{opacity:.55}}
+.cue button{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.26em;text-transform:uppercase;
+  background:none;border:none;color:var(--chalk-70);cursor:pointer;
+  padding:.2rem .1rem;
+}
+.cue button:hover{color:var(--chalk)}
+.cue-hint{
+  position:fixed;right:1.2rem;bottom:4.6rem;z-index:90;
+  font-family:var(--mono);font-size:.54rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--chalk-25);
+  writing-mode:vertical-rl;pointer-events:none;
+  transition:opacity 1s; 
+}
+
+/* ── BLACKOUT : cue light set to GO ─────────────────── */
+html.blackout body{
+  background:
+    repeating-linear-gradient(90deg,transparent 0 118px,rgba(239,232,216,.04) 118px 119px),
+    #060504;
+}
+html.blackout .grain{opacity:.2}
+html.blackout section,html.blackout header,html.blackout footer{border-color:rgba(239,232,216,.06)}
+html.blackout .hero-lede,
+html.blackout .coll-copy p,
+html.blackout .rep-intro,
+html.blackout .host-box p,
+html.blackout .call-note{color:var(--chalk-45)}
+html.blackout .sigil-x{
+  background:
+    linear-gradient(45deg,transparent 42%,var(--tape-pink) 42% 58%,transparent 58%),
+    linear-gradient(-45deg,transparent 42%,var(--tape-blue) 42% 58%,transparent 58%);
+  filter:drop-shadow(0 0 8px rgba(240,97,159,.7));
+}
+html.blackout .lamp{
+  background:#59D98C;box-shadow:0 0 18px rgba(89,217,140,.8);
+  animation:none;
+}
+html.blackout .btn-tape{box-shadow:0 0 22px rgba(240,97,159,.45)}
+html.blackout .tapes li{background:rgba(239,232,216,.02)}
+html.blackout .block-path{stroke:var(--chalk-45)}
+
+/* ══════════ responsive ══════════ */
+@media(max-width:60rem){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:3rem}
+  .diagram-wrap{max-width:34rem}
+  .coll-grid{grid-template-columns:1fr}
+  .call-row{grid-template-columns:1fr auto;grid-template-areas:"when stamp" "name stamp"}
+  .call-when{grid-area:when}
+  .call-name{grid-area:name}
+  .stamp{grid-area:stamp}
+  .call-note{grid-column:1 / -1}
+}
+@media(max-width:34rem){
+  .call-row{grid-template-columns:1fr;grid-template-areas:"when" "name" "note" "stamp"}
+  .stamp{justify-self:start}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rise{opacity:1;transform:none}
+  .block-path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="page">
+
+<header>
+  <a class="sigil" href="#floor" aria-label="PTL — back to top">
+    <span class="sigil-x" aria-hidden="true"></span>
+    <b>PTL &middot; Vadodara</b>
+  </a>
+  <nav class="top" aria-label="Sections">
+    <a href="#floor">The Floor</a>
+    <a href="#call">Call Board</a>
+    <a href="#repertoire">Repertoire</a>
+    <a href="#collective">Collective</a>
+    <a href="#host">Host</a>
+  </nav>
+</header>
+
+<!-- ══════════ HERO : blocking diagram ══════════ -->
+<section class="hero" id="floor" style="border-top:none">
+
+  <div class="hero-copy">
+    <p class="kicker rise drawn">Rehearsal floor &middot; view from the grid</p>
+    <h1 class="hero-title rise drawn" style="transition-delay:.1s">
+      Peoples Theatre<br><em>Laboratory</em>
+      <span class="deva">जहाँ प्रयोग पूजा है</span>
+    </h1>
+    <p class="hero-lede rise drawn" style="transition-delay:.2s">
+      An experimental theatre collective, three decades deep in
+      <strong>Total Theatre</strong> — painters, musicians, art historians and
+      actors building one production together. You are standing on our floor.
+      The tape marks are yours to follow.
+    </p>
+    <div class="hero-actions rise drawn" style="transition-delay:.3s">
+      <a class="btn btn-tape" href="#call">Walk to the call board</a>
+      <a class="btn" href="#collective">Meet the collective</a>
+    </div>
+  </div>
+
+  <figure class="diagram-wrap rise drawn" style="transition-delay:.25s">
+    <svg class="floor" viewBox="0 0 900 520" role="img"
+         aria-label="A stage floor plan with six numbered spike marks connected by a chalk movement path">
+      <!-- floor -->
+      <rect class="floor-rect" x="30" y="30" width="840" height="460"/>
+      <g class="floor-grid" aria-hidden="true">
+        <line x1="240" y1="30" x2="240" y2="490"/>
+        <line x1="450" y1="30" x2="450" y2="490"/>
+        <line x1="660" y1="30" x2="660" y2="490"/>
+        <line x1="30" y1="175" x2="870" y2="175"/>
+        <line x1="30" y1="330" x2="870" y2="330"/>
+      </g>
+
+      <!-- stage geography -->
+      <text class="stage-label" x="450" y="52" text-anchor="middle">upstage</text>
+      <text class="stage-label" x="450" y="480" text-anchor="middle">downstage</text>
+      <text class="stage-label" x="46" y="264">sr</text>
+      <text class="stage-label" x="854" y="264" text-anchor="end">sl</text>
+
+      <!-- tape corner L-marks -->
+      <path class="tape-l pink"  d="M30 74 v-44 h44"/>
+      <path class="tape-l blue"  d="M826 30 h44 v44"/>
+      <path class="tape-l amber" d="M74 490 h-44 v-44"/>
+      <path class="tape-l blue"  d="M870 446 v44 h-44"/>
+
+      <!-- props table -->
+      <rect class="props" x="700" y="392" width="130" height="62"/>
+      <text class="props-label" x="765" y="427" text-anchor="middle">PROPS</text>
+
+      <!-- chalk X marks -->
+      <g stroke="var(--chalk-25)" stroke-width="2" aria-hidden="true">
+        <path d="M120 430 l26 26 M146 430 l-26 26"/>
+        <path d="M560 120 l22 22 M582 120 l-22 22"/>
+      </g>
+
+      <!-- movement path (draws itself; pathLength=1 trick) -->
+      <path id="blockPath" class="block-path" pathLength="1"
+            d="M150 150 C 260 80, 360 80, 450 118 C 560 162, 660 130, 720 190 C 780 250, 700 320, 620 340 C 500 370, 420 350, 330 380 C 230 412, 160 380, 165 310 C 170 240, 110 210, 150 150 Z"/>
+
+      <!-- travelling actor dot -->
+      <circle r="7" fill="var(--tape-pink)" opacity=".9">
+        <animateMotion dur="14s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#blockPath"/>
+        </animateMotion>
+      </circle>
+
+      <!-- spike spots -->
+      <g class="spot"><circle class="seat" cx="150" cy="150" r="17"/><circle class="halo" cx="150" cy="150" r="24" stroke="var(--tape-pink)" stroke-width="2"/><text x="150" y="151">1</text></g>
+      <g class="spot"><circle class="seat" cx="450" cy="118" r="17"/><circle class="halo" cx="450" cy="118" r="24" stroke="var(--tape-blue)" stroke-width="2"/><text x="450" y="119">2</text></g>
+      <g class="spot"><circle class="seat" cx="720" cy="190" r="17"/><circle class="halo" cx="720" cy="190" r="24" stroke="var(--tape-amber)" stroke-width="2"/><text x="720" y="191">3</text></g>
+      <g class="spot"><circle class="seat" cx="620" cy="340" r="17"/><circle class="halo" cx="620" cy="340" r="24" stroke="var(--tape-pink)" stroke-width="2"/><text x="620" y="341">4</text></g>
+      <g class="spot"><circle class="seat" cx="330" cy="380" r="17"/><circle class="halo" cx="330" cy="380" r="24" stroke="var(--tape-blue)" stroke-width="2"/><text x="330" y="381">5</text></g>
+      <g class="spot"><circle class="seat" cx="165" cy="310" r="17"/><circle class="halo" cx="165" cy="310" r="24" stroke="var(--tape-amber)" stroke-width="2"/><text x="165" y="311">6</text></g>
+
+      <!-- chalk notes -->
+      <text class="chalk-note" x="270" y="235">— baithak circle forms here</text>
+      <text class="chalk-note" x="600" y="255" text-anchor="middle">ruhdaari: full room sings</text>
+    </svg>
+    <figcaption>Fig. 1 — tonight's blocking. positions 1–6, one path.</figcaption>
+  </figure>
+
+</section>
+
+<!-- ══════════ CALL BOARD ══════════ -->
+<section id="call">
+  <p class="kicker rise">The call board</p>
+  <h2 class="rise">What is being <em>called</em>, and when</h2>
+
+  <ul class="call-list">
+    <li class="call-row rise">
+      <div class="call-when">Monthly<br>date on Instagram</div>
+      <div>
+        <h3 class="call-name">Baithak <span class="deva">बैठक</span></h3>
+        <p class="call-note">Not a performance — a sitting. A new composition tried, a scene still in rehearsal read aloud, a canvas shown wet. Small rooms, moving homes: studios, courtyards, living rooms.</p>
+      </div>
+      <span class="stamp next">Next · TBA</span>
+    </li>
+
+    <li class="call-row rise">
+      <div class="call-when">Annual<br>Jyestha Poornima</div>
+      <div>
+        <h3 class="call-name">Kabir Sang Ruhdaari <span class="deva">कबीर संग रुहदारी</span></h3>
+        <p class="call-note">The full-moon gathering around the voices of Kabir, Meera, Bulleh Shah, Raidaas and Lalon Fakir — original compositions, folk song and live painting, in a room that sings back. Contribution-based, by registration only.</p>
+      </div>
+      <span class="stamp soon">2027 · Register soon</span>
+    </li>
+
+    <li class="call-row done rise">
+      <div class="call-when">27 June 2026<br>Vadodara</div>
+      <div>
+        <h3 class="call-name">Ruhdaari — MilanKunj Club</h3>
+        <p class="call-note">Jyestha Poornima. A room of nearly four hundred people singing along while painters worked at the edge of the stage.</p>
+      </div>
+      <span class="stamp done">Concluded</span>
+    </li>
+
+    <li class="call-row done rise">
+      <div class="call-when">2026<br>Ahmedabad</div>
+      <div>
+        <h3 class="call-name">Ruhdaari — Kanoria Centre for Arts</h3>
+        <p class="call-note">The same songs in a different city, a different room, the same breath.</p>
+      </div>
+      <span class="stamp done">Concluded</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ══════════ REPERTOIRE ══════════ -->
+<section id="repertoire">
+  <p class="kicker rise">Repertoire</p>
+  <h2 class="rise">Songs laid down <em>on the floor</em></h2>
+  <p class="rep-intro rise">What gets sung at Ruhdaari and in Baithaks — taped down like spike marks, so nobody loses their place.</p>
+
+  <ul class="tapes">
+    <li>साँई बिन दरद<span>Kabir</span></li>
+    <li>मिर्गा ने खेत उजाडा<span>Folk</span></li>
+    <li>प्रेम न खेतो निपजे<span>Kabir</span></li>
+    <li>जात भी ओछी, कर्म भी ओछा<span>Kabir</span></li>
+    <li>भीगे चुनरिया<span>Folk</span></li>
+    <li>जाग पियारी<span>Meera</span></li>
+    <li>हंसा करो पुरातन बात<span>Kabir</span></li>
+    <li>निताई चाँदेर<span>Lalon Fakir</span></li>
+    <li>मैं गुलाम<span>Bulleh Shah</span></li>
+    <li>साँई संग ससुराल<span>Raidaas</span></li>
+    <li>प्रेम न बाड़ी उपजे रे<span>Kabir</span></li>
+    <li>मैं कासौं कहौं<span>Kabir</span></li>
+    <li>झीनी झीनी<span>Kabir</span></li>
+    <li>समझ देख<span>Kabir</span></li>
+    <li>मोको कहाँ ढूंढें बन्दे<span>Kabir</span></li>
+  </ul>
+</section>
+
+<!-- ══════════ COLLECTIVE ══════════ -->
+<section id="collective">
+  <div class="coll-grid">
+    <div class="coll-copy">
+      <p class="kicker rise">The collective</p>
+      <h2 class="rise">Never a cast<br>and a <em>crew</em></h2>
+      <p class="rise">Peoples Theatre Laboratory has never been a cast and a crew. It works in the spirit of <strong>Total Theatre</strong>: the painter sits in the rehearsal, the musician argues inside the workshop, the art historian questions the director — and the production belongs to all of them at once.</p>
+      <p class="rise">Three decades in Vadodara. Works like <strong>टोबा टेक सिंह</strong> and other experiments that were allowed to fail in front of each other, which is the only way a laboratory stays a laboratory.</p>
+      <p class="rise">No single form is allowed to hold the room alone. If you carry a form we haven't met yet — bring it.</p>
+    </div>
+
+    <ul class="positions" aria-label="Positions on the floor">
+      <li class="rise"><span class="no">1</span><span class="role">Direction<small>holds the floor, not the answer</small></span></li>
+      <li class="rise"><span class="no">2</span><span class="role">Music<small>compositions born in Baithak</small></span></li>
+      <li class="rise"><span class="no">3</span><span class="role">Painting &amp; scenography<small>the painter is in the rehearsal</small></span></li>
+      <li class="rise"><span class="no">4</span><span class="role">You<small>open door — write on Instagram</small></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ HOST ══════════ -->
+<section id="host">
+  <div class="host-box rise">
+    <p class="kicker" style="justify-content:center">Spike mark: your room</p>
+    <h2>Host a <em>Baithak</em></h2>
+    <p>A courtyard, a studio, a living room with the furniture pushed back — if twenty people can sit close enough to answer back, it can hold a Baithak. We bring the songs and the work-in-progress; you bring the room.</p>
+    <a class="btn btn-tape" href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Mark your floor → Instagram</a>
+  </div>
+</section>
+
+<footer>
+  <nav class="social" aria-label="Social links">
+    <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/ptlvadodara/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+  </nav>
+  <div class="colophon">Peoples Theatre Laboratory · Vadodara, Gujarat, India</div>
+</footer>
+
+</div><!-- /.page -->
+
+<!-- cue light -->
+<div class="cue-hint" aria-hidden="true">house lights</div>
+<div class="cue">
+  <span class="lamp" aria-hidden="true"></span>
+  <button type="button" id="cueBtn" aria-pressed="false">Standby</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* reveals */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add("drawn"); io.unobserve(e.target); }
+    });
+  },{threshold:.15});
+  document.querySelectorAll(".rise").forEach(function(el){ io.observe(el); });
+
+  /* draw the blocking path when the hero diagram has been seen */
+  var hero = document.querySelector(".diagram-wrap");
+  if(hero && !reduced){
+    var dio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ hero.classList.add("drawn"); dio.disconnect(); }
+      });
+    },{threshold:.3});
+    dio.observe(hero);
+  } else if(hero){ hero.classList.add("drawn"); }
+
+  /* no travelling dot for reduced motion */
+  if(reduced){
+    var am = document.querySelector("animateMotion");
+    if(am && am.parentNode) am.parentNode.remove();
+  }
+
+  /* cue light : standby <-> go (blackout) */
+  var btn = document.getElementById("cueBtn");
+  var stored = null;
+  try{ stored = localStorage.getItem("ptl6-cue"); }catch(_){}
+  function setCue(go){
+    document.documentElement.classList.toggle("blackout", go);
+    btn.textContent = go ? "Go" : "Standby";
+    btn.setAttribute("aria-pressed", go ? "true" : "false");
+    try{ localStorage.setItem("ptl6-cue", go ? "go" : "standby"); }catch(_){}
+  }
+  if(stored === "go") setCue(true);
+  btn.addEventListener("click", function(){
+    setCue(!document.documentElement.classList.contains("blackout"));
+  });
+})();
+</script>
+
+</body>
+</html>

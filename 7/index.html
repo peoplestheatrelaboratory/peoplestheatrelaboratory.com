@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peoples Theatre Laboratory — Vadodara</title>
+<meta name="description" content="Three decades of Total Theatre in Vadodara. Home of the monthly Baithak and the annual Kabir Sang Ruhdaari.">
+<meta name="theme-color" content="#0A0908">
+
+<meta property="og:title" content="Peoples Theatre Laboratory — Vadodara">
+<meta property="og:description" content="Three decades of Total Theatre. Home of Baithak and Kabir Sang Ruhdaari.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════
+   CONCEPT 7 — "MAHFIL" 
+   Bold & photographic. Film-festival energy.
+   Full-bleed duotone stills, oversized type, red curtain.
+   Photos are placeholders until the PTL archive arrives.
+   ══════════════════════════════════════════════════════ */
+
+:root{
+  --black:#0A0908;
+  --black-2:#12100D;
+  --cream:#F2EDDC;
+  --cream-70:rgba(242,237,220,.70);
+  --cream-45:rgba(242,237,220,.45);
+  --cream-25:rgba(242,237,220,.25);
+  --cream-12:rgba(242,237,220,.12);
+  --red:#E14B2A;
+  --gold:#E3B23C;
+
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --ital:"Newsreader",Georgia,serif;
+  --deva:"Tiro Devanagari Hindi",Georgia,serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+body{
+  background:var(--black);
+  color:var(--cream);
+  font-family:var(--disp);
+  font-weight:300;
+  line-height:1.55;
+  overflow-x:hidden;
+}
+
+::selection{background:var(--red);color:var(--cream)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+img{display:block;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) sepia(.32) contrast(1.06) brightness(.82)}
+
+.grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;
+  opacity:.12;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── type utilities ──────────────────────────────────── */
+.mono{
+  font-family:var(--disp);font-weight:500;font-size:.66rem;
+  letter-spacing:.28em;text-transform:uppercase;
+}
+.ital{font-family:var(--ital);font-style:italic;font-weight:300}
+.deva{font-family:var(--deva)}
+.ph-tag{
+  position:absolute;left:1rem;bottom:1rem;z-index:5;
+  font-size:.54rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cream-70);background:rgba(10,9,8,.72);
+  padding:.35rem .7rem;border:1px solid var(--cream-25);
+}
+
+/* ── header ──────────────────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem clamp(1.2rem,4vw,3rem);
+  background:linear-gradient(rgba(10,9,8,.82),transparent);
+}
+.brand{
+  display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--cream);
+  font-weight:700;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;
+}
+.brand .star{color:var(--red);font-size:1.15rem;line-height:0}
+nav.main{display:flex;gap:clamp(.9rem,3vw,2.2rem);flex-wrap:wrap}
+nav.main a{
+  color:var(--cream-70);text-decoration:none;
+  font-size:.64rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;
+  transition:color .3s;
+}
+nav.main a:hover,nav.main a:focus-visible{color:var(--red)}
+
+/* ── hero ────────────────────────────────────────────── */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{will-change:transform}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(10,9,8,.35) 0%,rgba(10,9,8,.15) 40%,rgba(10,9,8,.92) 88%,var(--black) 100%);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  padding:0 clamp(1.2rem,4vw,3rem) clamp(2.5rem,7vh,5rem);
+  max-width:110rem;
+}
+.hero-kicker{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem;
+  color:var(--gold);
+}
+.hero-kicker::after{content:"";flex:1;height:1px;background:var(--cream-25)}
+h1{
+  font-weight:800;
+  font-size:clamp(2.9rem,9.5vw,9.5rem);
+  line-height:.94;letter-spacing:-.03em;
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+h1 .outline{
+  display:block;color:transparent;
+  -webkit-text-stroke:1.5px var(--cream);
+}
+h1 .red{color:var(--red)}
+.hero-sub{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:2rem;flex-wrap:wrap;margin-top:2.2rem;
+}
+.hero-sub .ital{
+  font-size:clamp(1.05rem,.9rem + .6vw,1.5rem);
+  color:var(--cream-70);max-width:30rem;
+}
+.hero-meta{text-align:right;color:var(--cream-45);line-height:2.1}
+.hero-deva{
+  position:absolute;top:16vh;right:clamp(1.2rem,4vw,3rem);z-index:2;
+  writing-mode:vertical-rl;
+  font-family:var(--deva);font-size:clamp(1rem,2vw,1.5rem);
+  color:var(--cream-45);letter-spacing:.3em;
+}
+
+/* ── ticker ──────────────────────────────────────────── */
+.ticker{
+  background:var(--red);color:var(--black);
+  overflow:hidden;padding:.75rem 0;
+  border-block:1px solid var(--black);
+}
+.ticker-track{
+  display:flex;gap:3rem;width:max-content;
+  animation:tick 42s linear infinite;
+  font-weight:700;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.ticker-track .deva{font-weight:400;letter-spacing:.05em;text-transform:none;font-size:.95rem}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ── sections ────────────────────────────────────────── */
+section{padding:clamp(4.5rem,12vh,9rem) clamp(1.2rem,4vw,3rem)}
+.sec-head{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:clamp(2.5rem,6vh,4.5rem)}
+.sec-no{
+  font-weight:800;font-size:clamp(2.4rem,6vw,5rem);
+  line-height:1;color:transparent;-webkit-text-stroke:1.2px var(--red);
+}
+.sec-title{
+  font-weight:700;font-size:clamp(1.6rem,3.6vw,3rem);
+  letter-spacing:-.02em;text-transform:uppercase;line-height:1.05;
+}
+.sec-title em{font-family:var(--ital);font-style:italic;font-weight:300;
+  text-transform:none;color:var(--cream-45);letter-spacing:0}
+
+/* ── now playing : event features ────────────────────── */
+.event{
+  position:relative;
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:center;
+  padding-block:clamp(2.5rem,6vh,4.5rem);
+  border-top:1px solid var(--cream-12);
+}
+.event:nth-child(odd) .event-media{order:2}
+.event-media{
+  position:relative;aspect-ratio:4/3;overflow:hidden;
+}
+.event-media img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.event:hover .event-media img{transform:scale(1.045)}
+.event-date{
+  font-weight:800;font-size:clamp(3.4rem,8vw,7.5rem);
+  line-height:.9;letter-spacing:-.03em;color:var(--red);
+}
+.event-date small{
+  display:block;font-size:.22em;font-weight:500;letter-spacing:.3em;
+  color:var(--cream-45);margin-top:.8rem;text-transform:uppercase;
+}
+.event h3{
+  font-weight:700;font-size:clamp(1.7rem,3.4vw,2.8rem);
+  text-transform:uppercase;letter-spacing:-.01em;line-height:1.05;
+  margin:.9rem 0 .4rem;
+}
+.event h3 .deva{display:block;font-weight:400;font-size:.62em;color:var(--cream-45);margin-top:.35rem}
+.event p{color:var(--cream-70);max-width:34rem;margin-top:1rem}
+.event .go{
+  display:inline-flex;align-items:center;gap:.6rem;margin-top:1.6rem;
+  color:var(--cream);text-decoration:none;
+  font-size:.68rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+  border-bottom:1px solid var(--red);padding-bottom:.4rem;
+  transition:color .3s,gap .3s;
+}
+.event .go:hover{color:var(--red);gap:1rem}
+.status-chip{
+  display:inline-block;font-size:.56rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;
+  border:1px solid currentColor;padding:.35rem .7rem;margin-bottom:1rem;
+}
+.status-chip.live{color:var(--gold)}
+.status-chip.soon{color:var(--red)}
+.status-chip.past{color:var(--cream-25)}
+
+/* ── archive rail ────────────────────────────────────── */
+#archive{padding-inline:0}
+#archive .sec-head{padding-inline:clamp(1.2rem,4vw,3rem)}
+.rail{
+  display:flex;gap:1.2rem;overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:0 clamp(1.2rem,4vw,3rem) 1.5rem;
+  scrollbar-color:var(--red) transparent;
+}
+.card{
+  position:relative;flex:0 0 clamp(17rem,26vw,24rem);
+  aspect-ratio:3/4;overflow:hidden;scroll-snap-align:start;
+}
+.card img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.05)}
+.card-info{
+  position:absolute;inset:auto 0 0 0;z-index:3;
+  padding:3.5rem 1.2rem 1.2rem;
+  background:linear-gradient(transparent,rgba(10,9,8,.94));
+}
+.card-info b{
+  display:block;font-weight:700;font-size:1.05rem;
+  text-transform:uppercase;letter-spacing:.02em;
+}
+.card-info span{font-size:.6rem;font-weight:500;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--cream-45)}
+.rail-hint{
+  padding:0 clamp(1.2rem,4vw,3rem);
+  color:var(--cream-25);font-size:.58rem;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;
+}
+
+/* ── doha interlude ──────────────────────────────────── */
+.doha{
+  min-height:92svh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;gap:2.2rem;
+  background:radial-gradient(80% 60% at 50% 45%,var(--black-2),var(--black));
+  border-block:1px solid var(--cream-12);
+  padding:clamp(4rem,10vh,7rem) clamp(1.2rem,4vw,3rem);
+}
+.doha blockquote{
+  font-family:var(--deva);
+  font-size:clamp(1.9rem,5.4vw,4.4rem);
+  line-height:1.5;max-width:22ch;
+}
+.doha blockquote em{color:var(--red);font-style:normal}
+.doha .tr{
+  font-family:var(--ital);font-style:italic;
+  font-size:clamp(1rem,.9rem + .4vw,1.3rem);
+  color:var(--cream-45);max-width:36ch;
+}
+.doha .src{color:var(--gold)}
+
+/* ── collective ──────────────────────────────────────── */
+.coll{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(2rem,5vw,5rem);align-items:start;
+}
+.coll-statement{
+  font-weight:500;
+  font-size:clamp(1.5rem,3vw,2.5rem);
+  line-height:1.25;letter-spacing:-.01em;
+}
+.coll-statement em{font-family:var(--ital);font-style:italic;font-weight:300;color:var(--red)}
+.coll-side{color:var(--cream-70);display:flex;flex-direction:column;gap:1.2rem}
+.coll-side .roles{
+  list-style:none;border-top:1px solid var(--cream-12);
+}
+.coll-side li{
+  display:flex;justify-content:space-between;gap:1rem;
+  padding:.85rem .1rem;border-bottom:1px solid var(--cream-12);
+  font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+}
+.coll-side li span:last-child{color:var(--cream-45)}
+
+/* ── cta + footer ────────────────────────────────────── */
+.cta{
+  text-align:center;padding-block:clamp(5rem,14vh,10rem);
+  background:var(--red);color:var(--black);
+}
+.cta h2{
+  font-weight:800;font-size:clamp(2.4rem,7vw,6rem);
+  text-transform:uppercase;letter-spacing:-.02em;line-height:.98;
+}
+.cta h2 em{font-family:var(--ital);font-style:italic;font-weight:300;text-transform:none}
+.cta p{font-family:var(--ital);font-style:italic;font-size:1.15rem;margin:1.4rem auto 2.4rem;max-width:34rem}
+.btn-dark{
+  display:inline-block;background:var(--black);color:var(--cream);
+  text-decoration:none;padding:1.1rem 2.2rem;
+  font-size:.7rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),background .3s,color .3s;
+}
+.btn-dark:hover{transform:translateY(-3px);background:var(--cream);color:var(--black)}
+
+footer{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1.5rem;flex-wrap:wrap;
+  padding:2.2rem clamp(1.2rem,4vw,3rem) 2.6rem;
+  border-top:1px solid var(--cream-12);
+}
+.social{display:flex;gap:1.8rem;flex-wrap:wrap}
+.social a{
+  color:var(--cream-45);text-decoration:none;
+  font-size:.62rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  transition:color .3s;
+}
+.social a:hover{color:var(--red)}
+.colophon{color:var(--cream-25);font-size:.58rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase}
+
+/* ── reveals ─────────────────────────────────────────── */
+.rise{opacity:0;transform:translateY(26px);
+  transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.rise.in{opacity:1;transform:none}
+
+/* ── responsive ──────────────────────────────────────── */
+@media(max-width:52rem){
+  .event{grid-template-columns:1fr}
+  .event:nth-child(odd) .event-media{order:0}
+  .coll{grid-template-columns:1fr}
+  .hero-deva{display:none}
+  .hero-meta{text-align:left}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rise{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header>
+  <a class="brand" href="#top"><span class="star" aria-hidden="true">✳</span>PTL</a>
+  <nav class="main" aria-label="Main">
+    <a href="#gatherings">Gatherings</a>
+    <a href="#archive">Archive</a>
+    <a href="#collective">Collective</a>
+    <a href="#join">Join</a>
+  </nav>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero" id="top">
+  <div class="hero-media" aria-hidden="true">
+    <img id="heroImg" src="https://picsum.photos/seed/ptl-mahfil-stage/1800/1100" alt="">
+  </div>
+  <p class="hero-deva">सच्चा रंगमंच जनता का है</p>
+
+  <div class="hero-inner">
+    <p class="hero-kicker mono rise">Peoples Theatre Laboratory · Vadodara</p>
+    <h1 class="rise" style="transition-delay:.12s">
+      Three decades<br>
+      <span class="outline">of total</span>
+      <span class="red">theatre</span>
+    </h1>
+    <div class="hero-sub rise" style="transition-delay:.24s">
+      <p class="ital">Not a company. A laboratory — where painters sit inside rehearsals,
+      musicians argue with directors, and the room belongs to everyone who came to watch.</p>
+      <div class="hero-meta mono">
+        Baithak — every month<br>
+        Ruhdaari — every Jyestha Poornima<br>
+        Vadodara · Gujarat
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TICKER ══════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>झीनी झीनी</span><span class="deva">·</span><span>मोको कहाँ ढूंढें बन्दे</span><span class="deva">·</span><span>भीगे चुनरिया</span><span class="deva">·</span><span>निताई चाँदेर</span><span class="deva">·</span><span>साँई बिन दरद</span><span class="deva">·</span><span>जाग पियारी</span><span class="deva">·</span><span>मैं गुलाम</span><span class="deva">·</span><span>समझ देख</span><span class="deva">·</span>
+    <span>झीनी झीनी</span><span class="deva">·</span><span>मोको कहाँ ढूंढें बन्दे</span><span class="deva">·</span><span>भीगे चुनरिया</span><span class="deva">·</span><span>निताई चाँदेर</span><span class="deva">·</span><span>साँई बिन दरद</span><span class="deva">·</span><span>जाग पियारी</span><span class="deva">·</span><span>मैं गुलाम</span><span class="deva">·</span><span>समझ देख</span><span class="deva">·</span>
+  </div>
+</div>
+
+<!-- ══════════ NOW PLAYING ══════════ -->
+<section id="gatherings">
+  <div class="sec-head rise">
+    <span class="sec-no" aria-hidden="true">01</span>
+    <h2 class="sec-title">Now playing <em>— the gatherings</em></h2>
+  </div>
+
+  <article class="event rise">
+    <div class="event-media">
+      <img src="https://picsum.photos/seed/ptl-baithak-room/1200/900" alt="Placeholder — a Baithak sitting">
+      <span class="ph-tag">photo — replace with PTL archive</span>
+    </div>
+    <div>
+      <span class="status-chip live">Every month</span>
+      <div class="event-date">बैठक<small>Baithak — the sitting</small></div>
+      <p>A new composition tried out loud. A scene still wet from rehearsal.
+      A canvas shown unfinished. Small rooms — homes, studios, courtyards —
+      where everyone sits close enough to answer back.</p>
+      <a class="go" href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Next date on Instagram →</a>
+    </div>
+  </article>
+
+  <article class="event rise">
+    <div class="event-media">
+      <img src="https://picsum.photos/seed/ptl-ruhdaari-fullmoon/1200/900" alt="Placeholder — Kabir Sang Ruhdaari gathering">
+      <span class="ph-tag">photo — replace with PTL archive</span>
+    </div>
+    <div>
+      <span class="status-chip soon">2027 · Registration soon</span>
+      <div class="event-date">रुहदारी<small>Kabir Sang Ruhdaari — every Jyestha Poornima</small></div>
+      <p>The annual full-moon gathering around the voices of Kabir, Meera,
+      Bulleh Shah, Raidaas and Lalon Fakir — original compositions, folk song,
+      and painters working live at the edge of the stage. Contribution-based,
+      by registration only.</p>
+      <a class="go" href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Follow for registration →</a>
+    </div>
+  </article>
+</section>
+
+<!-- ══════════ ARCHIVE RAIL ══════════ -->
+<section id="archive">
+  <div class="sec-head rise">
+    <span class="sec-no" aria-hidden="true">02</span>
+    <h2 class="sec-title">Past moons <em>— the archive</em></h2>
+  </div>
+
+  <div class="rail" tabindex="0" aria-label="Past editions, scroll horizontally">
+    <figure class="card">
+      <img src="https://picsum.photos/seed/ptl-vadodara-2026/800/1066" alt="Placeholder — Ruhdaari Vadodara 2026">
+      <figcaption class="card-info"><b>Ruhdaari — Vadodara</b><span>27 Jun 2026 · MilanKunj Club · ~400 sang along</span></figcaption>
+      <span class="ph-tag">placeholder photo</span>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/ptl-ahmedabad-2026/800/1066" alt="Placeholder — Ruhdaari Ahmedabad 2026">
+      <figcaption class="card-info"><b>Ruhdaari — Ahmedabad</b><span>2026 · Kanoria Centre for Arts</span></figcaption>
+      <span class="ph-tag">placeholder photo</span>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/ptl-toba-trek-singh/800/1066" alt="Placeholder — production still">
+      <figcaption class="card-info"><b>टोबा टेक सिंह</b><span>Production · three decades of work</span></figcaption>
+      <span class="ph-tag">placeholder photo</span>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/ptl-workshop-paint/800/1066" alt="Placeholder — workshop">
+      <figcaption class="card-info"><b>The Workshop</b><span>Where the painter sits inside the rehearsal</span></figcaption>
+      <span class="ph-tag">placeholder photo</span>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/ptl-baithak-courtyard/800/1066" alt="Placeholder — courtyard baithak">
+      <figcaption class="card-info"><b>Baithak on the move</b><span>Homes · studios · courtyards</span></figcaption>
+      <span class="ph-tag">placeholder photo</span>
+    </figure>
+  </div>
+  <p class="rail-hint">← drag / scroll sideways →</p>
+</section>
+
+<!-- ══════════ DOHA INTERLUDE ══════════ -->
+<section class="doha">
+  <blockquote class="rise">मोको कहाँ ढूंढें बन्दे<br>मैं <em>तो तेरे में</em> ही था</blockquote>
+  <p class="tr rise" style="transition-delay:.15s">"Where will you search for me, friend?<br>I have been inside you all along."</p>
+  <p class="src mono rise" style="transition-delay:.25s">— Kabir</p>
+</section>
+
+<!-- ══════════ COLLECTIVE ══════════ -->
+<section id="collective">
+  <div class="sec-head rise">
+    <span class="sec-no" aria-hidden="true">03</span>
+    <h2 class="sec-title">The collective <em>— never a cast &amp; crew</em></h2>
+  </div>
+
+  <div class="coll">
+    <p class="coll-statement rise">
+      The painter is in the rehearsal. The musician is in the workshop.
+      The art historian argues with the director — and the production
+      belongs to <em>all of them at once.</em>
+    </p>
+    <div class="coll-side">
+      <p class="rise">Thirty years in Vadodara, working in the spirit of Total Theatre.
+      No single form is allowed to hold the room alone — which is why no two
+      evenings here have ever looked alike.</p>
+      <ul class="roles rise" style="transition-delay:.12s">
+        <li><span>Direction</span><span>holds the floor, not the answer</span></li>
+        <li><span>Music</span><span>compositions born in Baithak</span></li>
+        <li><span>Painting &amp; scenography</span><span>live, on stage</span></li>
+        <li><span>You</span><span>the door is open</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta" id="join">
+  <h2 class="rise">महफ़िल है जनाब,<br><em>dil khol kar aana</em></h2>
+  <p class="rise" style="transition-delay:.12s">It's a gathering, not a show. Come as you are — sing along, paint, breathe. Or bring us a room of your own.</p>
+  <a class="btn-dark rise" style="transition-delay:.2s" href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Find us on Instagram</a>
+</section>
+
+<footer>
+  <nav class="social" aria-label="Social links">
+    <a href="https://www.instagram.com/peoplestheatrelaboratory/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/ptlvadodara/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/kabirsangruhdaari.ptl/" target="_blank" rel="noopener">Ruhdaari</a>
+  </nav>
+  <div class="colophon">Peoples Theatre Laboratory · Vadodara, Gujarat, India</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* reveals */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  },{threshold:.12});
+  document.querySelectorAll(".rise").forEach(function(el){
+    if(reduced){ el.classList.add("in"); } else { io.observe(el); }
+  });
+
+  /* gentle hero parallax */
+  var img = document.getElementById("heroImg");
+  if(img && !reduced){
+    var ticking = false;
+    addEventListener("scroll", function(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = Math.min(scrollY, innerHeight);
+        img.style.transform = "translateY(" + y * .22 + "px) scale(" + (1 + y * .00012) + ")";
+        ticking = false;
+      });
+    }, {passive:true});
+  }
+})();
+</script>
+
+</body>
+</html>
