@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout>
+  <SiteHeader overlay />
+  <main id="main">
+    <h1 class="visually-hidden">
+      Peoples Theatre Laboratory — Vadodara. Home of Baithak and Kabir Sang Ruhdaari.
+    </h1>
+    <HeroVideo />
+  </main>
+  <SiteFooter />
+</BaseLayout>

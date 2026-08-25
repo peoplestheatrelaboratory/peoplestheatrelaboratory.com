@@ -1,0 +1,79 @@
+/* --- PTL design tokens -------------------------------------------------- */
+/* Black / cream / ember. Serif voice, Devanagari alongside Latin.          */
+
+:root {
+  /* ink + paper ---------------------------------------------------------- */
+  --ink: #0a0908;
+  --ink-soft: #171513;
+  --paper: #f2eddc;
+  --paper-72: rgb(242 237 220 / 0.72);
+  --paper-60: rgb(242 237 220 / 0.60);
+  --paper-38: rgb(242 237 220 / 0.38);
+  --paper-18: rgb(242 237 220 / 0.18);
+  --paper-08: rgb(242 237 220 / 0.08);
+  --paper-deep: #e9e2cb;
+
+  /* ink on paper (concept 3) -------------------------------------------- */
+  --ink-72: rgb(10 9 8 / 0.72);
+  --ink-60: rgb(10 9 8 / 0.60);
+  --ink-38: rgb(10 9 8 / 0.38);
+  --ink-14: rgb(10 9 8 / 0.14);
+
+  /* flame ---------------------------------------------------------------- */
+  --ember: #d08a3e;        /* ember on ink   */
+  --gold: #e3b23c;
+  --ember-warm: #b96f28;   /* ember on paper */
+  --gold-deep: #9a7419;
+
+  /* roles ---------------------------------------------------------------- */
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: var(--paper-60);
+  --fg-faint: var(--paper-38);
+  --rule: var(--paper-18);
+  --accent: var(--ember);
+
+  /* type ----------------------------------------------------------------- */
+  --font-display: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-body: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-deva: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif;
+  --font-mono: 'Courier Prime', ui-monospace, 'SFMono-Regular', monospace;
+  --font-hand: 'Kalam', 'Bradley Hand', cursive;
+
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  --step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.5rem);
+  --step-2:  clamp(1.56rem, 1.4rem + 0.8vw, 2rem);
+  --step-3:  clamp(1.95rem, 1.68rem + 1.35vw, 2.66rem);
+  --step-4:  clamp(2.44rem, 2rem + 2.2vw, 3.55rem);
+  --step-5:  clamp(3.05rem, 2.35rem + 3.5vw, 4.74rem);
+
+  --leading-tight: 1.1;
+  --leading-body: 1.6;
+  --tracking-wide: 0.18em;
+  --tracking-display: -0.01em;
+
+  /* space + measure ------------------------------------------------------ */
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --measure: 62ch;
+  --page-max: 76rem;
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1.25rem;
+  --space-l: 2rem;
+  --space-xl: 3.5rem;
+  --space-2xl: clamp(4rem, 10vh, 7rem);
+
+  /* motion --------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-fast: 160ms;
+  --dur-mid: 320ms;
+  --dur-slow: 520ms;
+  --dur-curtain: 720ms;
+
+  /* chrome --------------------------------------------------------------- */
+  --header-h: 4.5rem;
+}
