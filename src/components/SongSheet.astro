@@ -1,0 +1,213 @@
+---
+/**
+ * One song, laid out to be sung from: verses first, notes in the margin,
+ * meaning and references below. Used by the library and by event songbooks;
+ * `prev`/`next`/`back` decide what the bottom nav points at.
+ */
+import { getArtist, eventsForSong, formatDate, stanzas, type Song } from '../lib/content';
+
+interface Props {
+  song: Song;
+  prev?: { href: string; title: string };
+  next?: { href: string; title: string };
+  back: { href: string; label: string };
+  /** Position within a setlist, shown as "03 / 15". */
+  position?: { n: number; of: number };
+}
+
+const { song, prev, next, back, position } = Astro.props;
+const singers = song.singers.map((p) => getArtist(p)).filter(Boolean);
+const sungAt = eventsForSong(song.slug);
+
+const facts = [
+  song.language.length && ['Language', song.language.join(', ')],
+  song.genre.length && ['Genre', song.genre.join(', ')],
+  song.geography.length && ['From', song.geography.join(', ')],
+  song.raag && ['Raag', song.raag],
+].filter(Boolean) as [string, string][];
+---
+
+<div class="song">
+  <article class="verses" lang="hi">
+    {position && <p class="position" aria-label={`Song ${position.n} of ${position.of}`}>{String(position.n).padStart(2, '0')} / {String(position.of).padStart(2, '0')}</p>}
+    {stanzas(song).map((stanza) => (
+      <p class="stanza" set:html={stanza.replace(/\n/g, '<br>')} />
+    ))}
+    <p class="controls" aria-hidden="true">
+      <button type="button" data-size="-">A−</button>
+      <button type="button" data-size="+">A+</button>
+    </p>
+  </article>
+
+  <aside class="margin">
+    {facts.length > 0 && (
+      <dl>
+        {facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+    )}
+
+    {singers.length > 0 && (
+      <div class="who">
+        <p class="eyebrow">As sung by</p>
+        <ul role="list">{singers.map((a) => <li><a href={`/library/artists/${a!.slug}/`}>{a!.name}</a></li>)}</ul>
+      </div>
+    )}
+
+    {sungAt.length > 0 && (
+      <div class="who">
+        <p class="eyebrow">Sung at</p>
+        <ul role="list">
+          {sungAt.map((e) => (
+            <li><a href={`/events/${e.slug}/lyrics/${song.slug}/`}>{e.title}</a><span class="when">{formatDate(e.date, e.tithi)}</span></li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </aside>
+</div>
+
+{song.meaning && (
+  <section class="meaning">
+    <details open>
+      <summary><h2>Meaning</h2></summary>
+      <div class="prose">
+        {song.meaning.split(/\n{2,}/).map((p) => <p set:html={p.replace(/\n/g, '<br>')} />)}
+      </div>
+    </details>
+  </section>
+)}
+
+{song.references.length > 0 && (
+  <section class="refs">
+    <h2>Listen &amp; read</h2>
+    <ul role="list">
+      {song.references.map((r) => (
+        <li><a href={r.url} rel="noopener" target="_blank">{r.label}</a></li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<nav class="neighbours" aria-label="Other songs">
+  {prev && <a href={prev.href}><span class="eyebrow">Previous</span><span lang="hi">{prev.title}</span></a>}
+  <a class="all" href={back.href}>{back.label}</a>
+  {next && <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang="hi">{next.title}</span></a>}
+</nav>
+
+<style>
+  .song {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16rem;
+    gap: var(--space-2xl) var(--space-xl);
+    align-items: start;
+  }
+
+  @media (max-width: 56rem) { .song { grid-template-columns: 1fr; gap: var(--space-xl); } }
+
+  /* ── the verses are the page ──────────────────────────────────── */
+  .verses { --lyric-size: var(--step-2); max-width: 36ch; }
+
+  .position {
+    margin-block-end: var(--space-m);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    color: var(--fg-faint);
+  }
+
+  .stanza {
+    font-family: var(--font-deva);
+    font-size: var(--lyric-size);
+    line-height: 1.75;
+    text-wrap: balance;
+  }
+
+  .stanza + .stanza { margin-block-start: 1.6em; }
+
+  .controls { display: flex; gap: 0.5rem; margin-block-start: var(--space-l); }
+
+  .controls button {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: none;
+    color: var(--fg-faint);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+
+  .controls button:hover { color: var(--ember); border-color: var(--ember); }
+
+  /* ── margin notes ──────────────────────────────────────────────── */
+  .margin { position: sticky; top: calc(var(--header-h) + var(--space-l)); display: grid; gap: var(--space-l); }
+  .margin dl { margin: 0; display: grid; gap: var(--space-s); }
+  .margin dt { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--fg-faint); }
+  .margin dd { margin: 0; }
+
+  .who ul { margin: var(--space-xs) 0 0; padding: 0; }
+  .who li { display: flex; flex-direction: column; padding-block: 0.35rem; border-block-start: 1px dotted var(--rule); }
+  .who a { color: inherit; text-decoration: none; }
+  .who a:hover { color: var(--ember); }
+  .when { font-family: var(--font-mono); font-size: var(--step--1); color: var(--fg-faint); }
+
+  /* ── meaning / references ─────────────────────────────────────── */
+  .meaning, .refs { margin-block-start: var(--space-2xl); padding-block-start: var(--space-xl); border-block-start: 1px solid var(--rule); }
+  .meaning summary { list-style: none; cursor: pointer; }
+  .meaning summary::-webkit-details-marker { display: none; }
+  .meaning summary h2 { display: inline-flex; align-items: baseline; gap: var(--space-s); margin-block-end: var(--space-m); }
+  .meaning summary h2::after { content: '−'; font-family: var(--font-mono); color: var(--fg-faint); }
+  .meaning details:not([open]) summary h2::after { content: '+'; }
+  .meaning details:not([open]) summary h2 { margin-block-end: 0; }
+  .meaning .prose p { font-size: var(--step-1); line-height: var(--leading-body); color: var(--fg-muted); }
+
+  .refs ul { margin: 0; padding: 0; }
+  .refs li + li { margin-block-start: 0.4rem; }
+  .refs a { color: inherit; text-decoration: none; border-block-end: 1px solid var(--ink-38); }
+  .refs a:hover { color: var(--ember); border-block-end-color: var(--ember); }
+
+  /* ── neighbours ────────────────────────────────────────────────── */
+  .neighbours {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-l);
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-l);
+    border-block-start: 1px solid var(--rule);
+  }
+
+  .neighbours a { display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--step-1); line-height: var(--leading-tight); text-decoration: none; color: inherit; }
+  .neighbours a:hover { color: var(--ember); }
+  .neighbours .later { grid-column: 3; text-align: end; align-items: flex-end; }
+  .neighbours .all { grid-column: 2; align-self: center; font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--fg-faint); text-align: center; }
+
+  @media (max-width: 40rem) {
+    .neighbours { grid-template-columns: 1fr; }
+    .neighbours .later, .neighbours .all { grid-column: 1; text-align: start; align-items: flex-start; }
+  }
+</style>
+
+<script>
+  // lyric size, remembered — people sing from their phones
+  const verses = document.querySelector<HTMLElement>('.verses');
+  const KEY = 'ptl-lyric-size';
+  const steps = ['var(--step-1)', 'var(--step-2)', 'var(--step-3)', 'var(--step-4)'];
+  let i = Number(localStorage.getItem(KEY) ?? 1);
+  const apply = () => verses?.style.setProperty('--lyric-size', steps[i]);
+  apply();
+  document.querySelectorAll<HTMLButtonElement>('[data-size]').forEach((b) =>
+    b.addEventListener('click', () => {
+      i = Math.max(0, Math.min(steps.length - 1, i + (b.dataset.size === '+' ? 1 : -1)));
+      localStorage.setItem(KEY, String(i));
+      apply();
+    }),
+  );
+
+  // ← → move through a setlist
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const to = e.key === 'ArrowRight' ? '.neighbours .later' : e.key === 'ArrowLeft' ? '.neighbours a:not(.later):not(.all)' : null;
+    const a = to && document.querySelector<HTMLAnchorElement>(to);
+    if (a) location.href = a.href;
+  });
+</script>

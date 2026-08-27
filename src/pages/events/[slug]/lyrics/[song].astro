@@ -1,0 +1,36 @@
+---
+import InteriorLayout from '../../../../layouts/InteriorLayout.astro';
+import SongSheet from '../../../../components/SongSheet.astro';
+import { eventsSorted, getEvent, getSong, getArtist } from '../../../../lib/content';
+
+export function getStaticPaths() {
+  return eventsSorted().flatMap((e) =>
+    e.setlist.filter((s) => getSong(s)).map((song) => ({ params: { slug: e.slug, song } })),
+  );
+}
+
+const { slug, song: songSlug } = Astro.params;
+const event = getEvent(slug!)!;
+const song = getSong(songSlug!)!;
+const order = event.setlist.filter((s) => getSong(s));
+const i = order.indexOf(song.slug);
+const prev = i > 0 ? getSong(order[i - 1]) : undefined;
+const next = i < order.length - 1 ? getSong(order[i + 1]) : undefined;
+const href = (s: { slug: string }) => `/events/${event.slug}/lyrics/${s.slug}/`;
+const poets = song.poets.map((p) => getArtist(p)?.name).filter(Boolean).join(' · ');
+---
+
+<InteriorLayout
+  title={song.title}
+  eyebrow={`${event.title} · ${poets || 'song'}`}
+  deva={song.titleLatin}
+  description={`${song.titleLatin || song.title} — song ${i + 1} of ${order.length} at ${event.title}. Lyrics to sing along.`}
+>
+  <SongSheet
+    song={song}
+    position={{ n: i + 1, of: order.length }}
+    prev={prev && { href: href(prev), title: prev.title }}
+    next={next && { href: href(next), title: next.title }}
+    back={{ href: `/events/${event.slug}/lyrics/`, label: 'Songbook' }}
+  />
+</InteriorLayout>

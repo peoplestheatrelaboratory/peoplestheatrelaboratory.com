@@ -1,10 +1,10 @@
 ---
-import InteriorLayout from '../../layouts/InteriorLayout.astro';
-import MoonPhase from '../../components/MoonPhase.astro';
+import InteriorLayout from '../../../layouts/InteriorLayout.astro';
+import MoonPhase from '../../../components/MoonPhase.astro';
 import {
   eventsSorted, getEvent, getSong, getArtist, formatDate, formatPlace, seriesOf, isUpcoming, poetNames,
-} from '../../lib/content';
-import { SITE } from '../../consts';
+} from '../../../lib/content';
+import { SITE } from '../../../consts';
 
 export function getStaticPaths() {
   return eventsSorted().map((e) => ({ params: { slug: e.slug } }));
@@ -67,11 +67,12 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   {setlist.length > 0 && (
     <section class="setlist">
       <h2>{upcoming ? 'Songs we will sing' : 'What was sung'}</h2>
+      <a class="cta songbook" href={`/events/${event.slug}/lyrics/`}>Open the songbook — lyrics in singing order →</a>
       <ol role="list">
         {setlist.map((s, n) => (
           <li>
             <span class="n">{String(n + 1).padStart(2, '0')}</span>
-            <a class="song" href={`/library/songs/${s!.slug}/`}>
+            <a class="song" href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
               <span class="song__title" lang="hi">{s!.title}</span>
               <span class="song__poet">{poetNames(s!)}</span>
             </a>
@@ -82,13 +83,18 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   )}
 
   {performers.length > 0 && (
-    <section class="voices">
-      <h2>Voices in the room</h2>
+    <section class="artists">
+      <h2>Artists</h2>
       <ul role="list">
         {performers.map((a) => (
           <li>
-            <a href={`/library/artists/${a!.slug}/`}>{a!.name}</a>
-            {a!.nameDeva && <span class="deva" lang="hi">{a!.nameDeva}</span>}
+            {a!.photo && <img src={a!.photo} alt="" loading="lazy" />}
+            <div>
+              <a class="name" href={`/library/artists/${a!.slug}/`}>{a!.name}</a>
+              {a!.nameDeva && <span class="deva" lang="hi">{a!.nameDeva}</span>}
+              <span class="role">{a!.roles.join(' · ')}</span>
+              {a!.link && <a class="link" href={a!.link} rel="noopener" target="_blank">{a!.link.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</a>}
+            </div>
           </li>
         ))}
       </ul>
@@ -177,12 +183,19 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
 
   @media (max-width: 40rem) { .setlist ol { columns: 1; } }
 
-  /* ── voices ───────────────────────────────────────────────────── */
-  .voices ul { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); margin: 0; padding: 0; }
-  .voices li { display: flex; gap: 0.5rem; align-items: baseline; }
-  .voices a { color: inherit; text-decoration: none; border-block-end: 1px solid var(--ink-38); }
-  .voices a:hover { color: var(--ember); border-block-end-color: var(--ember); }
-  .voices .deva { color: var(--fg-faint); font-size: var(--step--1); }
+  .songbook { margin-block: 0 var(--space-l); }
+
+  /* ── artists ──────────────────────────────────────────────────── */
+  .artists ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--space-l); margin: 0; padding: 0; }
+  .artists li { display: flex; gap: var(--space-m); align-items: flex-start; }
+  .artists img { width: 4.5rem; aspect-ratio: 1; object-fit: cover; border-radius: 50%; filter: sepia(0.3); flex: none; }
+  .artists div { display: flex; flex-direction: column; gap: 0.15rem; }
+  .artists .name { font-family: var(--font-display); font-size: var(--step-1); color: inherit; text-decoration: none; }
+  .artists .name:hover { color: var(--ember); }
+  .artists .deva { color: var(--ember); font-size: var(--step--1); }
+  .artists .role { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-faint); }
+  .artists .link { margin-block-start: 0.2rem; font-size: var(--step--1); color: var(--fg-muted); text-decoration: none; border-block-end: 1px solid var(--ink-38); align-self: flex-start; }
+  .artists .link:hover { color: var(--ember); border-block-end-color: var(--ember); }
 
   /* ── neighbours ────────────────────────────────────────────────── */
   .neighbours {

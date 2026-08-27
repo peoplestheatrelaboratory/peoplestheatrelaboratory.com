@@ -1,0 +1,43 @@
+---
+import InteriorLayout from '../../../layouts/InteriorLayout.astro';
+import { scripts, getArtist } from '../../../lib/content';
+---
+
+<InteriorLayout
+  title="Scripts"
+  eyebrow="the plays"
+  deva="नाटक"
+  description="Playscripts from Peoples Theatre Laboratory's three decades of Total Theatre."
+>
+  {scripts.length ? (
+    <ul class="list" role="list">
+      {scripts.map((s) => (
+        <li>
+          <a href={`/library/scripts/${s.slug}/`}>
+            <span class="t">{s.title} {s.titleDeva && <span class="deva" lang="hi">{s.titleDeva}</span>}</span>
+            <span class="s">{[s.playwrights.map((p) => getArtist(p)?.name).filter(Boolean).join(', '), s.year].filter(Boolean).join(' · ')}</span>
+            {s.synopsis && <span class="syn">{s.synopsis}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">The playscripts are being typed up. Toba Tek Singh and Ulti Va will land here first.</p>
+  )}
+  <p class="back"><a href="/library/">← Library</a></p>
+</InteriorLayout>
+
+<style>
+  .list { max-width: var(--measure); margin: 0; padding: 0; }
+  .list a { display: flex; flex-direction: column; gap: 0.2rem; padding-block: var(--space-m); border-block-start: 1px solid var(--rule); text-decoration: none; color: inherit; }
+  .list li:last-child a { border-block-end: 1px solid var(--rule); }
+  .list a:hover .t { color: var(--ember); }
+  .t { font-family: var(--font-display); font-size: var(--step-2); line-height: var(--leading-tight); }
+  .t .deva { color: var(--ember); font-size: var(--step-0); }
+  .s { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--fg-faint); }
+  .syn { color: var(--fg-muted); line-height: var(--leading-body); }
+  .empty { font-family: var(--font-hand); color: var(--fg-faint); transform: rotate(-0.8deg); transform-origin: left center; }
+  .back { margin-block-start: var(--space-2xl); font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+  .back a { color: var(--fg-faint); text-decoration: none; }
+  .back a:hover { color: var(--ember); }
+</style>

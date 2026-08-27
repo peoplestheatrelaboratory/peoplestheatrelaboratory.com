@@ -16,6 +16,8 @@ export interface Artist {
   nameDeva: string;
   roles: string[];
   era: string;
+  link: string;
+  photo: string;
   note: string; // html
 }
 
@@ -177,6 +179,11 @@ export function stanzas(song: Song): string[] {
   flush();
   return out;
 }
+
+/** Newest first — the pull keeps Notion's created-time order. */
+export const recentSongs = (n = 10) => songs.slice(0, n);
+export const recentScripts = (n = 10) => scripts.slice(0, n);
+export const recentPosts = (n = 10) => posts.slice(0, n);
 
 /** Poets of a song as display names, e.g. "Kabir" or "Kabir · Mira Bai". */
 export const poetNames = (s: Song) =>

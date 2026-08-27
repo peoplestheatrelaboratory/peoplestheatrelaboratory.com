@@ -206,6 +206,8 @@ for (const r of published(artistRows)) {
     nameDeva: P.text(p['Name (Devanagari)']),
     roles: P.multi(p.Role),
     era: P.text(p['Era / Region']),
+    link: P.url(p.Link),
+    photo: P.files(p.Photo)[0] ? await localise(P.files(p.Photo)[0].url, r.id) : '',
     note: await blocksHtml(await blocksOf(r.id)),
   });
 }
