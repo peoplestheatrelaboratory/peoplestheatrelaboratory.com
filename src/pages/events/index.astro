@@ -1,11 +1,16 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../components/MoonPhase.astro';
-import { getUpcoming, getPast, formatDate, formatPlace, SERIES } from '../../lib/events';
+import { upcomingEvents, pastEvents, formatDate, formatPlace, SERIES, seriesOf } from '../../lib/content';
 import { SITE } from '../../consts';
 
-const upcoming = getUpcoming();
-const past = getPast();
+const upcoming = upcomingEvents();
+const strip = upcoming.slice(0, 7);
+const past = pastEvents();
+
+const day = (iso: string) => new Date(iso + 'T12:00:00Z');
+const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
+  day(iso).toLocaleDateString('en-IN', { ...opts, timeZone: 'UTC' });
 
 // group the ledger by year; undated entries go under their own heading
 const years = new Map<string, typeof past>();
@@ -21,29 +26,42 @@ for (const e of past) {
   deva="बैठक"
   description={`Gatherings of Peoples Theatre Laboratory, ${SITE.city} — the monthly Baithak and the annual Kabir Sang Ruhdaari.`}
 >
-  <section class="next">
-    {upcoming.length ? (
-      upcoming.map((e) => (
-        <article class="next__card">
-          <p class="eyebrow">Next · {SERIES[e.series].label}</p>
-          <h2><a href={`/events/${e.slug}/`}>{e.title}</a></h2>
-          <p class="when"><MoonPhase date={e.date} /> {formatDate(e.date, e.tithi)} · {formatPlace(e)}</p>
-          <p class="summary">{e.summary}</p>
-          {e.registerUrl && <a class="cta" href={e.registerUrl}>Register →</a>}
-        </article>
-      ))
+  <!-- the calendar strip: only the days that hold a gathering -->
+  <section class="strip" aria-label="Upcoming dates">
+    {strip.length ? (
+      <ol role="list">
+        {strip.map((e) => (
+          <li>
+            <a class="day" href={`/events/${e.slug}/`}>
+              <span class="day__dow">{fmt(e.date!, { weekday: 'short' })}</span>
+              <span class="day__num">{fmt(e.date!, { day: 'numeric' })}</span>
+              <span class="day__mon">{fmt(e.date!, { month: 'short' })}{day(e.date!).getUTCFullYear() !== new Date().getUTCFullYear() ? ` ${day(e.date!).getUTCFullYear()}` : ''}</span>
+              <MoonPhase date={e.date} size={18} class="day__moon" />
+              <span class="day__what">{seriesOf(e).label}</span>
+              <span class="day__where">{e.city}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
     ) : (
-      <article class="next__card next__card--empty">
-        <p class="eyebrow">Next</p>
-        <h2>The next <span class="deva" lang="hi">बैठक</span> is being planned.</h2>
-        <p class="summary">
-          We gather roughly every month, on or near the full moon. Call{' '}
-          <a href={SITE.phoneHref}>{SITE.phone}</a> or message us on Instagram and
-          we'll tell you where the next one is.
-        </p>
-      </article>
+      <p class="strip__empty">No upcoming events.</p>
     )}
   </section>
+
+  {upcoming.length > 0 && (
+    <section class="next">
+      <h2>Upcoming</h2>
+      {upcoming.map((e) => (
+        <article class="next__card">
+          <p class="eyebrow">{seriesOf(e).label}{seriesOf(e).rhythm ? ` · ${seriesOf(e).rhythm}` : ''}</p>
+          <h3><a href={`/events/${e.slug}/`}>{e.title}</a> {e.titleDeva && <span class="deva" lang="hi">{e.titleDeva}</span>}</h3>
+          <p class="when"><MoonPhase date={e.date} /> {formatDate(e.date, e.tithi)} · {formatPlace(e)}</p>
+          <p class="summary">{e.summary}</p>
+          <a class="cta" href={e.registerUrl || SITE.phoneHref}>{e.registerUrl ? 'Book a seat →' : `Call ${SITE.phone} to reserve a seat`}</a>
+        </article>
+      ))}
+    </section>
+  )}
 
   <section class="ledger">
     <h2>Past gatherings</h2>
@@ -61,7 +79,7 @@ for (const e of past) {
                   <span class="row__deva deva" lang="hi">{e.titleDeva}</span>
                 </span>
                 <span class="row__where">{formatPlace(e)}</span>
-                <span class="row__songs">{e.setlist.length} songs</span>
+                <span class="row__songs">{e.setlist.length ? `${e.setlist.length} songs` : ''}</span>
               </a>
             </li>
           ))}
@@ -76,14 +94,14 @@ for (const e of past) {
       <li>
         <MoonPhase date={null} size={40} />
         <div>
-          <h3><span class="deva" lang="hi">{SERIES.baithak.deva}</span> {SERIES.baithak.label}</h3>
+          <h3><span class="deva" lang="hi">{SERIES.Baithak.deva}</span> {SERIES.Baithak.label}</h3>
           <p>Monthly, mostly on a Poornima. Homes, studios and courtyards — a room small enough that nobody is only an audience.</p>
         </div>
       </li>
       <li>
         <MoonPhase date={null} size={40} />
         <div>
-          <h3><span class="deva" lang="hi">{SERIES.ksr.deva}</span> {SERIES.ksr.label}</h3>
+          <h3><span class="deva" lang="hi">{SERIES['Kabir Sang Ruhdaari'].deva}</span> {SERIES['Kabir Sang Ruhdaari'].label}</h3>
           <p>Once a year on Jyestha Poornima, Kabir's birthday. Contribution-based, limited seating, live painting. Not a presentation — a shared space of reflection.</p>
         </div>
       </li>
@@ -92,14 +110,75 @@ for (const e of past) {
 </InteriorLayout>
 
 <style>
-  /* ── next ──────────────────────────────────────────────────────── */
+  /* ── calendar strip ────────────────────────────────────────────── */
+  .strip ol {
+    display: flex;
+    gap: var(--space-s);
+    margin: 0;
+    padding: 0 0 var(--space-xs);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .strip li { flex: 0 0 auto; scroll-snap-align: start; }
+
+  .day {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      'dow  dow'
+      'num  moon'
+      'mon  mon'
+      'what what'
+      'where where';
+    align-items: center;
+    column-gap: 0.4rem;
+    min-width: 7.5rem;
+    padding: var(--space-s) var(--space-m);
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+
+  .day:hover, .day:focus-visible { border-color: var(--ember); }
+  .day:hover .day__num { color: var(--ember); }
+
+  .day__dow, .day__mon, .day__where {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .day__dow { grid-area: dow; }
+  .day__num { grid-area: num; font-family: var(--font-display); font-size: var(--step-4); line-height: 1; transition: color var(--dur-fast) var(--ease-out); }
+  .day__moon { grid-area: moon; color: var(--fg); }
+  .day__mon { grid-area: mon; }
+  .day__what { grid-area: what; margin-block-start: var(--space-xs); font-size: var(--step-0); }
+  .day__where { grid-area: where; }
+
+  .strip__empty {
+    padding: var(--space-m) 0;
+    border-block: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  /* ── upcoming ──────────────────────────────────────────────────── */
   .next__card {
     max-width: var(--measure);
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-xl);
     border-inline-start: 2px solid var(--ember);
   }
 
-  .next__card h2 {
+  .next__card + .next__card { margin-block-start: var(--space-l); }
+
+  .next__card h3 {
     margin-block: var(--space-s) var(--space-s);
     font-family: var(--font-display);
     font-weight: 400;
@@ -107,9 +186,9 @@ for (const e of past) {
     line-height: var(--leading-tight);
   }
 
-  .next__card h2 a { color: inherit; text-decoration: none; }
-  .next__card h2 a:hover { color: var(--ember); }
-  .next__card h2 .deva { color: var(--ember); }
+  .next__card h3 a { color: inherit; text-decoration: none; }
+  .next__card h3 a:hover { color: var(--ember); }
+  .next__card h3 .deva { color: var(--ember); font-size: var(--step-2); }
 
   .when {
     display: flex;
@@ -127,14 +206,6 @@ for (const e of past) {
     line-height: var(--leading-body);
     color: var(--fg-muted);
   }
-
-  .summary a {
-    color: var(--fg);
-    text-decoration: none;
-    border-block-end: 1px solid var(--ink-38);
-    white-space: nowrap;
-  }
-  .summary a:hover { color: var(--ember); border-block-end-color: var(--ember); }
 
   .cta {
     display: inline-block;
@@ -169,18 +240,13 @@ for (const e of past) {
     border-block-start: 1px solid var(--rule);
     text-decoration: none;
     color: inherit;
-    transition: color var(--dur-fast) var(--ease-out);
   }
 
   .rows li:last-child .row { border-block-end: 1px solid var(--rule); }
-
-  .row:hover .row__latin,
-  .row:focus-visible .row__latin { color: var(--ember); }
-
+  .row:hover .row__latin, .row:focus-visible .row__latin { color: var(--ember); }
   .row__moon { align-self: center; color: var(--fg); }
 
-  .row__when,
-  .row__songs {
+  .row__when, .row__songs {
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: 0.06em;
@@ -188,54 +254,22 @@ for (const e of past) {
   }
 
   .row__songs { text-align: end; }
-
   .row__title { display: flex; flex-direction: column; gap: 0.15rem; }
-
-  .row__latin {
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: var(--leading-tight);
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
+  .row__latin { font-family: var(--font-display); font-size: var(--step-2); line-height: var(--leading-tight); transition: color var(--dur-fast) var(--ease-out); }
   .row__deva { font-size: var(--step-0); color: var(--ember); }
-
   .row__where { color: var(--fg-muted); }
 
   @media (max-width: 56rem) {
-    .row {
-      grid-template-columns: auto 1fr;
-      row-gap: 0.35rem;
-    }
+    .row { grid-template-columns: auto 1fr; row-gap: 0.35rem; }
     .row__moon { grid-row: 1 / 3; }
     .row__when, .row__where, .row__songs { grid-column: 2; text-align: start; }
     .row__title { grid-column: 2; }
   }
 
   /* ── rhythms ───────────────────────────────────────────────────── */
-  .rhythm ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-    gap: var(--space-xl) var(--space-l);
-    margin: 0;
-    padding: 0;
-  }
-
+  .rhythm ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--space-xl) var(--space-l); margin: 0; padding: 0; }
   .rhythm li { display: flex; gap: var(--space-m); align-items: flex-start; color: var(--fg); }
-
-  .rhythm h3 {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-xs) var(--space-s);
-    margin-block-end: var(--space-s);
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: var(--step-2);
-    line-height: var(--leading-tight);
-  }
-
+  .rhythm h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-xs) var(--space-s); margin-block-end: var(--space-s); font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); line-height: var(--leading-tight); }
   .rhythm h3 .deva { color: var(--ember); }
-
   .rhythm p { max-width: 40ch; color: var(--fg-muted); line-height: var(--leading-body); }
 </style>

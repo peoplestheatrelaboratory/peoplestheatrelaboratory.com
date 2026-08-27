@@ -1,0 +1,116 @@
+[
+  {
+    "slug": "baithak-2026-09-ahmedabad",
+    "title": "Baithak — Ahmedabad",
+    "titleDeva": "बैठक",
+    "series": "Baithak",
+    "date": "2026-09-06",
+    "tithi": "",
+    "venue": "Kanoria Centre for Arts, Navrangpura",
+    "city": "Ahmedabad",
+    "summary": "A communal musical evening — original compositions, folk and devotional songs, stories shared in a circle. Everyone welcome, whatever your age or background.",
+    "registerUrl": "https://locality.in/events/baithak-by-peoples-theatre-laboraotry?slot=slot-1786535071521-sc9wi",
+    "cover": "",
+    "setlist": [],
+    "artists": [],
+    "body": "<p>Communal musical evenings where we gather to sing, share stories, and connect. The evening moves through original compositions, traditional folk music and devotional pieces. Come whoever you are — the room is open to every age and background. Seats are limited; book ahead.</p>"
+  },
+  {
+    "slug": "kabir-sang-ruhdaari-2026-vadodara",
+    "title": "Kabir Sang Ruhdaari 2026",
+    "titleDeva": "कबीर संग रुहदारी २०२६",
+    "series": "Kabir Sang Ruhdaari",
+    "date": "2026-06-27",
+    "tithi": "Jyestha Poornima",
+    "venue": "MilanKunj Club, Alkapuri",
+    "city": "Vadodara",
+    "summary": "A room of nearly four hundred people singing along while painters worked at the edge of the stage.",
+    "registerUrl": "",
+    "cover": "",
+    "setlist": [
+      "sai-bin-darad",
+      "prem-na-badi-upje",
+      "chadariya-jheeni",
+      "samajh-dekh",
+      "moko-kahan",
+      "mirga-ne-khet",
+      "prem-na-kheto-nipje",
+      "jaat-bhi-ochhi",
+      "bheege-chunariya",
+      "jaag-piyari",
+      "hansa-karo",
+      "nitai-chander",
+      "mai-gulam"
+    ],
+    "artists": [
+      "mir-mukhtiyar-ali"
+    ],
+    "body": "<p>A room of nearly four hundred people singing along while painters worked at the edge of the stage.</p>"
+  },
+  {
+    "slug": "baithak-2026-02",
+    "title": "Baithak — Phag Poonam",
+    "titleDeva": "बैठक",
+    "series": "Baithak",
+    "date": "2026-02-26",
+    "tithi": "Phag Poonam",
+    "venue": "",
+    "city": "Vadodara",
+    "summary": "The monthly sitting — music, readings and work-in-progress in a small circle. Holi songs for the full moon of Phagun.",
+    "registerUrl": "",
+    "cover": "",
+    "setlist": [
+      "phagun-ke-din-char",
+      "aj-rang-hai",
+      "chadariya-jheeni",
+      "saro-sansariyo",
+      "aari-gagan-ma",
+      "mara-nakh-na"
+    ],
+    "artists": [
+      "hardik-dave",
+      "mir-mukhtiyar-ali",
+      "devabhai-jagariya"
+    ],
+    "body": "<p>The monthly sitting — music, readings and work-in-progress in a small circle. Holi songs for the full moon of Phagun.</p>"
+  },
+  {
+    "slug": "kabir-sang-ruhdaari-first",
+    "title": "Kabir Sang Ruhdaari — the first gathering",
+    "titleDeva": "कबीर संग रुहदारी",
+    "series": "Kabir Sang Ruhdaari",
+    "date": null,
+    "tithi": "Jyestha Poornima",
+    "venue": "Kanoria Centre for Arts",
+    "city": "Ahmedabad",
+    "summary": "An earnest attempt to sit, breathe, and have a moment with ourselves, with art, and with the universe.",
+    "registerUrl": "",
+    "cover": "",
+    "setlist": [
+      "sadho",
+      "rahna-nahi-des",
+      "bheege-chunariya",
+      "sunta-nahi-dhun",
+      "ghat-ghat-panchhi",
+      "prem-na-badi-upje",
+      "mirga-ne-khet",
+      "jaat-bhi-ochhi",
+      "is-ghat-antar",
+      "tomar-ghore",
+      "aisa-lo-nahi-taisa",
+      "prem-na-kheto-nipje",
+      "mai-gulam",
+      "chadariya-jheeni",
+      "samajh-dekh",
+      "kabir-kutta-ram-ka",
+      "haman-hai-ishq",
+      "and-bahar-di",
+      "moko-kahan",
+      "sangachhadwam"
+    ],
+    "artists": [
+      "mir-mukhtiyar-ali"
+    ],
+    "body": "<p>An earnest attempt to sit, breathe, and have a moment with ourselves, with art, and with the universe.</p>"
+  }
+]

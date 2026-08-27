@@ -1,0 +1,22 @@
+---
+import InteriorLayout from '../layouts/InteriorLayout.astro';
+---
+
+<InteriorLayout title="Not found" eyebrow="404" deva="कहाँ?" description="This page is not here.">
+  <section class="prose">
+    <blockquote class="doha">
+      <p class="deva" lang="hi">मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।</p>
+      <p class="en">Where do you search for me? I am right beside you.</p>
+    </blockquote>
+    <p>
+      That page is not here. Try the <a href="/events/">gatherings</a>, the
+      <a href="/library/">library</a>, or <a href="/">start over</a>.
+    </p>
+  </section>
+</InteriorLayout>
+
+<style>
+  .doha { margin: 0 0 var(--space-xl); padding-inline-start: var(--space-l); border-inline-start: 1px solid var(--ember); }
+  .doha .deva { font-size: var(--step-2); line-height: 1.5; }
+  .doha .en { margin-block-start: var(--space-xs); font-style: italic; color: var(--fg-muted); }
+</style>

@@ -9,6 +9,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "pull": "node scripts/notion/pull.mjs",
+    "prebuild": "node scripts/notion/pull.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

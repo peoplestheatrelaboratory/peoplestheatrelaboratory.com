@@ -1,6 +1,7 @@
 ---
 import InteriorLayout from '../layouts/InteriorLayout.astro';
 import { SITE } from '../consts';
+import { team } from '../lib/content';
 ---
 
 <InteriorLayout
@@ -48,6 +49,23 @@ import { SITE } from '../consts';
       </li>
     </ul>
   </section>
+
+  {team.length > 0 && (
+    <section class="people">
+      <h2>The people</h2>
+      <ul role="list">
+        {team.map((m) => (
+          <li>
+            {m.photo && <img src={m.photo} alt="" loading="lazy" />}
+            <h3>{m.name} {m.nameDeva && <span class="deva" lang="hi">{m.nameDeva}</span>}</h3>
+            <p class="eyebrow">{m.role}</p>
+            <div class="bio" set:html={m.bio} />
+            {m.socials && <a class="link" href={m.socials} rel="me noopener">{m.socials.replace(/^https?:\/\/(www\.)?/, '')}</a>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   <section class="doha">
     <blockquote>
@@ -97,6 +115,14 @@ import { SITE } from '../consts';
     color: var(--fg-muted);
     line-height: var(--leading-body);
   }
+
+  .people ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--space-xl) var(--space-l); margin: 0; padding: 0; }
+  .people img { width: 7rem; aspect-ratio: 1; object-fit: cover; border-radius: 50%; margin-block-end: var(--space-s); filter: sepia(0.3); }
+  .people h3 { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-s); align-items: baseline; font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); line-height: var(--leading-tight); }
+  .people h3 .deva { color: var(--ember); font-size: var(--step-0); }
+  .people .bio { margin-block-start: var(--space-s); color: var(--fg-muted); line-height: var(--leading-body); }
+  .people .link { display: inline-block; margin-block-start: var(--space-s); font-family: var(--font-mono); font-size: var(--step--1); color: var(--fg-faint); text-decoration: none; }
+  .people .link:hover { color: var(--ember); }
 
   .doha blockquote {
     max-width: var(--measure);

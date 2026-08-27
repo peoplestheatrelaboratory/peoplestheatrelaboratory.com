@@ -1,0 +1,49 @@
+---
+import InteriorLayout from '../../../layouts/InteriorLayout.astro';
+import { scripts, getScript, getArtist, getEvent } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return scripts.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const script = getScript(slug!)!;
+const playwrights = script.playwrights.map((p) => getArtist(p)).filter(Boolean);
+const productions = script.productions.map((p) => getEvent(p)).filter(Boolean);
+---
+
+<InteriorLayout
+  title={script.title}
+  eyebrow={[playwrights.map((p) => p!.name).join(' · '), script.year].filter(Boolean).join(' · ') || 'script'}
+  deva={script.titleDeva}
+  description={script.synopsis || `${script.title} — a playscript from Peoples Theatre Laboratory.`}
+>
+  <section class="facts">
+    {script.synopsis && <p class="synopsis">{script.synopsis}</p>}
+    {script.language.length > 0 && <p class="eyebrow">{script.language.join(' · ')}</p>}
+    {script.file && <a class="cta" href={script.file}>Read the script (PDF) →</a>}
+  </section>
+
+  {script.body && (
+    <section class="prose">
+      <Fragment set:html={script.body} />
+    </section>
+  )}
+
+  {productions.length > 0 && (
+    <section>
+      <h2>Staged</h2>
+      <ul role="list">
+        {productions.map((e) => <li><a href={`/events/${e!.slug}/`}>{e!.title}</a></li>)}
+      </ul>
+    </section>
+  )}
+</InteriorLayout>
+
+<style>
+  .synopsis { max-width: var(--measure); font-size: var(--step-1); line-height: var(--leading-body); margin-block-end: var(--space-m); }
+  .cta { display: inline-block; margin-block-start: var(--space-m); font-family: var(--font-mono); letter-spacing: var(--tracking-wide); text-transform: uppercase; text-decoration: none; color: var(--ember); }
+  ul { margin: 0; padding: 0; }
+  li a { color: inherit; text-decoration: none; border-block-end: 1px solid var(--ink-38); }
+  li a:hover { color: var(--ember); border-block-end-color: var(--ember); }
+</style>

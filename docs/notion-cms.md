@@ -124,11 +124,47 @@ in Notion (35 harvested, 31 with lyrics, 10 with meanings; source:
 | `/blog/[slug]` | Blog |
 | `/about` | Team (bios section) |
 
-## Access needed
-An **internal Notion integration** with read + insert + update content, connected
-to the *Master Library* page. It must be created by a **member/owner of the
-"અલગારી" workspace** (guests cannot create integrations). Put the secret in
-`.env` as `NOTION_TOKEN=` — never commit it.
+## Where it lives now (2026-08-27)
+The library was rebuilt in **Yash's Workspace** — top-level page *PTL Master
+Library*, https://app.notion.com/p/3c9bb969ec3481d1a524cae3d17cc299 — because
+the owner's "અલગારી" workspace never got an integration. Database and data-source
+ids: `content/notion-ids.json`.
+
+## How content flows
+```
+bun run pull   →  scripts/notion/pull.mjs  →  content/site/*.json  (+ public/notion/ media)
+bun run build  →  runs `pull` first (prebuild), then astro build reads the JSON
+```
+- `pull` needs `NOTION_TOKEN`; without it the **committed snapshot** is used, so
+  the site always builds. Locally: `NOTION_TOKEN=$(ntn auth token) bun run pull`.
+- Only rows with `Status = Published` are pulled. Song pages read `## Lyrics`
+  (callout), `## Meaning` (quote), `## References` (bookmarks/links).
+- Images/files in Notion expire after 1 h, so `pull` copies them to
+  `public/notion/<hash>.<ext>` and rewrites the URLs.
+
+## Vercel setup (one-time, by a project owner)
+1. **Environment variables** (Project → Settings → Environment Variables):
+   `NOTION_TOKEN` (from `ntn auth token`, or a dedicated internal integration
+   connected to *PTL Master Library*), `NOTION_WEBHOOK_SECRET`,
+   `VERCEL_DEPLOY_HOOK_URL`.
+2. **Deploy hook**: Settings → Git → Deploy Hooks → create one for `main`
+   (or `dev`); paste its URL into `VERCEL_DEPLOY_HOOK_URL`.
+3. **Notion webhook**: at notion.so/profile/integrations → the integration →
+   *Webhooks* → subscribe `https://peoplestheatrelaboratory.com/api/notion-webhook`
+   to `page.*` and `data_source.*` events. Notion sends a one-time
+   `verification_token`; the function logs it — copy it into
+   `NOTION_WEBHOOK_SECRET` and redeploy, then confirm the subscription.
+4. Optional safety net: a Vercel cron or GitHub Action that hits the deploy hook
+   nightly.
+
+After that: edit in Notion → set Status to Published → the site rebuilds itself
+within ~2 minutes. `api/notion-webhook.ts` verifies the HMAC signature before
+triggering anything.
+
+## Committing snapshots
+`content/site/*.json` and `public/notion/` are committed on purpose: they are
+the fallback when no token is present and they make every build reproducible.
+Re-run `pull` and commit when you want the fallback refreshed.
 
 ## Notion gotchas we handle
 - Image/file URLs expire after 1 h → always downloaded at build.

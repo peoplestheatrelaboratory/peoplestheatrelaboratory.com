@@ -1,0 +1,62 @@
+---
+import InteriorLayout from '../../../layouts/InteriorLayout.astro';
+import { artists, getArtist, songs, eventsSorted, poetNames } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return artists.map((a) => ({ params: { slug: a.slug } }));
+}
+
+const { slug } = Astro.params;
+const artist = getArtist(slug!)!;
+const wrote = songs.filter((s) => s.poets.includes(artist.slug));
+const sang = songs.filter((s) => s.singers.includes(artist.slug));
+const appeared = eventsSorted().filter((e) => e.artists.includes(artist.slug));
+---
+
+<InteriorLayout
+  title={artist.name}
+  eyebrow={artist.roles.join(' · ').toLowerCase() || 'artist'}
+  deva={artist.nameDeva}
+  description={`${artist.name}${artist.era ? ` (${artist.era})` : ''} — ${wrote.length ? `${wrote.length} songs` : ''}${sang.length ? ` sung by them: ${sang.length}` : ''} in the Peoples Theatre Laboratory library.`}
+>
+  {(artist.era || artist.note) && (
+    <section class="prose">
+      {artist.era && <p class="eyebrow">{artist.era}</p>}
+      <Fragment set:html={artist.note} />
+    </section>
+  )}
+
+  {wrote.length > 0 && (
+    <section>
+      <h2>Words</h2>
+      <ul class="list" role="list">
+        {wrote.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang="hi">{s.title}</span><span class="l">{s.titleLatin}</span></a></li>)}
+      </ul>
+    </section>
+  )}
+
+  {sang.length > 0 && (
+    <section>
+      <h2>Voice</h2>
+      <ul class="list" role="list">
+        {sang.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang="hi">{s.title}</span><span class="l">{poetNames(s)}</span></a></li>)}
+      </ul>
+    </section>
+  )}
+
+  {appeared.length > 0 && (
+    <section>
+      <h2>In the room</h2>
+      <ul class="list" role="list">
+        {appeared.map((e) => <li><a href={`/events/${e.slug}/`}>{e.title}</a></li>)}
+      </ul>
+    </section>
+  )}
+</InteriorLayout>
+
+<style>
+  .list { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0 var(--space-l); margin: 0; padding: 0; }
+  .list a { display: flex; flex-direction: column; padding-block: 0.6rem; border-block-start: 1px solid var(--rule); text-decoration: none; color: inherit; font-size: var(--step-1); }
+  .list a:hover { color: var(--ember); }
+  .l { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--fg-faint); }
+</style>

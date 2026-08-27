@@ -1,0 +1,54 @@
+---
+import InteriorLayout from '../../layouts/InteriorLayout.astro';
+import { posts, getPost, team, getEvent, formatDate } from '../../lib/content';
+
+export function getStaticPaths() {
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = getPost(slug!)!;
+const authors = post.authors.map((a) => team.find((t) => t.slug === a)).filter(Boolean);
+const event = post.relatedEvent ? getEvent(post.relatedEvent) : undefined;
+---
+
+<InteriorLayout
+  title={post.title}
+  eyebrow={[formatDate(post.date), ...authors.map((a) => a!.name)].filter(Boolean).join(' · ')}
+  description={post.excerpt || post.title}
+  image={post.cover || undefined}
+>
+  {post.cover && <img class="cover" src={post.cover} alt="" />}
+
+  <article class="prose body">
+    <Fragment set:html={post.body} />
+  </article>
+
+  {(event || post.tags.length > 0) && (
+    <footer class="foot">
+      {event && <p>From <a href={`/events/${event.slug}/`}>{event.title}</a></p>}
+      {post.tags.length > 0 && <p class="eyebrow">{post.tags.join(' · ')}</p>}
+    </footer>
+  )}
+
+  <nav class="back"><a href="/blog/">← All notes</a></nav>
+</InteriorLayout>
+
+<style>
+  .cover { display: block; width: 100%; max-height: 60vh; object-fit: cover; margin-block-end: var(--space-xl); filter: sepia(0.25) contrast(1.05); }
+  .body :global(h2) { margin-block-start: var(--space-xl); }
+  .body :global(h3) { margin-block: var(--space-l) var(--space-s); font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); }
+  .body :global(blockquote) { margin: var(--space-l) 0; padding-inline-start: var(--space-l); border-inline-start: 1px solid var(--ember); font-style: italic; color: var(--fg-muted); }
+  .body :global(figure) { margin: var(--space-l) 0; }
+  .body :global(figcaption) { font-family: var(--font-hand); color: var(--fg-faint); margin-block-start: var(--space-xs); }
+  .body :global(ul), .body :global(ol) { padding-inline-start: 1.2em; margin-block: var(--space-m); }
+  .body :global(li + li) { margin-block-start: 0.3em; }
+  .body :global(hr) { border: 0; border-block-start: 1px solid var(--rule); margin-block: var(--space-xl); }
+  .body :global(.callout) { padding: var(--space-m) var(--space-l); border: 1px solid var(--rule); margin-block: var(--space-l); }
+  .foot { margin-block-start: var(--space-xl); color: var(--fg-muted); }
+  .foot a { color: inherit; border-block-end: 1px solid var(--ink-38); text-decoration: none; }
+  .foot a:hover { color: var(--ember); }
+  .back { margin-block-start: var(--space-2xl); font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+  .back a { color: var(--fg-faint); text-decoration: none; }
+  .back a:hover { color: var(--ember); }
+</style>

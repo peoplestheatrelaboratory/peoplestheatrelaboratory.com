@@ -14,12 +14,14 @@ interface Props {
   eyebrow?: string;
   /** Optional Devanagari word set beside the title. */
   deva?: string;
+  /** Social share image; defaults to the site card. */
+  image?: string;
 }
 
-const { title, description, eyebrow, deva } = Astro.props;
+const { title, description, eyebrow, deva, image } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} image={image}>
   <SiteHeader />
   <main id="main" class="interior">
     <header class="page interior__head">

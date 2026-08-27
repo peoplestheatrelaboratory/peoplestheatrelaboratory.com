@@ -1,30 +1,39 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../components/MoonPhase.astro';
-import { getEvents, getEvent, formatDate, SERIES } from '../../lib/events';
+import {
+  eventsSorted, getEvent, getSong, getArtist, formatDate, formatPlace, seriesOf, isUpcoming, poetNames,
+} from '../../lib/content';
 import { SITE } from '../../consts';
 
 export function getStaticPaths() {
-  return getEvents().map((e) => ({ params: { slug: e.slug } }));
+  return eventsSorted().map((e) => ({ params: { slug: e.slug } }));
 }
 
 const { slug } = Astro.params;
 const event = getEvent(slug!)!;
-const series = SERIES[event.series];
+const series = seriesOf(event);
+const upcoming = isUpcoming(event);
 
-// neighbours for the prev/next links, in date order
-const all = getEvents();
+// neighbours for the earlier/later links, in date order
+const all = eventsSorted();
 const i = all.findIndex((e) => e.slug === event.slug);
 const newer = all[i - 1];
 const older = all[i + 1];
+
+const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
+const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
 ---
 
 <InteriorLayout
   title={event.title}
-  eyebrow={`${series.label} · ${series.rhythm}`}
+  eyebrow={[series.label, series.rhythm].filter(Boolean).join(' · ')}
   deva={event.titleDeva}
-  description={`${event.title} — ${formatDate(event.date, event.tithi)}, ${event.venue}, ${event.city}. ${event.summary}`}
+  description={`${event.title} — ${formatDate(event.date, event.tithi)}, ${formatPlace(event)}. ${event.summary}`}
+  image={event.cover || undefined}
 >
+  {event.cover && <img class="cover" src={event.cover} alt="" />}
+
   <section class="facts">
     <dl>
       <div>
@@ -38,38 +47,51 @@ const older = all[i + 1];
       <div>
         <dt>Sitting</dt>
         <dd>
-          {event.status === 'upcoming'
+          {upcoming
             ? 'Limited seating · contribution-based'
-            : `Concluded · ${event.setlist.length} songs sung`}
+            : `Concluded${setlist.length ? ` · ${setlist.length} songs sung` : ''}`}
         </dd>
       </div>
     </dl>
-    {event.status === 'upcoming' && (
-      <a class="cta" href={event.registerUrl ?? SITE.phoneHref}>
+    {upcoming && (
+      <a class="cta" href={event.registerUrl || SITE.phoneHref}>
         {event.registerUrl ? 'Register →' : `Call ${SITE.phone} to reserve a seat`}
       </a>
     )}
   </section>
 
   <section class="prose">
-    <p>{event.summary}</p>
+    {event.body ? <Fragment set:html={event.body} /> : <p>{event.summary}</p>}
   </section>
 
-  {event.setlist.length > 0 && (
+  {setlist.length > 0 && (
     <section class="setlist">
-      <h2>{event.status === 'upcoming' ? 'Songs we will sing' : 'What was sung'}</h2>
+      <h2>{upcoming ? 'Songs we will sing' : 'What was sung'}</h2>
       <ol role="list">
-        {event.setlist.map((s, n) => (
+        {setlist.map((s, n) => (
           <li>
             <span class="n">{String(n + 1).padStart(2, '0')}</span>
-            <span class="song">
-              <span class="song__title" lang="hi">{s.title}</span>
-              {s.poet && <span class="song__poet" lang="hi">— {s.poet}</span>}
-            </span>
+            <a class="song" href={`/library/songs/${s!.slug}/`}>
+              <span class="song__title" lang="hi">{s!.title}</span>
+              <span class="song__poet">{poetNames(s!)}</span>
+            </a>
           </li>
         ))}
       </ol>
-      <p class="hint">Full lyrics arrive with the Library.</p>
+    </section>
+  )}
+
+  {performers.length > 0 && (
+    <section class="voices">
+      <h2>Voices in the room</h2>
+      <ul role="list">
+        {performers.map((a) => (
+          <li>
+            <a href={`/library/artists/${a!.slug}/`}>{a!.name}</a>
+            {a!.nameDeva && <span class="deva" lang="hi">{a!.nameDeva}</span>}
+          </li>
+        ))}
+      </ul>
     </section>
   )}
 
@@ -81,6 +103,15 @@ const older = all[i + 1];
 </InteriorLayout>
 
 <style>
+  .cover {
+    display: block;
+    width: 100%;
+    max-height: 60vh;
+    object-fit: cover;
+    margin-block-end: var(--space-xl);
+    filter: sepia(0.25) contrast(1.05);
+  }
+
   .facts dl {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
@@ -139,19 +170,19 @@ const older = all[i + 1];
     color: var(--fg-faint);
   }
 
-  .song { display: flex; flex-direction: column; }
-  .song__title { font-size: var(--step-1); line-height: 1.4; }
+  .song { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+  .song:hover .song__title { color: var(--ember); }
+  .song__title { font-size: var(--step-1); line-height: 1.4; transition: color var(--dur-fast) var(--ease-out); }
   .song__poet { font-size: var(--step--1); color: var(--fg-faint); }
 
-  .hint {
-    margin-block-start: var(--space-l);
-    font-family: var(--font-hand);
-    color: var(--fg-faint);
-    transform: rotate(-0.8deg);
-    transform-origin: left center;
-  }
-
   @media (max-width: 40rem) { .setlist ol { columns: 1; } }
+
+  /* ── voices ───────────────────────────────────────────────────── */
+  .voices ul { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); margin: 0; padding: 0; }
+  .voices li { display: flex; gap: 0.5rem; align-items: baseline; }
+  .voices a { color: inherit; text-decoration: none; border-block-end: 1px solid var(--ink-38); }
+  .voices a:hover { color: var(--ember); border-block-end-color: var(--ember); }
+  .voices .deva { color: var(--fg-faint); font-size: var(--step--1); }
 
   /* ── neighbours ────────────────────────────────────────────────── */
   .neighbours {

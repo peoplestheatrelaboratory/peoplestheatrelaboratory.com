@@ -14,6 +14,7 @@ export const SITE = {
 export const NAV = [
   { label: 'Events', href: '/events', note: 'when we gather' },
   { label: 'Library', href: '/library', note: 'songs, poetry, scripts' },
+  { label: 'Blog', href: '/blog', note: 'notes from the room' },
   { label: 'About', href: '/about', note: 'why we exist' },
   { label: 'Contact', href: '/contact', note: 'ways to join in' },
 ] as const;
