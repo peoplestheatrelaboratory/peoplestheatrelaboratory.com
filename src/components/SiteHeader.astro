@@ -311,9 +311,11 @@ const { overlay = false } = Astro.props;
       masthead?.classList.remove('is-menu-open');
       label.textContent = 'Menu';
       document.documentElement.style.overflow = '';
-      const done = () => {
-        curtain.hidden = true;
+      // only the curtain's own transition counts, and only if it is still closed
+      const done = (e: TransitionEvent) => {
+        if (e.target !== curtain) return;
         curtain.removeEventListener('transitionend', done);
+        if (!curtain.classList.contains('is-open')) curtain.hidden = true;
       };
       curtain.addEventListener('transitionend', done);
       // body is not focusable — fall back to the toggle so focus is never lost

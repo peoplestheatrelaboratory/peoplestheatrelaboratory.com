@@ -23,6 +23,14 @@ if (!TOKEN) {
   process.exit(0);
 }
 
+// A pull that fails must never fail the build: the committed snapshot stays
+// in place and the site ships from it — loudly.
+process.on('unhandledRejection', (err) => {
+  console.error('\npull: FAILED —', err?.message ?? err);
+  console.error('pull: keeping the committed snapshot in', OUT, '(content may be stale)\n');
+  process.exit(0);
+});
+
 // ── client ────────────────────────────────────────────────────────────────
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function api(p, body, method = body ? 'POST' : 'GET') {
@@ -83,13 +91,43 @@ const P = {
   text: (p) => plain(p?.rich_text),
   select: (p) => p?.select?.name ?? '',
   multi: (p) => (p?.multi_select ?? []).map((o) => o.name),
-  date: (p) => p?.date?.start ?? null,
+  date: (p) => p?.date?.start?.slice(0, 10) ?? null, // drop any time part
   checkbox: (p) => !!p?.checkbox,
   url: (p) => p?.url ?? '',
   number: (p) => p?.number ?? null,
-  relation: (p) => (p?.relation ?? []).map((r) => r.id),
+  relation: (p) => (p?.relation ?? []).map((r) => r.id), // see fullRelation for >25
   files: (p) => (p?.files ?? []).map((f) => ({ name: f.name, url: f.type === 'file' ? f.file.url : f.external?.url })),
 };
+
+/** Notion embeds at most 25 relation ids in a page; page the rest via the property endpoint. */
+async function fullRelation(page, name) {
+  const prop = page.properties[name];
+  if (!prop) return [];
+  if (!prop.has_more) return P.relation(prop);
+  const ids = [];
+  let cursor;
+  do {
+    const r = await api(`/v1/pages/${page.id}/properties/${prop.id}?page_size=100${cursor ? `&start_cursor=${cursor}` : ''}`);
+    for (const item of r.results) ids.push(item.relation.id);
+    cursor = r.has_more ? r.next_cursor : undefined;
+  } while (cursor);
+  return ids;
+}
+
+/** Fail loudly when a database no longer has the properties the site reads. */
+function need(row, dbName, names) {
+  const missing = names.filter((n) => !(n in row.properties));
+  if (missing.length) throw new Error(`${dbName}: property missing or renamed in Notion: ${missing.join(', ')}`);
+}
+
+/** Slugs become routes: they must be URL-safe and unique within a database. */
+function slugOf(row, dbName, seen) {
+  const slug = P.text(row.properties.Slug).trim();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error(`${dbName}: bad or empty Slug "${slug}" on "${P.title(row.properties.Name ?? row.properties.Title)}"`);
+  if (seen.has(slug)) throw new Error(`${dbName}: duplicate Slug "${slug}"`);
+  seen.add(slug);
+  return slug;
+}
 
 // ── media: Notion file URLs expire, so copy them into the build ──────────
 fs.mkdirSync(MEDIA_DIR, { recursive: true });
@@ -197,11 +235,13 @@ const byId = (list) => Object.fromEntries(list.map((x) => [x.id, x]));
 console.log('pull: artists');
 const artistRows = await queryAll(ids.ds.artists);
 const artists = [];
+const artistSlugs = new Set();
 for (const r of published(artistRows)) {
   const p = r.properties;
+  need(r, 'Artists', ['Name', 'Name (Devanagari)', 'Slug', 'Role', 'Era / Region', 'Link', 'Photo', 'Status']);
   artists.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Artists', artistSlugs),
     name: P.title(p.Name),
     nameDeva: P.text(p['Name (Devanagari)']),
     roles: P.multi(p.Role),
@@ -216,16 +256,18 @@ const artistById = byId(artists);
 console.log('pull: songs');
 const songRows = await queryAll(ids.ds.songs);
 const songs = [];
+const songSlugs = new Set();
 for (const r of published(songRows)) {
   const p = r.properties;
+  need(r, 'Songs', ['Title', 'Title (Latin)', 'Slug', 'Poet', 'Singers / Composers', 'Language', 'Genre', 'Geography', 'Raag', 'Status']);
   const body = await songBody(await blocksOf(r.id));
   songs.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Songs', songSlugs),
     title: P.title(p.Title),
     titleLatin: P.text(p['Title (Latin)']),
-    poets: P.relation(p.Poet).map((id) => artistById[id]?.slug).filter(Boolean),
-    singers: P.relation(p['Singers / Composers']).map((id) => artistById[id]?.slug).filter(Boolean),
+    poets: (await fullRelation(r, 'Poet')).map((id) => artistById[id]?.slug).filter(Boolean),
+    singers: (await fullRelation(r, 'Singers / Composers')).map((id) => artistById[id]?.slug).filter(Boolean),
     language: P.multi(p.Language),
     genre: P.multi(p.Genre),
     geography: P.multi(p.Geography),
@@ -238,13 +280,19 @@ const songById = byId(songs);
 console.log('pull: events');
 const eventRows = await queryAll(ids.ds.events);
 const events = [];
+const eventSlugs = new Set();
+const songTitleById = Object.fromEntries(songRows.map((r) => [r.id, P.title(r.properties.Title)]));
 for (const r of published(eventRows)) {
   const p = r.properties;
+  need(r, 'Events', ['Name', 'Name (Devanagari)', 'Slug', 'Series', 'Date', 'Tithi', 'Venue', 'City', 'Summary', 'Registration URL', 'Cover', 'Setlist', 'Artists', 'Status']);
   const cover = P.files(p.Cover)[0];
   const blocks = await blocksOf(r.id);
+  const setlistIds = await fullRelation(r, 'Setlist');
+  const dropped = setlistIds.filter((id) => !songById[id]);
+  if (dropped.length) console.warn(`  ! ${P.title(p.Name)}: ${dropped.length} setlist song(s) not Published, left out: ${dropped.map((id) => songTitleById[id] ?? id).join(', ')}`);
   events.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Events', eventSlugs),
     title: P.title(p.Name),
     titleDeva: P.text(p['Name (Devanagari)']),
     series: P.select(p.Series),
@@ -255,8 +303,8 @@ for (const r of published(eventRows)) {
     summary: P.text(p.Summary),
     registerUrl: P.url(p['Registration URL']),
     cover: cover ? await localise(cover.url, r.id) : '',
-    setlist: P.relation(p.Setlist).map((id) => songById[id]?.slug).filter(Boolean),
-    artists: P.relation(p.Artists).map((id) => artistById[id]?.slug).filter(Boolean),
+    setlist: setlistIds.map((id) => songById[id]?.slug).filter(Boolean),
+    artists: (await fullRelation(r, 'Artists')).map((id) => artistById[id]?.slug).filter(Boolean),
     body: await blocksHtml(blocks),
   });
 }
@@ -264,12 +312,14 @@ const eventById = byId(events);
 
 console.log('pull: team');
 const team = [];
+const teamSlugs = new Set();
 for (const r of published(await queryAll(ids.ds.team))) {
   const p = r.properties;
+  need(r, 'Team', ['Name', 'Name (Devanagari)', 'Slug', 'Role', 'Order', 'Photo', 'Socials', 'Status']);
   const photo = P.files(p.Photo)[0];
   team.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Team', teamSlugs),
     name: P.title(p.Name),
     nameDeva: P.text(p['Name (Devanagari)']),
     role: P.text(p.Role),
@@ -284,12 +334,14 @@ const teamById = byId(team);
 
 console.log('pull: blog');
 const blog = [];
+const blogSlugs = new Set();
 for (const r of published(await queryAll(ids.ds.blog))) {
   const p = r.properties;
+  need(r, 'Blog', ['Title', 'Slug', 'Date', 'Author', 'Excerpt', 'Cover', 'Tags', 'Related event', 'Status']);
   const cover = P.files(p.Cover)[0];
   blog.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Blog', blogSlugs),
     title: P.title(p.Title),
     date: P.date(p.Date),
     authors: P.relation(p.Author).map((id) => teamById[id]?.slug).filter(Boolean),
@@ -304,12 +356,14 @@ blog.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
 
 console.log('pull: scripts');
 const scripts = [];
+const scriptsSlugs = new Set();
 for (const r of published(await queryAll(ids.ds.scripts))) {
   const p = r.properties;
+  need(r, 'Scripts', ['Title', 'Title (Devanagari)', 'Slug', 'Playwright', 'Language', 'Year', 'File', 'Synopsis', 'Productions', 'Status']);
   const file = P.files(p.File)[0];
   scripts.push({
     id: r.id,
-    slug: P.text(p.Slug),
+    slug: slugOf(r, 'Scripts', scriptsSlugs),
     title: P.title(p.Title),
     titleDeva: P.text(p['Title (Devanagari)']),
     playwrights: P.relation(p.Playwright).map((id) => artistById[id]?.slug).filter(Boolean),

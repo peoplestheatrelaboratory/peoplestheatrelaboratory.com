@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://peoplestheatrelaboratory.com',
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   build: {
     // /about -> /about/index.html, so URLs stay clean without a server
     format: 'directory',

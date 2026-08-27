@@ -16,6 +16,10 @@ interface Props {
 }
 
 const { song, prev, next, back, position } = Astro.props;
+
+// Notion text is plain text; escape it before the only markup we add (<br>).
+const esc = (t: string) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const lines = (t: string) => esc(t).replace(/\n/g, '<br>');
 const singers = song.singers.map((p) => getArtist(p)).filter(Boolean);
 const sungAt = eventsForSong(song.slug);
 
@@ -31,7 +35,7 @@ const facts = [
   <article class="verses" lang="hi">
     {position && <p class="position" aria-label={`Song ${position.n} of ${position.of}`}>{String(position.n).padStart(2, '0')} / {String(position.of).padStart(2, '0')}</p>}
     {stanzas(song).map((stanza) => (
-      <p class="stanza" set:html={stanza.replace(/\n/g, '<br>')} />
+      <p class="stanza" set:html={lines(stanza)} />
     ))}
     <p class="controls" aria-hidden="true">
       <button type="button" data-size="-">A−</button>
@@ -71,7 +75,7 @@ const facts = [
     <details open>
       <summary><h2>Meaning</h2></summary>
       <div class="prose">
-        {song.meaning.split(/\n{2,}/).map((p) => <p set:html={p.replace(/\n/g, '<br>')} />)}
+        {song.meaning.split(/\n{2,}/).map((p) => <p set:html={lines(p)} />)}
       </div>
     </details>
   </section>

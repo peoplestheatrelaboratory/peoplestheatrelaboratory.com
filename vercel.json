@@ -4,5 +4,7 @@
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
   "installCommand": "bun install --frozen-lockfile",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "crons": [{ "path": "/api/nightly-rebuild", "schedule": "30 21 * * *" }]
 }
