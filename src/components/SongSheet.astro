@@ -4,7 +4,7 @@
  * meaning and references below. Used by the library and by event songbooks;
  * `prev`/`next`/`back` decide what the bottom nav points at.
  */
-import { getArtist, eventsForSong, formatDate, stanzas, type Song } from '../lib/content';
+import { getArtist, stanzas, type Song } from '../lib/content';
 
 interface Props {
   song: Song;
@@ -21,17 +21,15 @@ const { song, prev, next, back, position } = Astro.props;
 const esc = (t: string) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 const lines = (t: string) => esc(t).replace(/\n/g, '<br>');
 const singers = song.singers.map((p) => getArtist(p)).filter(Boolean);
-const sungAt = eventsForSong(song.slug);
-
-const facts = [
-  song.language.length && ['Language', song.language.join(', ')],
-  song.genre.length && ['Genre', song.genre.join(', ')],
-  song.geography.length && ['From', song.geography.join(', ')],
-  song.raag && ['Raag', song.raag],
-].filter(Boolean) as [string, string][];
+const meta = [song.language.join(', '), song.raag && `Raag ${song.raag}`, song.geography.join(', ')].filter(Boolean).join(' · ');
 ---
 
-<div class="song">
+<p class="top">
+  <a class="back" href={back.href}>← {back.label}</a>
+  {meta && <span class="meta">{meta}</span>}
+</p>
+
+<div class:list={['song', { 'song--solo': !singers.length }]}>
   <article class="verses" lang="hi">
     {position && <p class="position" aria-label={`Song ${position.n} of ${position.of}`}>{String(position.n).padStart(2, '0')} / {String(position.of).padStart(2, '0')}</p>}
     {stanzas(song).map((stanza) => (
@@ -43,31 +41,14 @@ const facts = [
     </p>
   </article>
 
-  <aside class="margin">
-    {facts.length > 0 && (
-      <dl>
-        {facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
-      </dl>
-    )}
-
-    {singers.length > 0 && (
+  {singers.length > 0 && (
+    <aside class="margin">
       <div class="who">
         <p class="eyebrow">As sung by</p>
         <ul role="list">{singers.map((a) => <li><a href={`/library/artists/${a!.slug}/`}>{a!.name}</a></li>)}</ul>
       </div>
-    )}
-
-    {sungAt.length > 0 && (
-      <div class="who">
-        <p class="eyebrow">Sung at</p>
-        <ul role="list">
-          {sungAt.map((e) => (
-            <li><a href={`/events/${e.slug}/lyrics/${song.slug}/`}>{e.title}</a><span class="when">{formatDate(e.date, e.tithi)}</span></li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </aside>
+    </aside>
+  )}
 </div>
 
 {song.meaning && (
@@ -94,11 +75,27 @@ const facts = [
 
 <nav class="neighbours" aria-label="Other songs">
   {prev && <a href={prev.href}><span class="eyebrow">Previous</span><span lang="hi">{prev.title}</span></a>}
-  <a class="all" href={back.href}>{back.label}</a>
   {next && <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang="hi">{next.title}</span></a>}
 </nav>
 
 <style>
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-s) var(--space-l);
+    margin-block: calc(-1 * var(--space-xl)) var(--space-xl);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+  .top .back { color: var(--fg-muted); text-decoration: none; }
+  .top .back:hover { color: var(--ember); }
+
+  .song--solo { grid-template-columns: minmax(0, 1fr); }
+
   .song {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 16rem;
@@ -144,10 +141,7 @@ const facts = [
   .controls button:hover { color: var(--ember); border-color: var(--ember); }
 
   /* ── margin notes ──────────────────────────────────────────────── */
-  .margin { position: sticky; top: calc(var(--header-h) + var(--space-l)); display: grid; gap: var(--space-l); }
-  .margin dl { margin: 0; display: grid; gap: var(--space-s); }
-  .margin dt { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--fg-faint); }
-  .margin dd { margin: 0; }
+  .margin { position: sticky; top: calc(var(--header-h) + var(--space-l)); }
 
   .who ul { margin: var(--space-xs) 0 0; padding: 0; }
   .who li { display: flex; flex-direction: column; padding-block: 0.35rem; border-block-start: 1px dotted var(--rule); }
@@ -173,7 +167,7 @@ const facts = [
   /* ── neighbours ────────────────────────────────────────────────── */
   .neighbours {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-l);
     margin-block-start: var(--space-2xl);
     padding-block-start: var(--space-l);
@@ -182,12 +176,11 @@ const facts = [
 
   .neighbours a { display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--step-1); line-height: var(--leading-tight); text-decoration: none; color: inherit; }
   .neighbours a:hover { color: var(--ember); }
-  .neighbours .later { grid-column: 3; text-align: end; align-items: flex-end; }
-  .neighbours .all { grid-column: 2; align-self: center; font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--fg-faint); text-align: center; }
+  .neighbours .later { grid-column: 2; text-align: end; align-items: flex-end; }
 
   @media (max-width: 40rem) {
     .neighbours { grid-template-columns: 1fr; }
-    .neighbours .later, .neighbours .all { grid-column: 1; text-align: start; align-items: flex-start; }
+    .neighbours .later { grid-column: 1; text-align: start; align-items: flex-start; }
   }
 </style>
 
@@ -210,7 +203,7 @@ const facts = [
   // ← → move through a setlist
   document.addEventListener('keydown', (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
-    const to = e.key === 'ArrowRight' ? '.neighbours .later' : e.key === 'ArrowLeft' ? '.neighbours a:not(.later):not(.all)' : null;
+    const to = e.key === 'ArrowRight' ? '.neighbours .later' : e.key === 'ArrowLeft' ? '.neighbours a:not(.later)' : null;
     const a = to && document.querySelector<HTMLAnchorElement>(to);
     if (a) location.href = a.href;
   });

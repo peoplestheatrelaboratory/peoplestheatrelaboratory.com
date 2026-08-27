@@ -25,11 +25,13 @@ if (!TOKEN) {
 
 // A pull that fails must never fail the build: the committed snapshot stays
 // in place and the site ships from it — loudly.
-process.on('unhandledRejection', (err) => {
+const bail = (err) => {
   console.error('\npull: FAILED —', err?.message ?? err);
   console.error('pull: keeping the committed snapshot in', OUT, '(content may be stale)\n');
   process.exit(0);
-});
+};
+process.on('unhandledRejection', bail);
+process.on('uncaughtException', bail);
 
 // ── client ────────────────────────────────────────────────────────────────
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

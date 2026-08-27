@@ -44,14 +44,6 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
         <dt>Where</dt>
         <dd>{event.venue && event.venue !== event.city ? <>{event.venue}<br />{event.city}</> : event.city}</dd>
       </div>
-      <div>
-        <dt>Sitting</dt>
-        <dd>
-          {upcoming
-            ? 'Limited seating · contribution-based'
-            : `Concluded${setlist.length ? ` · ${setlist.length} songs sung` : ''}`}
-        </dd>
-      </div>
     </dl>
     {upcoming && (
       <a class="cta" href={event.registerUrl || SITE.phoneHref}>
@@ -67,7 +59,7 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   {setlist.length > 0 && (
     <section class="setlist">
       <h2>{upcoming ? 'Songs we will sing' : 'What was sung'}</h2>
-      <a class="cta songbook" href={`/events/${event.slug}/lyrics/`}>Open the songbook — lyrics in singing order →</a>
+      <a class="cta songbook" href={`/events/${event.slug}/lyrics/`}>Open songbook →</a>
       <ol role="list">
         {setlist.map((s, n) => (
           <li>
