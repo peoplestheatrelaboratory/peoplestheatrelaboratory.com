@@ -34,7 +34,7 @@
   --accent: var(--ember);
 
   /* type ----------------------------------------------------------------- */
-  --font-display: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   --font-body: 'Newsreader', Georgia, 'Times New Roman', serif;
   --font-deva: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif;
   --font-mono: 'Courier Prime', ui-monospace, 'SFMono-Regular', monospace;

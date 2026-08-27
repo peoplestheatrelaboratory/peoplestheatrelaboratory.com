@@ -1,5 +1,5 @@
 ---
-import { NAV, SITE, SOCIALS } from '../consts';
+import { NAV } from '../consts';
 
 interface Props {
   /** Transparent chrome for pages that open on full-bleed media. */
@@ -34,25 +34,15 @@ const { overlay = false } = Astro.props;
       {NAV.map((item, i) => (
         <li style={`--i:${i}`}>
           <a href={item.href}>
-            <span class="deva" lang="hi">{item.deva}</span>
-            <span class="latin">{item.label}</span>
-            <span class="note">{item.note}</span>
+            <span class="lines">
+              <span class="latin">{item.label}</span>
+              <span class="note">{item.note}</span>
+            </span>
           </a>
         </li>
       ))}
     </ol>
   </nav>
-
-  <div class="curtain__foot" style={`--i:${NAV.length}`}>
-    <p class="place">{SITE.city}, {SITE.region}</p>
-    <ul class="socials" role="list">
-      {SOCIALS.map((s) => (
-        <li>
-          <a href={s.href} target="_blank" rel="me noopener">{s.label}</a>
-        </li>
-      ))}
-    </ul>
-  </div>
 </div>
 
 <style>
@@ -73,9 +63,21 @@ const { overlay = false } = Astro.props;
 
   /* solid chrome for future interior pages */
   .masthead:not(.overlay) {
-    background: var(--ink);
-    border-block-end: 1px solid var(--paper-18);
+    color: var(--ink);
+    background: var(--paper);
+    border-block-end: 1px solid var(--ink-14);
   }
+
+  .masthead:not(.overlay) .wordmark em { color: var(--ember-warm); }
+
+  /* the curtain is ink, so the chrome reads in paper while it is open */
+  .masthead.is-menu-open {
+    color: var(--paper);
+    background: transparent;
+    border-block-end-color: transparent;
+  }
+
+  .masthead.is-menu-open .wordmark em { color: var(--ember); }
 
   /* over the paper world the chrome inverts, so it never goes cream-on-cream */
   .masthead.overlay {
@@ -221,17 +223,18 @@ const { overlay = false } = Astro.props;
     color: var(--paper-38);
   }
 
-  .curtain__nav .deva {
-    font-family: var(--font-deva);
-    font-size: var(--step-2);
-    color: var(--ember);
-    transition: transform var(--dur-slow) var(--ease-out);
+  /* label and its note read as one stacked block, not two columns */
+  .curtain__nav .lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
   .curtain__nav .latin {
-    flex: 1;
     font-family: var(--font-display);
     font-size: var(--step-4);
+    line-height: 1.05;
     letter-spacing: var(--tracking-display);
   }
 
@@ -239,54 +242,20 @@ const { overlay = false } = Astro.props;
     font-family: var(--font-hand);
     font-size: var(--step-0);
     color: var(--paper-38);
-    text-align: end;
     transform: rotate(-1.2deg);
-  }
-
-  @media (max-width: 40rem) {
-    .curtain__nav .note { display: none; }
+    transform-origin: left center;
   }
 
   .curtain__nav a:hover .latin,
   .curtain__nav a:focus-visible .latin { color: var(--ember); }
-  .curtain__nav a:hover .deva { transform: translateX(0.35rem); }
-
-  .curtain__foot {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-m) var(--space-l);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--paper-38);
-  }
-
-  .curtain__foot ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-m) var(--space-l);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .curtain__foot a {
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .curtain__foot a:hover { color: var(--ember); }
 
   /* staggered reveal, driven by --i */
-  .curtain__nav li,
-  .curtain__foot {
+  .curtain__nav li {
     opacity: 0;
     transform: translateY(0.9rem);
   }
 
-  .curtain.is-open .curtain__nav li,
-  .curtain.is-open .curtain__foot {
+  .curtain.is-open .curtain__nav li {
     opacity: 1;
     transform: none;
     transition:
@@ -297,8 +266,7 @@ const { overlay = false } = Astro.props;
 
   @media (prefers-reduced-motion: reduce) {
     .curtain,
-    .curtain.is-open .curtain__nav li,
-    .curtain.is-open .curtain__foot { transition-duration: 1ms; }
+    .curtain.is-open .curtain__nav li { transition-duration: 1ms; }
   }
 </style>
 

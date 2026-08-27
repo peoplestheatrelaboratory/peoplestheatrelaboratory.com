@@ -1,0 +1,156 @@
+---
+import InteriorLayout from '../layouts/InteriorLayout.astro';
+import { SITE, SOCIALS } from '../consts';
+---
+
+<InteriorLayout
+  title="Contact"
+  eyebrow="ways to join in"
+  deva="संपर्क"
+  description={`Reach Peoples Theatre Laboratory, ${SITE.city} — call, write on Instagram, host a Baithak, or come and sit with us.`}
+>
+  <section class="reach">
+    <div class="card">
+      <h2 class="eyebrow">Call us</h2>
+      <a class="big" href={SITE.phoneHref}>{SITE.phone}</a>
+      <p class="hint">{SITE.city}, {SITE.region}</p>
+    </div>
+
+    <div class="card">
+      <h2 class="eyebrow">Write to us</h2>
+      <ul role="list">
+        {SOCIALS.map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="me noopener">
+              <span class="what">{s.label}</span>
+              <span class="who">{s.handle}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="hint">Messages on Instagram are the quickest way to reach the room.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every gathering is made by many hands</h2>
+    <ul class="ways" role="list">
+      <li>
+        <h3>Come and sit</h3>
+        <p>
+          The Baithak is open. Call or message us and we will tell you where the
+          next one is. Seating is limited, so a word beforehand helps.
+        </p>
+      </li>
+      <li>
+        <h3>Host a Baithak</h3>
+        <p>
+          Our sittings live in homes, studios and courtyards, not auditoriums.
+          If you can gather a small circle of people, we can bring the songs
+          and the stories.
+        </p>
+      </li>
+      <li>
+        <h3>Sing, paint, read, build</h3>
+        <p>
+          If you carry a form — a voice, a brush, a text, a pair of hands —
+          there is a place for it in the room. Tell us what you carry.
+        </p>
+      </li>
+    </ul>
+  </section>
+</InteriorLayout>
+
+<style>
+  .reach {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl) var(--space-l);
+  }
+
+  .card ul { margin: 0; padding: 0; }
+  .card li + li { margin-block-start: 0.55rem; }
+
+  .big {
+    display: inline-block;
+    margin-block-start: var(--space-s);
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    line-height: 1.3;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--fg);
+    border-block-end: 1px solid var(--ink-38);
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .big:hover,
+  .big:focus-visible {
+    color: var(--ember);
+    border-block-end-color: var(--ember);
+  }
+
+  .card li a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding-block: 0.45rem;
+    border-block-end: 1px dotted var(--rule);
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .card ul { margin-block-start: var(--space-s); }
+  .card li a:hover { border-block-end-color: var(--ember); }
+  .card li a:hover .what { color: var(--ember); }
+
+  .what {
+    font-size: var(--step-1);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .who {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--fg-faint);
+    text-align: end;
+    overflow-wrap: anywhere;
+  }
+
+  .hint {
+    margin-block-start: var(--space-m);
+    font-family: var(--font-hand);
+    color: var(--fg-faint);
+    transform: rotate(-0.8deg);
+    transform-origin: left center;
+  }
+
+  .ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-xl) var(--space-l);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ways li {
+    padding-block-start: var(--space-s);
+    border-block-start: 1px solid var(--ember);
+  }
+
+  .ways h3 {
+    margin-block-end: var(--space-s);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--step-2);
+    line-height: var(--leading-tight);
+  }
+
+  .ways p {
+    max-width: 40ch;
+    color: var(--fg-muted);
+    line-height: var(--leading-body);
+  }
+</style>

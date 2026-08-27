@@ -12,10 +12,10 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { label: 'Events', deva: 'बैठक', href: '/events', note: 'when we gather' },
-  { label: 'Library', deva: 'गीत', href: '/library', note: 'songs, poetry, scripts' },
-  { label: 'About', deva: 'प्रयोगशाला', href: '/about', note: 'why we exist' },
-  { label: 'Contact', deva: 'संपर्क', href: '#contact', note: 'ways to join in' },
+  { label: 'Events', href: '/events', note: 'when we gather' },
+  { label: 'Library', href: '/library', note: 'songs, poetry, scripts' },
+  { label: 'About', href: '/about', note: 'why we exist' },
+  { label: 'Contact', href: '/contact', note: 'ways to join in' },
 ] as const;
 
 export const SOCIALS = [

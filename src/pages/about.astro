@@ -1,0 +1,129 @@
+---
+import InteriorLayout from '../layouts/InteriorLayout.astro';
+import { SITE } from '../consts';
+---
+
+<InteriorLayout
+  title="About"
+  eyebrow="why we exist"
+  deva="प्रयोगशाला"
+  description={`Peoples Theatre Laboratory is an experimental theatre collective in ${SITE.city}, three decades into Total Theatre — gatherings of song, paint and stage.`}
+>
+  <section class="prose">
+    <p>
+      Peoples Theatre Laboratory is an experimental theatre collective in{' '}
+      {SITE.city}, {SITE.region}. For three decades it has worked in the spirit
+      of <em>Total Theatre</em> — where painters, sculptors, musicians, art
+      historians and people from social practice build a production together,
+      and no single form is allowed to hold the room alone.
+    </p>
+    <p>
+      We have never been a cast and a crew. The painter is in the rehearsal,
+      the musician is in the workshop, the art historian argues with the
+      director, and the work belongs to all of them at once. We stage plays,
+      run residential workshops, and experiment with people of every age.
+    </p>
+  </section>
+
+  <section>
+    <h2>What we gather for</h2>
+    <ul class="gatherings" role="list">
+      <li>
+        <p class="eyebrow">Every month</p>
+        <h3><span class="deva" lang="hi">बैठक</span> Baithak</h3>
+        <p>
+          Our monthly sitting in Vadodara. Music, readings and work-in-progress,
+          shared in a room small enough that nobody is only an audience.
+        </p>
+      </li>
+      <li>
+        <p class="eyebrow">Every year · Jyestha Poornima</p>
+        <h3><span class="deva" lang="hi">कबीर संग रुहदारी</span> Kabir Sang Ruhdaari</h3>
+        <p>
+          An intimate, contribution-based gathering around the voices of Kabir,
+          Meera, Bulleh Shah, Raidas and Lalon Fakir — original compositions,
+          folk songs sung together, and live painting at the edge of the room.
+          Not a cultural presentation; a shared space of reflection.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="doha">
+    <blockquote>
+      <p class="deva" lang="hi">मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।</p>
+      <p class="en">Where do you search for me? I am right beside you.</p>
+      <footer>— Kabir</footer>
+    </blockquote>
+  </section>
+
+  <section class="prose">
+    <h2>The best introduction is a <span class="deva" lang="hi">बैठक</span>.</h2>
+    <p>
+      Words tell you little. Come sit with us at the next gathering and meet
+      everyone the way this collective prefers — mid-song.{' '}
+      <a href="/contact">Ways to join in →</a>
+    </p>
+  </section>
+</InteriorLayout>
+
+<style>
+  .gatherings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-xl) var(--space-l);
+    margin: 0;
+    padding: 0;
+  }
+
+  .gatherings h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-s);
+    margin-block: var(--space-s) var(--space-s);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--step-2);
+    line-height: var(--leading-tight);
+  }
+
+  .gatherings h3 .deva {
+    color: var(--ember);
+  }
+
+  .gatherings p:not(.eyebrow) {
+    max-width: 44ch;
+    color: var(--fg-muted);
+    line-height: var(--leading-body);
+  }
+
+  .doha blockquote {
+    max-width: var(--measure);
+    margin: 0;
+    padding-inline-start: var(--space-l);
+    border-inline-start: 1px solid var(--ember);
+  }
+
+  .doha .deva {
+    font-size: var(--step-2);
+    line-height: 1.5;
+  }
+
+  .doha .en {
+    margin-block-start: var(--space-s);
+    font-style: italic;
+    font-size: var(--step-1);
+    color: var(--fg-muted);
+  }
+
+  .doha footer {
+    margin-block-start: var(--space-s);
+    font-family: var(--font-hand);
+    color: var(--fg-faint);
+  }
+
+  .prose h2 .deva {
+    color: var(--ember);
+  }
+</style>
