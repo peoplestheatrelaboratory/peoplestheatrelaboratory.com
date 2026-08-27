@@ -1,0 +1,193 @@
+---
+import InteriorLayout from '../../layouts/InteriorLayout.astro';
+import MoonPhase from '../../components/MoonPhase.astro';
+import { getEvents, getEvent, formatDate, SERIES } from '../../lib/events';
+import { SITE } from '../../consts';
+
+export function getStaticPaths() {
+  return getEvents().map((e) => ({ params: { slug: e.slug } }));
+}
+
+const { slug } = Astro.params;
+const event = getEvent(slug!)!;
+const series = SERIES[event.series];
+
+// neighbours for the prev/next links, in date order
+const all = getEvents();
+const i = all.findIndex((e) => e.slug === event.slug);
+const newer = all[i - 1];
+const older = all[i + 1];
+---
+
+<InteriorLayout
+  title={event.title}
+  eyebrow={`${series.label} · ${series.rhythm}`}
+  deva={event.titleDeva}
+  description={`${event.title} — ${formatDate(event.date, event.tithi)}, ${event.venue}, ${event.city}. ${event.summary}`}
+>
+  <section class="facts">
+    <dl>
+      <div>
+        <dt>When</dt>
+        <dd><MoonPhase date={event.date} /> {formatDate(event.date, event.tithi)}</dd>
+      </div>
+      <div>
+        <dt>Where</dt>
+        <dd>{event.venue && event.venue !== event.city ? <>{event.venue}<br />{event.city}</> : event.city}</dd>
+      </div>
+      <div>
+        <dt>Sitting</dt>
+        <dd>
+          {event.status === 'upcoming'
+            ? 'Limited seating · contribution-based'
+            : `Concluded · ${event.setlist.length} songs sung`}
+        </dd>
+      </div>
+    </dl>
+    {event.status === 'upcoming' && (
+      <a class="cta" href={event.registerUrl ?? SITE.phoneHref}>
+        {event.registerUrl ? 'Register →' : `Call ${SITE.phone} to reserve a seat`}
+      </a>
+    )}
+  </section>
+
+  <section class="prose">
+    <p>{event.summary}</p>
+  </section>
+
+  {event.setlist.length > 0 && (
+    <section class="setlist">
+      <h2>{event.status === 'upcoming' ? 'Songs we will sing' : 'What was sung'}</h2>
+      <ol role="list">
+        {event.setlist.map((s, n) => (
+          <li>
+            <span class="n">{String(n + 1).padStart(2, '0')}</span>
+            <span class="song">
+              <span class="song__title" lang="hi">{s.title}</span>
+              {s.poet && <span class="song__poet" lang="hi">— {s.poet}</span>}
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p class="hint">Full lyrics arrive with the Library.</p>
+    </section>
+  )}
+
+  <nav class="neighbours" aria-label="Other gatherings">
+    {older && <a href={`/events/${older.slug}/`}><span class="eyebrow">Earlier</span>{older.title}</a>}
+    <a class="all" href="/events/">All gatherings</a>
+    {newer && <a class="later" href={`/events/${newer.slug}/`}><span class="eyebrow">Later</span>{newer.title}</a>}
+  </nav>
+</InteriorLayout>
+
+<style>
+  .facts dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-l);
+    margin: 0;
+  }
+
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .facts dd {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: var(--space-xs) 0 0;
+    font-size: var(--step-1);
+    line-height: 1.4;
+  }
+
+  .cta {
+    display: inline-block;
+    margin-block-start: var(--space-l);
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ember);
+  }
+
+  /* ── setlist: numbered because the order is the order they were sung ── */
+  .setlist ol {
+    max-width: var(--measure);
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: var(--space-xl);
+  }
+
+  .setlist li {
+    display: flex;
+    gap: var(--space-m);
+    align-items: baseline;
+    padding-block: 0.55rem;
+    border-block-start: 1px solid var(--rule);
+    break-inside: avoid;
+  }
+
+  .n {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--fg-faint);
+  }
+
+  .song { display: flex; flex-direction: column; }
+  .song__title { font-size: var(--step-1); line-height: 1.4; }
+  .song__poet { font-size: var(--step--1); color: var(--fg-faint); }
+
+  .hint {
+    margin-block-start: var(--space-l);
+    font-family: var(--font-hand);
+    color: var(--fg-faint);
+    transform: rotate(-0.8deg);
+    transform-origin: left center;
+  }
+
+  @media (max-width: 40rem) { .setlist ol { columns: 1; } }
+
+  /* ── neighbours ────────────────────────────────────────────────── */
+  .neighbours {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-l);
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-l);
+    border-block-start: 1px solid var(--rule);
+  }
+
+  .neighbours a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: var(--leading-tight);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .neighbours a:hover { color: var(--ember); }
+  .neighbours .later { grid-column: 3; text-align: end; align-items: flex-end; }
+  .neighbours .all {
+    grid-column: 2;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  @media (max-width: 40rem) {
+    .neighbours { grid-template-columns: 1fr; }
+    .neighbours .later, .neighbours .all { grid-column: 1; text-align: start; align-items: flex-start; }
+  }
+</style>
