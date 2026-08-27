@@ -1,0 +1,1015 @@
+{
+  "generatedFrom": {
+    "notionExport": "Master Library",
+    "harvest": "public/lyrics/songs.js"
+  },
+  "artists": [
+    {
+      "slug": "abida-parveen",
+      "name": "Abida Parveen",
+      "nameDeva": "आबिदा परवीन",
+      "roles": [],
+      "note": ""
+    },
+    {
+      "slug": "amir-khusrow",
+      "name": "Amir Khusrow",
+      "nameDeva": "अमीर ख़ुसरो",
+      "roles": [
+        "Poet"
+      ],
+      "note": "[अमीर ख़ुसरौ के  रंग | सूफ़ीनामा](https://sufinama.org/poets/amir-khusrau/rang?lang=hi)"
+    },
+    {
+      "slug": "devabhai-jagariya",
+      "name": "Devabhai Jagariya",
+      "nameDeva": "देवाभाई जगरिया",
+      "roles": [
+        "Singer / Composer"
+      ],
+      "note": "Devabhai Jagariya sings the songs of Kabir, Mirabai and other mystics and along with several other singers from his village and neighbouring ones keeps alive the tradition of ‘aradhiya bhajan’. He belongs to Kharoda village in Lakhpat, Kutch in western Gujarat."
+    },
+    {
+      "slug": "fareed-ayaz-abu-muhammad",
+      "name": "Fareed Ayaz & Abu Muhammad",
+      "nameDeva": "फ़रीद अयाज़ और अबू मुहम्मद",
+      "roles": [],
+      "note": "[ग़ज़ल l ऑडियो विडियो के साथ बेहतरीन उर्दू ग़ज़लें सुनें एवं पढ़ें](https://sufinama.org/collections/best-qawwalis-of-fareed-ayaz-abu-muhammad?lang=hi)"
+    },
+    {
+      "slug": "hardik-dave",
+      "name": "Hardik Dave",
+      "nameDeva": "हार्दिक दवे",
+      "roles": [
+        "Singer / Composer"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "harji-bhati",
+      "name": "Harji Bhati",
+      "nameDeva": "हरजी भाटी",
+      "roles": [
+        "Poet"
+      ],
+      "note": "[Profile of Haraji Bhati | Anjas](https://anjas.org/poets/haraji-bhati/profile)"
+    },
+    {
+      "slug": "kabir",
+      "name": "Kabir",
+      "nameDeva": "कबीर",
+      "roles": [
+        "Poet"
+      ],
+      "note": "प्रेम रस बुंदन) (../Songs%20Library/Bheege%20Chunariya%20Prem%20Ras%20Boondan%20(%E0%A4%AD%E0%A5%80%E0%A4%97%E0%A5%87%20%E0%A4%9A%E0%A5%81%E0%A4%A8%E0%A4%B0%E0%A4%BF%E0%A4%AF%E0%A4%BE,%20%E0%A4%AA%202fa3280c2bbf80eda51dc342347f1732.md), Rahna Nahi Des Birana (रहना नहीं देस बिराना) (../Songs%20Library/Rahna%20Nahi%20Des%20Birana%20(%E0%A4%B0%E0%A4%B9%E0%A4%A8%E0%A4%BE%20%E0%A4%A8%E0%A4%B9%E0%A5%80%E0%A4%82%20%E0%A4%A6%E0%A5%87%E0%A4%B8%20%E0%A4%AC%E0%A4%BF%E0%A4%B0%E0%A4%BE%E0%A4%A8%E0%A4%BE)%202fa3280c2bbf803e8d37d1990e1f4c8d.md), Sadho (साधो) (../Songs%20Library/Sadho%20(%E0%A4%B8%E0%A4%BE%E0%A4%A7%E0%A5%8B)%202fa3280c2bbf8033b128db87a4307710.md), Sunta Nahi Dhun Ki Khabar (सुनता नहींधुन की खबर) (../Songs%20Library/Sunta%20Nahi%20Dhun%20Ki%20Khabar%20(%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A4%A4%E0%A4%BE%20%E0%A4%A8%E0%A4%B9%E0%A5%80%E0%A4%82%E0%A4%A7%E0%A5%81%E0%A4%A8%20%E0%A4%95%E0%A5%80%20%E0%A4%96%E0%A4%AC%E0%A4%B0)%202fa3280c2bbf80de8c9ac2e429525c05.md), Man Lago Mero Yaar Fakiri Me (../Songs%20Library/Man%20Lago%20Mero%20Yaar%20Fakiri%20Me%203073280c2bbf8081a80aea5d5354daa3.md), Chadariya Jheeni Re Jheeni (../Songs%20Library/Chadariya%20Jheeni%20Re%20Jheeni%203073280c2bbf80f8a23afd4c1270b06e.md), Moko Kahaan Dhundhe Re Bande (../Songs%20Library/Moko%20Kahaan%20Dhundhe%20Re%20Bande%203073280c2bbf80568d57fe262a4802f5.md), Aari Gagan Ma (../Songs%20Library/Aari%20Gagan%20Ma%203073280c2bbf803ea634dc9fb0a1aef2.md), Aisi Mhari Preet (../Songs%20Library/Aisi%20Mhari%20Preet%203143280c2bbf8106b2d6c8759baddd0a.md)"
+    },
+    {
+      "slug": "kabir-cafe",
+      "name": "Kabir Cafe",
+      "nameDeva": "कबीर कैफ़े",
+      "roles": [
+        "Singer / Composer"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "mir-mukhtiyar-ali",
+      "name": "Mir Mukhtiyar Ali",
+      "nameDeva": "मीर मुख्तियार अली",
+      "roles": [
+        "Singer / Composer"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "mira-bai",
+      "name": "Mira Bai",
+      "nameDeva": "मीरा",
+      "roles": [
+        "Poet"
+      ],
+      "note": "[Rajasthani famous Poetry of Meerabaai | Anjas](https://anjas.org/poets/meerabaai/)"
+    },
+    {
+      "slug": "nusrat-fateh-ali-khan",
+      "name": "Nusrat Fateh Ali Khan",
+      "nameDeva": "नुसरत फ़तेह अली ख़ान",
+      "roles": [],
+      "note": ""
+    },
+    {
+      "slug": "folk-rajasthani",
+      "name": "Folk (Rajasthani)",
+      "nameDeva": "राजस्थानी लोकगीत",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "folk-gujarati",
+      "name": "Folk (Gujarati)",
+      "nameDeva": "ગુજરાતી લોકગીત",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "raidas",
+      "name": "Raidas",
+      "nameDeva": "रैदास",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "bhaba-pagla",
+      "name": "Bhaba Pagla",
+      "nameDeva": "भाबा पागला",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "bengali-folk",
+      "name": "Bengali folk",
+      "nameDeva": "बांग्ला लोकगीत",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "ali-raja",
+      "name": "Ali Raja",
+      "nameDeva": "अली राजा",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    },
+    {
+      "slug": "rigveda",
+      "name": "Rigveda",
+      "nameDeva": "ऋग्वेद",
+      "roles": [
+        "Poet"
+      ],
+      "note": ""
+    }
+  ],
+  "songs": [
+    {
+      "slug": "aari-gagan-ma",
+      "title": "आरी गगन माँ",
+      "titleLatin": "Aari Gagan Ma",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [
+        "hardik-dave",
+        "devabhai-jagariya"
+      ],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [
+        "Kutch Gujarat"
+      ],
+      "raag": "",
+      "lyrics": "आरी गगन माँ ज्योत जलंत है\n\nऐनु अखंड भयो उजवालो, रे गगन माँ\n\nम्हारो परभु रमे छे निराधारो रे गगन माँ\n\nराम रमे रंगारो रे हरी\n\nआरी गगन माँ बाजा रे बाजे,\n\nऐनु झीनू झीनू आ झनकारो | रे गगन माँ …\n\nगुरुमुख ज्ञानी सतगुरु आगे,\n\nतियाँ मटी जाए जम का फेरा | रे गगन माँ …\n\nकहत कबीरा सुनो भाई साधो,\n\nऐवा अनगढिया तीरथ कोने भारिया |",
+      "meaning": "Kabir evokes the vast undivided sky in this song, to show us visions of that nirgun Raam, Kabir's God, playing there without barriers, in many hues and colours. Look towards the sky, and be free of the cycles of birth and death, says Kabir.",
+      "references": [
+        {
+          "label": "ajabshahar.com",
+          "url": "https://ajabshahar.com/songs/details/182/Aari-Gagan-Ma&title=Aari-Gagan-Ma"
+        },
+        {
+          "label": "'Aari Gagan Ma' sings Devabhai Jagariya & Group",
+          "url": "https://www.youtube.com/watch?v=yTSLkf6O7t8"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "aisi-mhari-preet",
+      "title": "ऐसी म्हारी प्रीत",
+      "titleLatin": "Aisi Mhari Preet",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [
+        "kabir-cafe"
+      ],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [
+        "Madhya Pradesh"
+      ],
+      "raag": "",
+      "lyrics": "प्रीत तो ऐसी कीजिये, ज्यूं लोटा ज्यूं डोर\n\nवी गला फँसावे आपणा, और पानी पिलावे और\n\nघायल की गति और है, और औरन की गति और\n\nजब प्रेम बाण ह्रदय लगा, तो रहा कबीरा ठोर\n\nप्रेमी ढूँढ़त मैं फिरा, मोहे प्रेमी मिला न कोए\n\nप्रेमी से प्रेमी मिले, तो विष अमृत होए\n\nप्रेम छिपाया न छिपे, जा घट परकट होए\n\nअगर मुख से बोले नहीं, तो ये नैन देत हैं रोए\n\nऐसी म्हारी प्रीत निभावजो\n\nहो निर्धन (दुर्बल) का हो राम\n\nराम जी\n\nतम तो बादल हम मोरीया\n\nरहांगा तमारा ही माए\n\nतम तो बरसो तो हम बोलीया\n\nअब म्हारा कईं हवाल\n\nऐसी म्हारी प्रीत निभावजो…\n\nराम राम\n\nतम तो सरोवर हम मछली\n\nरहांगा तमारा हो माए\n\nतम जद सूको तो हम मरी जावां\n\nअब म्हारा कईं हवाल\n\nऐसी म्हारी प्रीत निभावजो…\n\nराम राम\n\nतम तो झरकट हम बेलड़ी\n\nरहांगा तम से लिपटाए\n\nतम जद सूको तो हम मरी जावां\n\nअब म्हारा कईं हवाल\n\nऐसी म्हारी प्रीत निभावजो…\n\nराम राम\n\nकहे हो कबीर धर्मदास से\n\nसुण लीजो ध्यान धराए\n\nगावे बजावे सुणे सांभड़े\n\nहंसा सतलोक जाए\n\nऐसी म्हारी प्रीत निभावजो…",
+      "meaning": "This delicate song of love and surrender, is a softer, more vulnerable poetic voice from the Kabir tradition. Attributed to his disciple Dharamdas, the song is sung here in a satsang by Arun Goyal and mandali, prefaced by a series of beautiful dohas on the subject of love.",
+      "references": [
+        {
+          "label": "ajabshahar.com",
+          "url": "https://ajabshahar.com/songs/details/104/Aisi-Mhaari-Preet-Nibhaavjo&title=Aisi-Mhaari-Preet-Nibhaavjo"
+        },
+        {
+          "label": "'Aisi Mhaari Preet Nibhaavjo' by Arun Goyal",
+          "url": "https://www.youtube.com/watch?v=jCgyazkXeLc"
+        },
+        {
+          "label": "Aisi Mhari Preet - Eternal Love | Kabir Cafe Ft Parthiv Gohil | Sabr | 2022",
+          "url": "https://www.youtube.com/watch?v=wAtG5Hep7TY"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "aj-rang-hai",
+      "title": "आज रंग है",
+      "titleLatin": "Aj Rang Hai",
+      "poets": [
+        "amir-khusrow"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "आज रंग है हे मन रंग है री\nमोरे मेहबूब के घर रंग है री\n\nसाजन मिलावरा साजन मिलावरा\nसाजन मिलावरा मोरे आँगन को\nआज रंग है....\n\nमोहे पीर पायो निजामुद्दीन औलिया\nनिजामुद्दीन औलिया मोहे पीर पायो\nदेस बदेस में ढूंढ फिरे हूँ\nतोरा रंग मन भायो री.…\n\nजग उजियारो, जगत उजियारो\nमैं तो ऐसो रंग और नहीं देखी रे\n\nमैं तो जब देखूं मोरे संग है\nआज रंग है हे मन रंग है री",
+      "meaning": "",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "bheege-chunariya",
+      "title": "भीगे चुनरिया, प्रेम रस बुंदन",
+      "titleLatin": "Bheege Chunariya Prem Ras Boondan",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "भीगे चुनरिया, प्रेम रस बुंदन,\nआरती सज के चली सुहागन,\nअपने पीयू को ढूंढन।\n\nकाहे की तोरी बनी चुनरिया,\nकाहे के लागे फूंदन।\nपांच तत्व की बनी चुनरिया,\nनाम के लागे फूंदन।\n\nचढ़ गई महल खुल गई कांवरिया,\nदास कबीर लागे झूलन।\nभीगे चुनरिया।",
+      "meaning": "",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "bhum-charkha",
+      "title": "Bhum Charkha",
+      "titleLatin": "Bhum Charkha",
+      "poets": [
+        "folk-rajasthani"
+      ],
+      "singers": [],
+      "language": [],
+      "genre": [],
+      "geography": [
+        "Rajasthan"
+      ],
+      "raag": "",
+      "lyrics": "",
+      "meaning": "",
+      "references": [
+        {
+          "label": "Charkha | Voyage 2 | Dhruv Ghanekar x Ila Arun | Official Live Music Video",
+          "url": "https://www.youtube.com/watch?v=EFVC6pfM70w"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "chadariya-jheeni",
+      "title": "चदरिया झीनी रे झीनी",
+      "titleLatin": "Chadariya Jheeni Re Jheeni",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [
+        "mir-mukhtiyar-ali"
+      ],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "कबीरा इस संसार में तो भाँती भाँती के लॉग,\nरे सब से हिल मिल चालिये ज्यों नदी नाव संयोग* ।\n\nबुरा जो खोजन मैं गयी और बुरा न मिल्या कोया,\nअंतर खोजै आपने तो मुझ से बुरा न कोए* ।\n\nकबिरा जब हम पैदा हुए तो जग हांसे हम रोय,\nतो ऐसी करनी कर चलो तो हम हांसे जग रोये*  ।\n\nचदरिया झीनी रे झीनी\nराम नाम रस भीनी\nचदरिया झीनी रे झीनी\n\nअष्ट-कमल का चरखा बनाया,\nपांच तत्व की पूनी ।\nनौ-दस मास बुनन को लागे,\nमूरख मैली किन्ही ॥\nचदरिया झीनी रे झीनी...\n\nजद मोरी चादर बन घर,\nआयी धुबियाँ के घर दीन्हि ।\nसूरत सिला पर दे फटकारो,\nइस विध निर्मल कीन्हि ॥\nचदरिया झीनी रे झीनी...\n\nजब मोरी चादर बन घर आई,\nरंगरेज को दीन्हि ।\nऐसा रंग रंगा रंगरे ने,\nके लालो लाल कर दीन्हि ॥\nचदरिया झीनी रे झीनी...\n\nचादर ओढ़ शंका मत करियो,\nये दो दिन तुमको दीन्हि ।\nमूरख लोग भेद नहीं जाने,\nदिन-दिन मैली कीन्हि ॥\nचदरिया झीनी रे झीनी...\n\nध्रुव-प्रह्लाद सुदामा ने ओढ़ी चदरिया,\nशुकदे में निर्मल कीन्हि ।\nदास कबीर ने ऐसी ओढ़ी,\nज्यूँ की त्यूं धर दीन्हि ॥\nके राम नाम रस भीनी,\nचदरिया झीनी रे झीनी ।",
+      "meaning": "In this song, Kabir, the weaver poet, evocatively describes the journey that a finely knit cloth goes through – weaving, washing, dying – and deftly ties it up with the fabric of our own body-selves. Fools can sully this subtle fabric of being. Says Kabir – beware, wear your precious body with care.",
+      "references": [
+        {
+          "label": "ajabshahar.com",
+          "url": "https://ajabshahar.com/songs/details/205/Chadariya-Jheeni-Re-Jheeni&title=Chadariya-Jheeni-Re-Jheeni"
+        },
+        {
+          "label": "chadariya jhini re jhini ram nam ras bheeni",
+          "url": "https://bhajanganga.com/mobile_bhajan/lyrics/id/1027/title/chadariya-jhini-re-jhini-ram-nam-ras-bheeni"
+        },
+        {
+          "label": "'Chadariya Jheeni Re Jheeni' by Mukhtiyar Ali @MirMukhtiyarAliOfficial",
+          "url": "https://www.youtube.com/watch?v=7z9dM2E1Zl8"
+        },
+        {
+          "label": "Chadariya Jheeni re Jheeni",
+          "url": "https://youtu.be/lsBj-vkiSbA?si=X2Ero3cpDIqmARid"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "man-lago-fakiri",
+      "title": "मन लागो मेरो यार फकीरी में",
+      "titleLatin": "Man Lago Mero Yaar Fakiri Me",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "",
+      "meaning": "",
+      "references": [
+        {
+          "label": "Mann Lago Yaar - Abida Parveen",
+          "url": "https://www.youtube.com/watch?v=1WpvW2db6g4"
+        },
+        {
+          "label": "MAN LAGO MERO  YAAR   - Shabad Parikrma Performed live at Abhivyakti by Iktara | Hardik Dave",
+          "url": "https://www.youtube.com/watch?v=3oC4PAJQ-Hk"
+        },
+        {
+          "label": "Mann Lagyo Mero Yaar Fakiri Mein",
+          "url": "https://youtu.be/2f80nd1kqTo?si=XyC6zXgHrHY3IAQ5"
+        },
+        {
+          "label": "'Mann Laago Fakiri Mein' by Kaluram Bamaniya",
+          "url": "https://youtu.be/KrgqkHUJtsg?si=_GEFsxbdvZ-v8l79"
+        },
+        {
+          "label": "Fakiri Men I मेरो मन लाग्यो फकीरी में I Mooralala Marwada I Rajasthan Kabir Yatra 2019",
+          "url": "https://youtu.be/syx6m-P1zeA?si=W68Jz294ilU0tgNl"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "mara-nakh-na",
+      "title": "મારા નખના પરવાળા જેવી",
+      "titleLatin": "Mara Nakh Na Parvada Jevi",
+      "poets": [
+        "folk-gujarati"
+      ],
+      "singers": [],
+      "language": [
+        "Gujarati"
+      ],
+      "genre": [
+        "Lagna Geet"
+      ],
+      "geography": [
+        "Gujarat"
+      ],
+      "raag": "",
+      "lyrics": "mara nakh na parvala jevi chundadi\nmaari chundadi no rang raato ho laadali\nodho ne saaheb jaani chundadi ...\n\nrang re kasumbal me to kesudano lidho\nlilo te rang van ni vanarayu ea didho\no ho pilo te rang ugati puname didho\ntaaraliye taaki navrang chundadi\nmara nakh na ...\n\ngaam ne shimade karashu saamaiya tamaara\nantar na orade deshu re utaara\no ho jedi vaaja vagdavo maandvade aavo\ntedi odhu hu saayaba chundadi\nmara nakh na ...\n\njo jo re khel koi vasamo na khelata\nmaari chundadi ne paachi nav thelata\no ho taara rudiya ni raani bole bandhaani\nnahi re odhu hu koini chundadi\nmara nakh na ...\n\nyi re chundaladi ma varnaangi prit che\nvarnaangi prit ema vaalam keri prit che\npritaladi hoy hoy pritladi, pritladi mari\nsamaju samaju ne naa samajaay\nke mara nakh na ...",
+      "meaning": "",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "moko-kahan",
+      "title": "मोको कहाँ ढूंढें बन्दे",
+      "titleLatin": "Moko Kahaan Dhundhe Re Bande",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [
+        "mir-mukhtiyar-ali"
+      ],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "मोको कहाँ ढूंढें बन्दे, मैं तो तेरे पास में।\n\nना तीरथ में ना मूरत में, ना एकांत निवास में।\nना मंदिर में, ना मस्जिद में, ना काबे कैलाश में॥\n\nना मैं जप में, ना मैं तप में, ना मैं व्रत उपवास में।\nना मैं क्रिया कर्म में रहता, ना ही योग संन्यास में॥\n\nखोजी होए तुरत मिल जाऊं, एक पल की ही तलाश में।\nकहे कबीर सुनो भाई साधो, मैं तो हूँ विशवास में॥",
+      "meaning": "ऐ बंदे, तू मुझे कहाँ ढूँढ़ता फिर रहा है, मैं तो तेरे पास ही हूँ। न मैं मंदिर में मिलूँगा, न मस्जिद में, न काबे और कैलाश में, न पूजा-पाठ में, न योग-बैराग में।\n\nसच्चे मन से खोजने वाला हो तो उसे मैं पल-भर की तलाश में मिल जाऊँगा। कबीर कहते हैं कि वे और कहीं नहीं परंतु हमारे विश्वास में हैं।",
+      "references": [
+        {
+          "label": "Mir Mukhtiyar Ali@ Ulgulan 2015 - Moko Kahan Dhoondhe Re Bande",
+          "url": "https://youtu.be/wbtUWiZE8OM?si=FFLDy-J44BkOHlUV"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "phagun-ke-din-char",
+      "title": "फागुन के दिन चार",
+      "titleLatin": "Phagun Ke Din Char",
+      "poets": [
+        "mira-bai"
+      ],
+      "singers": [
+        "hardik-dave"
+      ],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [
+        "Rajasthan"
+      ],
+      "raag": "",
+      "lyrics": "फागुन के दिन चार होरी खेल मना रे।\n\nबिन करताल पखावज बाजे, अनहद की झंकार रे।\n\nबिन सुर राग छतीसूं गावे, रोम रोम रंगसार रे।\n\nउड़त गुलाल लाल भए बादल, बरसत रंग अपार रे।\n\nघट के पट सब खोल दिए हैं, लोकलाज है डार रे।\n\nमीरा के प्रभु गिरधर नागर, चरण कमल बलिहार रे।",
+      "meaning": "",
+      "references": [
+        {
+          "label": "Phagun Ke Din Chaar",
+          "url": "https://youtu.be/fzJ5RY33m-E?si=dfCmkUc8O-M-IGOx"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "rahna-nahi-des",
+      "title": "रहना नहीं देस बिराना",
+      "titleLatin": "Rahna Nahi Des Birana",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "रहना नहिं देस बिराना है।\n\nयह संसार कागद की पुड़िया,\nबूँद पड़े घुल जाना है।\n\nयह संसार काँट की बाड़ी,\nउलझ पुलझ मरि जाना है।\n\nयह संसार झाड़ और झाँखर,\nआग लगे बरि जाना है।\n\nकहे कबीर सुनो भाई साधो,\nसतगुरु नाम ठिकाना है॥",
+      "meaning": "यह पराया देश है, यहाँ नहीं रहना है। यह संसार काग़ज़ की पुड़िया है जो एक बूँद पानी से गल जाती है। यह काँटों की झाड़ी है जिसमें उलझकर लोग मर जाते हैं।\n\nयह झाड़-झंखाड़ है जो आग लगते ही जल जाता है। कबीर कहते हैं कि सुनो भाई साधो, सतगुरु का नाम ही आख़िरी ठिकाना है।",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "sadho",
+      "title": "साधो",
+      "titleLatin": "Sadho",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "साधो\nसाधो, ये है मुर्दों का गाँव\n\nपीर मरे, पैगम्बर मरी है\nमरी है ज़िंदा जोगी,\n\nराजा मरी है, परजा मरी है\nमरी है वैद और रोगी\n\nनाम अनाम अनंत रहत है\nदूजा तत्त्व न होइ\n\nकहे कबीर सुनो भाई साधो\nभटकन मरो मत कोई",
+      "meaning": "जागो, इस मृत हालत से।\nहम से पहले बहुत ज्ञानी आकर चले गए,\n\nबड़े से बड़े साम्राज्य रेत बन गए।\nबीमार और उनके दर्द हारने वाले भी खत्म हो गए।\n\nजो परम तत्व है वही है जो पहले भी था,\nऔर आगे भी रहेगा।\n\nएक ये ही सत्य है।\n\nकबीर कहते हैं की हम भटके हुए ही\nखत्म ना हो जाएँ",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "saro-sansariyo",
+      "title": "Saro Sansariyo",
+      "titleLatin": "Saro Sansariyo",
+      "poets": [
+        "harji-bhati"
+      ],
+      "singers": [],
+      "language": [],
+      "genre": [],
+      "geography": [
+        "Kutch Gujarat"
+      ],
+      "raag": "",
+      "lyrics": "Saro Sansariyo, Kupathi No Bhariyal Rama,\n\nGau Re Bhekh No Ram Dhani, Ho Ji…Haan..Ji..\n\nAraj Karu Chhu Tamne, Suno Ajamal Na Rama,\n\nDiyo Darshan Beda Par Lage, Ho Ji…Haan..Ji…\n\nGaam Ranuja Me, Devad Adana Rama,\n\nNav Khande Me Aanja Naam Jape, Ho Ji…Haan..Ji…\n\nVaniya Ni Vahare Tame Avya, Ajamal Na Rama,\n\nDubta Beda Tame Tarya, Ho Ji…Haan..Ji…\n\nHari Charne Bhaati, Harji Re Bolya Rama,\n\nPat Bahana Tani Rakhyo, Re..Haaji…",
+      "meaning": "O my dear Rama! (Ramdev Pir), the entire world is filled with wrong things; you are the lord of who are innocent and pure like cow.\n\nO dear Rama! Son of great Ajmal please heard my earnestly appeal to you, Show your divine face so that our boat of life can reach its shore (final Destination)\n\nIn the village of Ranuja, your glorious temple was constructed, and your name has been chanting in all nine continents.\n\nO dear Rama! Son of great Ajmal, you have bestowed the Vaniya(businessman) with your grace and held our sinking boat of life to across shore safely.\n\nIn your divine feet, Harji Bhaati(the poet who wrote this bhajan) urges that O Dear Rama! To keep our reputation intact.",
+      "references": [
+        {
+          "label": "Saro Sansariyo Aradhivani- \"A devotional song of hope from kutch\"folkmusic#Ramdevpir",
+          "url": "https://www.youtube.com/watch?v=R9cmMDyRHcU"
+        }
+      ],
+      "source": "notion"
+    },
+    {
+      "slug": "sunta-nahi-dhun",
+      "title": "सुनता नहीं धुन की खबर",
+      "titleLatin": "Sunta Nahi Dhun Ki Khabar",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "सुनता नहीं धुन की खबर,\nअनहद का बाजा बाजता।\n\nरस मंद मंदिर बाजता,\nबाहर सुने तो क्या हुआ।\nइक प्रेम-रस चाखा नहीं,\nअमली हुआ तो क्या हुआ॥\n\nकाजी किताबें खोजता,\nकरता नसीहत और को।\nमरहम नहीं उस हाल से,\nकाजी हुआ तो क्या हुआ॥\n\nजोगी दिगंबर सेवड़ा,\nकपड़ा रँगे रंग लाल से।\nवाकिफ नहीं उस रंग से,\nकपड़ा रँगे से क्या हुआ॥\n\nमंदिर-झरोखा-रावटी,\nगुल चमन में रहते सदा।\nकहे कबीरा है सही,\nहर दम में साहिब रम रहा॥",
+      "meaning": "अनहद नाद हो रहा है लेकिन तुझे उसकी धुन की ख़बर नहीं है। मधुर संगीत स्वयं मंदिर के अंदर गूँज रहा है, उसे मंदिर से बाहर आकर सुनने से क्या फ़ायदा। अगर तूने प्रेम रस नहीं चखा है तो और सारे नशे करने से क्या फ़ायदा।\n\nक़ाज़ी किताबें ढूँढ़ता फिरता है, दूसरों को नसीहत करता है, लेकिन अगर वह मर्म को नहीं जानता तो केवल क़ाज़ी होने से क्या फ़ायदा। योगी अपने कपड़े लाल रंग से रँगते हैं लेकिन अगर वह उस (प्रेम के) रंग से परिचित नहीं हैं तो कपड़े रँगने से क्या होगा। कबीर सच ही कहते हैं कि साहब तो हर साँस में रमा हुआ है।",
+      "references": [],
+      "source": "notion"
+    },
+    {
+      "slug": "sai-bin-darad",
+      "title": "साँई बिन दरद",
+      "titleLatin": "Sai Bin Darad",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "साँई बिन दरद करजवा में होय।\nदिन नहिं चैन आवे, रात नहिं निंदिया,\nकासे कहूं दुख मुझे होय रे।\n\nआधी रतियाँ पिछले पहरवा,\nसाँई बिना तरस रही सोई मैं।\nकहत कबीर सुनो भाई प्यारे,\nसाँई मिले मुझे सुख होय रे॥",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "sai-sang-sasural",
+      "title": "साँई संग ससुराल",
+      "titleLatin": "Sai Sang Sasural",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "prem-na-badi-upje",
+      "title": "प्रेम न बाड़ी उपजे रे",
+      "titleLatin": "Prem Na Badi Upje",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "प्रेम न बाड़ी उपजे रे,\nप्रेम न हाट बिकाय।\nराजा परजा जेहि रुचे,\nसीस दे सो ले जाए।\n\nप्रेम पियाला जो पीवे है,\nसीस दछीना दे।\nलोभी शिश न दे सके,\nनाम प्रेम का लेय।\n\nछीन ही चढ़े, छीन ही उतरे,\nसो तो प्रेम न होई।\nअघट प्रेम पिंजर बसे,\nप्रेम कहावै सो।",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "mai-kaso-kahu",
+      "title": "मैं कासौं कहौं",
+      "titleLatin": "Mai Kaso Kahu",
+      "poets": [
+        "mira-bai"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "samajh-dekh",
+      "title": "समझ देख",
+      "titleLatin": "Samajh Dekh",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "समुझ देख मन मीत पियरवा,\nआसिक हो कर सोना क्या रे।\nपाया हो तो दे दे प्यारे,\nपाय पाय फिर खोना क्या रे।\n\nजब अँखियन में नींद घनेरी,\nतकिया और बिछौना क्या रे।\nकहैं कबीर प्रेम का मारग,\nसिर देना तो रोना क्या रे।",
+      "meaning": "देख मेरे मन के मीत, प्यारे इस बात को समझ ले कि प्रेमी होकर सोना कैसा। अगर तूने पाया है तो दिल खोलकर दे; उसे पाकर खो देने का सवाल नहीं पैदा होता।\n\nजब आँखों में घनेरी नींद बसी हो तो फिर तकिए और बिस्तर की क्या ज़रूरत है। कबीर कहते हैं कि प्रेम के मार्ग में सर दिया है तो रोना कैसा।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "mirga-ne-khet",
+      "title": "मिर्गा ने खेत उजाडा",
+      "titleLatin": "Mirga Ne Khet",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "मिरगा ने खेत उजाड़ा,\nजतन बिन मिरगा ने खेत उजाड़ा।\n\nपांच मिरगला पचीस मिरगनी,\nजामे तीन चिकारा।\nअपने अपने रस के भोगी,\nचुग लिया न्यारा न्यारा।\nमिरगा ने खेत उजाड़ा।\n\nउठ के झुंड मिरगा के आए,\nबैठे देखे खेत मंझारा।\nहो हो करत लट्ठ ले भागा,\nमुख पाए रखवाला।\nमिरगा ने खेत उजाड़ा।\n\nज्ञान का भूला, सुरति का चूका,\nगुरु शबद रखवाला।\nकहे कबीरा सुनो भाई साधो,\nबिरला भए सहारा।",
+      "meaning": "हर पल, हर दिशा से नयी खींचतान है, नया मनोरंजन है, जिसमें खोकर रास्ते से भटकना बहुत आसान है।\n\nहमारी पाँच इंद्रियाँ, उसकी पच्चीस वृत्तियाँ, और तीन गुण — ये अपने अपने अनुसार हमें चलाती हैं। और हम भी आसानी से उनकी लालसा में अपने आत्म को भूल जाते हैं।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "prem-na-kheto-nipje",
+      "title": "प्रेम न खेतो निपजे",
+      "titleLatin": "Prem Na Kheto Nipje",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "प्रेम न खेतो निपजे,\nप्रेम न हाट बिकाय।\nराजा परजा जिसको रुचे,\nसिर दे सो ले जाए।\n\nभगति दुहेली राम ने,\nनहीं कायर का काम।\nशीश उतारे हाथ करी,\nसो ले सो हरी नाम।\n\nप्रेम न हाट बिकाय।",
+      "meaning": "प्रेम किसी खेत में उत्पन्न नहीं होता और न वह किसी हाट (बाज़ार) में ही बिकता है। राजा हो अथवा प्रजा, जिस किसी को भी वह रुचिकर लगे, वह अपना सिर देकर उसे ले जा सकता है।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "jaat-bhi-ochhi",
+      "title": "जात भी ओछी, कर्म भी ओछा",
+      "titleLatin": "Jaat Bhi Ochhi",
+      "poets": [
+        "raidas"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "जात भी ओछी, करम भी ओछा,\nओछा कसब हमारा रे।\nनीचे से प्रभु ऊंच कियो हैं,\nकहे रैदास चमारा रे।\n\nजाति-जाति में जाती है,\nजो केतन के पात।\nरैदास मानुष ना जुड़ सके,\nजब तक जाति ना जात।",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "jaag-piyari",
+      "title": "जाग पियारी",
+      "titleLatin": "Jaag Piyari",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "जाग पियारी अब काहेको सोवै।\nरैन गई, दिन काहेको खोवै॥\n\nजिन जागा तिन मानिक पाया रे।\nतैं बौरी, सब सोय तू गँवाया॥\n\nजाग पियारी अब काहेको सोवै।\nपिया तेरे चतुर हैं, तू मूरुख नारी।\nकबहुँ न पिय की सेज सँवारी॥\n\nतैं बौरी बौरापन किन्ही।\nभर-जोबन पिय अपन न चीन्ही॥\n\nजाग देख पिय सेज न तेरे।\nतोहिं छाँड़ उठी गये सवेरे।\n\nकहैं कबीर सोई धुन जागै।\nशबद-बान उर अंतर लागै॥",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "hansa-karo",
+      "title": "हंसा करो पुरातन बात",
+      "titleLatin": "Hansa Karo",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "हंसा करो पुरातन बात।\nकौन देस से आया है हंसा,\nउतरना कौन सा घाट।\n\nकहाँ हंसा बिसराम किया है,\nकहाँ लगाये आस॥\n\nअबहीं हंसा चेत सबेरा,\nचलो हमारे साथ।\nसंसय-सोक वहाँ नहिं ब्यापै,\nनहीं काल के त्रास॥\n\nहिआँ मदन-बन फूल रहे हैं,\nआवे सोहम की बास।\nमन भौंरा जिहँ अरुझ रहे हैं,\nसुख की ना अभिलास॥",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "nitai-chander",
+      "title": "निताई चाँदेर",
+      "titleLatin": "Nitai Chander",
+      "poets": [
+        "bhaba-pagla"
+      ],
+      "singers": [],
+      "language": [
+        "Bengali"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "आमार निताई चाँदेर बाजारे,\nगोउर चाँदेर दरबारे,\nएक मोन जाए षेई जेते पारे।\n\nआबार दूई मन होले पोरबि फांदे,\nओरे पारबी ना जेते,\nएक मोन जाए षेई जेते पारे।\n\nचार दोषे चोल्लि शेरे मोन,\nरोति मासा कम होईले खैपारे,\nनैयेना महोजन बोली।\n\nआरेक हाकिम बोशे आछे,\nब्रजेर राधा रानी पार कोरे,\nएक मोन जाए षेई जेते पारे।\n\nआर काठुरिया मानिक चेने ना,\nचिनिर बॉलोद बॉए जे,\nचिनि षाद तो पेलो ना।\n\nजैमोन षर्नोकारे सोना चिने,\nआबार न्यैय सेथाय पॉरोख कॉरे,\nएक मोन जाए षेई जेते पारे।\n\nजे जोन चैपटा गुड़ेर भियेन जाने ना,\nओला रोश बाँधबी की कोरे?\nआबार भबा पागलार रॉशेर तॉत्त।",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "mai-gulam",
+      "title": "मैं गुलाम",
+      "titleLatin": "Mai Gulam",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "मैं गुलाम मोहे बेचे गोसाईं,\nतन मन धन मेरा राम जी के ताई।\n\nआणि सवेरा हाठ बिछायी,\nसोहि ग्राहक सोही बेचनहारा।\n\nबेचे राम तो राखे कौन,\nराखे राम तो बेचे कौन।\n\nकहे कबीर मैं तन-मन जार्या,\nसाहिब अपना छीन न बिसारया।\n\nबेचे राम तो राखे कौन,\nराखे राम तो बेचे कौन।",
+      "meaning": "भरे बाज़ार में मुझ जैसे ग़ुलाम को मेरा मालिक (स्वयं राम) बेच रहा है। सवेरे-सवेरे दुकान लगाके बेचने निकला है।\n\nमुझे खरीदने वाला भी वो, और बेचने वाला भी वो — तो जब बेचे वो तो खरीदेगा कौन, और खरीदे वो तो बेचेगा कौन।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "ghat-ghat-panchhi",
+      "title": "घट घट में पंछी",
+      "titleLatin": "Ghat Ghat Panchhi",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "घट घट में पंछी बोलता है।\n\nआप ही दंडी, आप तराजू,\nआप ही बैठा तोलता है।\n\nआप ही माली, आप बगीचा,\nआप ही कलियाँ तोड़ता है।\n\nसब बन में सब आप बिराजे,\nजड़ चेतन में डोलता है।\n\nकहत कबीरा सुनो भाई साधो,\nमन की गुंथी खोलता है।",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "is-ghat-antar",
+      "title": "इस घट अंतर",
+      "titleLatin": "Is Ghat Antar",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "इस घट अन्तर बाग-बगीचे,\nइसी में सिरजनहारा।\n\nइस घट अन्तर सात समुंदर,\nइसी में नौ लख तारा।\n\nइस घट अन्तर पारस मोती,\nइसी में परखनहारा।\n\nइस घट अन्तर अनहद गरजे,\nइसी में उठत फुहारा।\n\nकहत कबीर सुनो भाई साधो,\nइसी में साईं हमारा।",
+      "meaning": "इसी घट में बाग़-बग़ीचे खिले हैं और इसी में उनका सृजनहार है। इसी घट में सात समुद्र हैं और इसी में नौ लाख तारे। इसी में पारस और मोती हैं और इसी में परखने वाले।\n\nइसी घट में अनाहत नाद गूँज रहा है और इसी में फुहारें फूट रही हैं। कबीर कहते हैं, सुनो भाई साधो, इसी घट में हमारा साँई है।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "tomar-ghore",
+      "title": "तोमार घोरे",
+      "titleLatin": "Tomar Ghore",
+      "poets": [
+        "bengali-folk"
+      ],
+      "singers": [],
+      "language": [
+        "Bengali"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "Tomar ghore bash kore kara, o mon janona.\n\nEk jonay chobi ake ek mone mon,\narek joney boshe boshe rong makhe.\nO abar se chhobikhan noshto kore\nkon jona, kon jona.\nTomar ghore bash kore kara, o mon janona.\n\nEk jonay sur tole ek tare, o mon,\narek jonay monjirate taal tole.\nO abar besura sur dhore dekho\nkon jona, kon jona.\n\nTomar ghore boshot kore koyjona,\nmon janona.\n\nRosh khaiya hoiya matal, oi dekho\nhath foshke jay ghorar lagam.\nOi lagam khana dhore dekho\nkon jon, kon jona.\n\nTomar ghore boshot kore koy jona,\nmon janona.",
+      "meaning": "आपके घर — मन, शरीर — में कई मन हैं। कोई सृजन करता है, कोई विनाश; कोई सुर पिरोता है, और कोई ताल देता है; और उसी घर में बेसुरा होने पर टोका जाता है।\n\nजैसे जीवन प्रेमी रस में लीन होके भटक जाते हैं, कोई घर में है जो सुनिश्चित करता है कि आप अपनी मंज़िल तक पहुँचें।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "aisa-lo-nahi-taisa",
+      "title": "ऐसा लो नहीं तैसा लो",
+      "titleLatin": "Aisa Lo Nahi Taisa",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "ऐसा लो नहिं तैसा लो,\nमैं केहि बिधि कथौं गंभीरा लो।\n\nभीतर कहूँ तो जगमय लाजै,\nबाहर कहूँ तो झूठा लो॥\n\nबाहर-भीतर सकल निरन्तर,\nचित्त अचित दोउ पीठा लो।\n\nदृष्टि न मुष्टि परगट अगोचर,\nबातन कहा न जाई लो॥\n\nकहे कबीर सुनो भाई साधो,\nबातन कहा न जाई लो॥",
+      "meaning": "मैं इस गंभीर रहस्य का कैसे वर्णन करूँ — कैसे कहूँ कि वह ऐसा है या वैसा है। अगर मैं कहूँ कि वह मेरे अंदर है तो सारा जग शरमा जाए, और अगर यह कहूँ कि वह मुझसे बाहर है तो बात झूठी हो जाएगी।\n\nअंदर-बाहर की शक्लें एक-दूसरे से अलग नहीं की जा सकतीं। चित और अचित उसके दो पक्ष हैं। न वह दिखाई देता है, न हाथ से पकड़ा जा सकता है; न वह प्रगट है न अगोचर। वह क्या है, यह बताने के लिए शब्द नहीं।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "kabir-kutta-ram-ka",
+      "title": "कबीर कुत्ता राम का",
+      "titleLatin": "Kabir Kutta Ram Ka",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "कबीर कुत्ता राम का,\nमोतिया मेरा नाम।\nगलै राम की जेवड़ी,\nजित खैंचे तित जाऊँ॥\n\nज्यों ज्यों करे तो बहु,\nहो दूर दूर कहे जाऊँ।\nजो हरी रखे त्यों मैं रहूँ,\nजो देवे सो खाऊँ।",
+      "meaning": "कबीर कहते हैं कि मैं तो राम का कुत्ता हूँ, और मोतिया नाम मेरा है। मेरे गले में राम की ज़ंजीर पड़ी हुई है, मैं उधर ही चला जाता हूँ जिधर वह ले जाता है। प्रेम के ऐसे बंधन में मौज-ही-मौज है।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "haman-hai-ishq",
+      "title": "हमन है इश्क मस्ताना",
+      "titleLatin": "Haman Hai Ishq",
+      "poets": [
+        "kabir"
+      ],
+      "singers": [],
+      "language": [
+        "Hindi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "हमन है इश्क मस्ताना,\nहमन को होशियारी क्या।\nरहें आज़ाद या जग से,\nहमन दुनिया से यारी क्या।\n\nजो बिछड़े हैं पियारे से,\nभटकते दर-बदर फिरते।\nहमारा यार है हम में,\nहमन को इंतज़ारी क्या।\n\nन पल बिछड़े पिया हम से,\nन हम बिछड़े पियारे से।\nउन्हीं से नेह लागी है,\nहमन को बेकरारी क्या।\n\nकबीर इश्क का माता,\nदुई को दूर कर दिल से।\nजो चलना राह नाज़ुक है,\nहमन सर बोझ भारी क्या।",
+      "meaning": "",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "and-bahar-di",
+      "title": "अंद बाहर दी खबर न जानी",
+      "titleLatin": "And Bahar Di",
+      "poets": [
+        "ali-raja"
+      ],
+      "singers": [],
+      "language": [
+        "Punjabi"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "अंद बाहर दी खबर न जानी,\nरंग ही रंग बनाया।\nरंग ही रंग बनाया, मौला\nआदमी बन आया।\n\nना मैं मंगी, ना मैं परमी,\nझोली बाल झुलाया।\nउज्जर कित्ता वण दाणे ख्वाण दा,\nभेष तो आप तणाया।\n\nहाबिल काबिल पूट आदम दे,\nआदम किस दा झाया।\nअस्सा आदम खानू आगे होया,\nसुं आदम साड्डा झाया।\n\nआन बाज़ीगर बाज़ी पकड़ी,\nपुतला जोड़ बनाया।\nगली गली विच ढोल बजोंदा,\nनाचूं इश्क नचाया।\n\nएन दी चादर, मीम दा बुरखा,\nमुख पे घूंघट पाया।\nअली राजा है नाम हमारा,\nबुल्लेया नाम धराया।",
+      "meaning": "जब परम तत्व हम ही हैं, तो क्या भीतर क्या बाहर? मैं और वो एक ही हो गए हैं।\n\nइंसान उस परम तत्व से ही बना है, अब मैं वो ही बन गया हूँ। इस ज्ञान की शुरुआत चेतना से होती है और खत्म ये मुहब्बत पे होती है — जहाँ सब एक हो जाता है।",
+      "references": [],
+      "source": "canva"
+    },
+    {
+      "slug": "sangachhadwam",
+      "title": "संगच्छद्वम् संवदध्वं",
+      "titleLatin": "Sangachhadwam",
+      "poets": [
+        "rigveda"
+      ],
+      "singers": [],
+      "language": [
+        "Sanskrit"
+      ],
+      "genre": [],
+      "geography": [],
+      "raag": "",
+      "lyrics": "संगच्छद्वम् संवदध्वं,\nसं वो मनांसि जानताम्।\n\nसमानो मन्त्रः समितिः समानी,\nसमानं मनः सहचित्तमेषाम्।\n\nसमानी व आकूतिः,\nसमाना हृदयानि वः।\nसमानमस्तु वो मनो,\nयथा वः सुसहासति॥",
+      "meaning": "May you move in harmony, speak in one voice; let your minds be in agreement. May our purpose be the same; may we all be of one mind.\n\nMay our intentions and aspirations be alike, so that a common objective unifies us all.",
+      "references": [],
+      "source": "canva"
+    }
+  ],
+  "events": [
+    {
+      "slug": "kabir-sang-ruhdaari-first",
+      "series": "Kabir Sang Ruhdaari",
+      "title": "Kabir Sang Ruhdaari — the first gathering",
+      "titleDeva": "कबीर संग रुहदारी",
+      "date": null,
+      "tithi": "Jyestha Poornima",
+      "venue": "Kanoria Centre for Arts",
+      "city": "Ahmedabad",
+      "summary": "An earnest attempt to sit, breathe, and have a moment with ourselves, with art, and with the universe.",
+      "setlist": [
+        "sadho",
+        "rahna-nahi-des",
+        "bheege-chunariya",
+        "sunta-nahi-dhun",
+        "ghat-ghat-panchhi",
+        "prem-na-badi-upje",
+        "mirga-ne-khet",
+        "jaat-bhi-ochhi",
+        "is-ghat-antar",
+        "tomar-ghore",
+        "aisa-lo-nahi-taisa",
+        "prem-na-kheto-nipje",
+        "mai-gulam",
+        "chadariya-jheeni",
+        "samajh-dekh",
+        "kabir-kutta-ram-ka",
+        "haman-hai-ishq",
+        "and-bahar-di",
+        "moko-kahan",
+        "sangachhadwam"
+      ]
+    },
+    {
+      "slug": "baithak-2026-02",
+      "series": "Baithak",
+      "title": "Baithak — Phag Poonam",
+      "titleDeva": "बैठक",
+      "date": "2026-02-26",
+      "tithi": "Phag Poonam",
+      "venue": "",
+      "city": "Vadodara",
+      "summary": "The monthly sitting — music, readings and work-in-progress in a small circle. Holi songs for the full moon of Phagun.",
+      "setlist": [
+        "phagun-ke-din-char",
+        "aj-rang-hai",
+        "chadariya-jheeni",
+        "saro-sansariyo",
+        "aari-gagan-ma",
+        "mara-nakh-na"
+      ]
+    },
+    {
+      "slug": "kabir-sang-ruhdaari-2026-vadodara",
+      "series": "Kabir Sang Ruhdaari",
+      "title": "Kabir Sang Ruhdaari 2026",
+      "titleDeva": "कबीर संग रुहदारी २०२६",
+      "date": "2026-06-27",
+      "tithi": "Jyestha Poornima",
+      "venue": "MilanKunj Club, Alkapuri",
+      "city": "Vadodara",
+      "summary": "A room of nearly four hundred people singing along while painters worked at the edge of the stage.",
+      "setlist": [
+        "sai-bin-darad",
+        "sai-sang-sasural",
+        "prem-na-badi-upje",
+        "mai-kaso-kahu",
+        "chadariya-jheeni",
+        "samajh-dekh",
+        "moko-kahan",
+        "mirga-ne-khet",
+        "prem-na-kheto-nipje",
+        "jaat-bhi-ochhi",
+        "bheege-chunariya",
+        "jaag-piyari",
+        "hansa-karo",
+        "nitai-chander",
+        "mai-gulam"
+      ]
+    }
+  ],
+  "warnings": [
+    "lyrics differ notion vs harvest: aari-gagan-ma — kept Notion's",
+    "lyrics differ notion vs harvest: aj-rang-hai — kept Notion's",
+    "lyrics differ notion vs harvest: bheege-chunariya — kept Notion's",
+    "lyrics differ notion vs harvest: chadariya-jheeni — kept Notion's",
+    "lyrics differ notion vs harvest: mara-nakh-na — kept Notion's",
+    "lyrics differ notion vs harvest: phagun-ke-din-char — kept Notion's",
+    "lyrics differ notion vs harvest: rahna-nahi-des — kept Notion's",
+    "lyrics differ notion vs harvest: sadho — kept Notion's",
+    "lyrics differ notion vs harvest: saro-sansariyo — kept Notion's",
+    "lyrics differ notion vs harvest: sunta-nahi-dhun — kept Notion's",
+    "bheege-chunariya: Notion page body held \"साधो\" (sadho); replaced with harvest",
+    "rahna-nahi-des: Notion page body held \"भीगे चुनरिया प्रेम रस बुंदन\" (bheege-chunariya); replaced with harvest",
+    "sunta-nahi-dhun: Notion page body held \"साधो\" (sadho); replaced with harvest",
+    "no lyrics anywhere: bhum-charkha",
+    "no lyrics anywhere: man-lago-fakiri",
+    "no lyrics anywhere: sai-sang-sasural",
+    "no lyrics anywhere: mai-kaso-kahu",
+    "baithak-2026-02: Notion says 28 Feb 2026, its own name and the Canva site say 26 Feb — kept 26; confirm with owner"
+  ]
+}
