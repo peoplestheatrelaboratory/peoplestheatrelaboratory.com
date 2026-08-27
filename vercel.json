@@ -6,5 +6,5 @@
   "installCommand": "bun install --frozen-lockfile",
   "cleanUrls": true,
   "trailingSlash": true,
-  "crons": [{ "path": "/api/nightly-rebuild", "schedule": "30 21 * * *" }]
+  "crons": [{ "path": "/api/nightly-rebuild/", "schedule": "30 21 * * *" }]
 }

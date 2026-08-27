@@ -150,7 +150,7 @@ bun run build  →  runs `pull` first (prebuild), then astro build reads the JSO
 2. **Deploy hook**: Settings → Git → Deploy Hooks → create one for `main`
    (or `dev`); paste its URL into `VERCEL_DEPLOY_HOOK_URL`.
 3. **Notion webhook**: at notion.so/profile/integrations → the integration →
-   *Webhooks* → subscribe `https://peoplestheatrelaboratory.com/api/notion-webhook`
+   *Webhooks* → subscribe `https://peoplestheatrelaboratory.com/api/notion-webhook/` (keep the trailing slash — the site redirects without it and Notion will not follow a redirect)
    to `page.*` and `data_source.*` events. Notion sends a one-time
    `verification_token`; the function logs it — copy it into
    `NOTION_WEBHOOK_SECRET` and redeploy, then confirm the subscription.
