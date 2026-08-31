@@ -180,7 +180,7 @@ const meta = [song.language.join(', '), song.raag && `Raag ${song.raag}`, song.g
 
   @media (max-width: 40rem) {
     .neighbours { grid-template-columns: 1fr; }
-    .neighbours .later { grid-column: 1; text-align: start; align-items: flex-start; }
+    .neighbours .later { grid-column: 1; } /* stacked, but Next stays on the right */
   }
 </style>
 
