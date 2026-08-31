@@ -29,7 +29,6 @@ const e = next ?? last;
         ) : (
           <a class="cta" href={`/events/${e.slug}/`}>What was sung →</a>
         )}
-        <a class="all" href="/events/">All gatherings</a>
       </p>
     </div>
   </section>
@@ -76,6 +75,4 @@ const e = next ?? last;
 
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-m) var(--space-l); align-items: baseline; margin-block-start: var(--space-l); }
   .cta { font-family: var(--font-mono); letter-spacing: var(--tracking-wide); text-transform: uppercase; text-decoration: none; color: var(--ember); }
-  .all { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; text-decoration: none; color: var(--paper-38); }
-  .all:hover { color: var(--paper); }
 </style>
