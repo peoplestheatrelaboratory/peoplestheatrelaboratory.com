@@ -5,5 +5,61 @@
     "attribution": "Kabir",
     "poet": "kabir",
     "order": 1
+  },
+  {
+    "couplet": "पोथी पढ़ि पढ़ि जग मुआ, पंडित भया न कोय। ढाई आखर प्रेम का, पढ़े सो पंडित होय॥",
+    "translation": "Reading book upon book the whole world died, and none grew wise. Read two and a half letters of love — become the scholar.",
+    "attribution": "Kabir",
+    "poet": "kabir",
+    "order": 2
+  },
+  {
+    "couplet": "बुरा जो देखन मैं चला, बुरा न मिलिया कोय। जो दिल खोजा आपना, मुझसे बुरा न कोय॥",
+    "translation": "I went out to find the wicked and found no one. I searched my own heart — no one more wicked than me.",
+    "attribution": "Kabir",
+    "poet": "kabir",
+    "order": 3
+  },
+  {
+    "couplet": "साईं इतना दीजिये, जा में कुटुम समाय। मैं भी भूखा न रहूँ, साधु न भूखा जाय॥",
+    "translation": "Give me only this much, Lord — enough to hold the household: that I do not go hungry, and no guest leaves hungry.",
+    "attribution": "Kabir",
+    "poet": "kabir",
+    "order": 4
+  },
+  {
+    "couplet": "माटी कहे कुम्हार से, तू क्या रौंदे मोय। एक दिन ऐसा आएगा, मैं रौंदूँगी तोय॥",
+    "translation": "The clay says to the potter: why do you knead me? A day will come when I will knead you.",
+    "attribution": "Kabir",
+    "poet": "kabir",
+    "order": 5
+  },
+  {
+    "couplet": "चलती चक्की देख के, दिया कबीरा रोय। दो पाटन के बीच में, साबुत बचा न कोय॥",
+    "translation": "Watching the millstones turn, Kabir wept: between the two stones, nothing comes through whole.",
+    "attribution": "Kabir",
+    "poet": "kabir",
+    "order": 6
+  },
+  {
+    "couplet": "पायो जी मैंने राम रतन धन पायो।",
+    "translation": "I have found it — the jewel-wealth of the Name.",
+    "attribution": "Mira Bai",
+    "poet": "mira-bai",
+    "order": 7
+  },
+  {
+    "couplet": "मन चंगा तो कठौती में गंगा।",
+    "translation": "If the heart is clear, the Ganga flows in your washbowl.",
+    "attribution": "Raidas",
+    "poet": "raidas",
+    "order": 8
+  },
+  {
+    "couplet": "बुल्ला! की जाणा मैं कौण।",
+    "translation": "Bulleh! Who knows who I am?",
+    "attribution": "Bulleh Shah",
+    "poet": "",
+    "order": 9
   }
 ]

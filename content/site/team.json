@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "slug": "chaity-bhatt",
+    "name": "Chaity Bhatt",
+    "nameDeva": "",
+    "role": "Managing Director",
+    "order": 1,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  },
+  {
+    "slug": "meet-panchal",
+    "name": "Meet Panchal",
+    "nameDeva": "",
+    "role": "Management",
+    "order": 2,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  },
+  {
+    "slug": "dhaivat-shah",
+    "name": "Dhaivat Shah",
+    "nameDeva": "",
+    "role": "Management",
+    "order": 3,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  },
+  {
+    "slug": "parth-pandya",
+    "name": "Parth Pandya",
+    "nameDeva": "",
+    "role": "Developer, Singer",
+    "order": 4,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  },
+  {
+    "slug": "yash-chauhan",
+    "name": "Yash Chauhan",
+    "nameDeva": "",
+    "role": "Developer",
+    "order": 5,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  },
+  {
+    "slug": "nemi-shah",
+    "name": "Nemi Shah",
+    "nameDeva": "",
+    "role": "Designer",
+    "order": 6,
+    "photo": "",
+    "socials": "",
+    "bio": ""
+  }
+]

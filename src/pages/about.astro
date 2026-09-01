@@ -59,7 +59,7 @@ import { team } from '../lib/content';
             {m.photo && <img src={m.photo} alt="" loading="lazy" />}
             <h3>{m.name} {m.nameDeva && <span class="deva" lang="hi">{m.nameDeva}</span>}</h3>
             <p class="eyebrow">{m.role}</p>
-            <div class="bio" set:html={m.bio} />
+            {m.bio && <div class="bio" set:html={m.bio} />}
             {m.socials && <a class="link" href={m.socials} rel="me noopener">{m.socials.replace(/^https?:\/\/(www\.)?/, '')}</a>}
           </li>
         ))}

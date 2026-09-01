@@ -93,10 +93,6 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
       </ul>
     </section>
   )}
-
-  <nav class="neighbours" aria-label="Other gatherings">
-    <a class="all" href="/events/">All gatherings</a>
-  </nav>
 </InteriorLayout>
 
 <style>
@@ -188,22 +184,4 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   .artists .role { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-faint); }
   .artists .link { margin-block-start: 0.2rem; font-size: var(--step--1); color: var(--fg-muted); text-decoration: none; border-block-end: 1px solid var(--ink-38); align-self: flex-start; }
   .artists .link:hover { color: var(--ember); border-block-end-color: var(--ember); }
-
-  /* ── back to the ledger ────────────────────────────────────────── */
-  .neighbours {
-    margin-block-start: var(--space-2xl);
-    padding-block-start: var(--space-l);
-    border-block-start: 1px solid var(--rule);
-  }
-
-  .neighbours .all {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--fg-faint);
-  }
-
-  .neighbours .all:hover { color: var(--ember); }
 </style>

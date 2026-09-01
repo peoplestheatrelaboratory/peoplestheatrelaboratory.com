@@ -268,17 +268,36 @@ async function loadEvents() {
   console.log(`events: ${lib.events.length}`);
 }
 
+/**
+ * The doha pool, taken from the sample direction in public/5. The homepage
+ * hero shows the lowest-Order published quote; the rest are the pool the
+ * couplet can be drawn from.
+ * [slug, couplet, translation, attribution, artist slug (may be ''), order]
+ */
+const QUOTES = [
+  ['moko-kahan', 'मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।', 'Where do you search for me? I am right beside you.', 'Kabir', 'kabir', 1],
+  ['dhai-akhar', 'पोथी पढ़ि पढ़ि जग मुआ, पंडित भया न कोय। ढाई आखर प्रेम का, पढ़े सो पंडित होय॥', 'Reading book upon book the whole world died, and none grew wise. Read two and a half letters of love — become the scholar.', 'Kabir', 'kabir', 2],
+  ['bura-jo-dekhan', 'बुरा जो देखन मैं चला, बुरा न मिलिया कोय। जो दिल खोजा आपना, मुझसे बुरा न कोय॥', 'I went out to find the wicked and found no one. I searched my own heart — no one more wicked than me.', 'Kabir', 'kabir', 3],
+  ['sai-itna-dijiye', 'साईं इतना दीजिये, जा में कुटुम समाय। मैं भी भूखा न रहूँ, साधु न भूखा जाय॥', 'Give me only this much, Lord — enough to hold the household: that I do not go hungry, and no guest leaves hungry.', 'Kabir', 'kabir', 4],
+  ['mati-kahe-kumhar', 'माटी कहे कुम्हार से, तू क्या रौंदे मोय। एक दिन ऐसा आएगा, मैं रौंदूँगी तोय॥', 'The clay says to the potter: why do you knead me? A day will come when I will knead you.', 'Kabir', 'kabir', 5],
+  ['chalti-chakki', 'चलती चक्की देख के, दिया कबीरा रोय। दो पाटन के बीच में, साबुत बचा न कोय॥', 'Watching the millstones turn, Kabir wept: between the two stones, nothing comes through whole.', 'Kabir', 'kabir', 6],
+  ['payo-ji-maine', 'पायो जी मैंने राम रतन धन पायो।', 'I have found it — the jewel-wealth of the Name.', 'Mira Bai', 'mira-bai', 7],
+  ['man-changa', 'मन चंगा तो कठौती में गंगा।', 'If the heart is clear, the Ganga flows in your washbowl.', 'Raidas', 'raidas', 8],
+  ['bulla-ki-jana', 'बुल्ला! की जाणा मैं कौण।', 'Bulleh! Who knows who I am?', 'Bulleh Shah', '', 9]
+];
+
 async function loadQuotes() {
-  // The homepage hero shows the lowest-Order published quote.
-  await ensurePage('quote:moko-kahan', 'quotes', {
-    Couplet: title('मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।'),
-    Translation: text('Where do you search for me? I am right beside you.'),
-    Attribution: text('Kabir'),
-    Poet: relation([ids.pages['artist:kabir']]),
-    Order: number(1),
-    Status: select('Published'),
-  });
-  console.log('quotes: 1');
+  for (const [slug, couplet, translation, attribution, poet, order] of QUOTES) {
+    await ensurePage(`quote:${slug}`, 'quotes', {
+      Couplet: title(couplet),
+      Translation: text(translation),
+      Attribution: text(attribution),
+      Poet: relation([ids.pages[`artist:${poet}`]]),
+      Order: number(order),
+      Status: select('Published'),
+    });
+  }
+  console.log(`quotes: ${QUOTES.length}`);
 }
 
 await createDatabases();
