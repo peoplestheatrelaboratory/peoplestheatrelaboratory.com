@@ -4,6 +4,9 @@ import SiteHeader from '../components/SiteHeader.astro';
 import HeroVideo from '../components/HeroVideo.astro';
 import NextGathering from '../components/NextGathering.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { heroQuote } from '../lib/content';
+
+const quote = heroQuote();
 ---
 
 <BaseLayout>
@@ -12,7 +15,7 @@ import SiteFooter from '../components/SiteFooter.astro';
     <h1 class="visually-hidden">
       Peoples Theatre Laboratory — Vadodara. Home of Baithak and Kabir Sang Ruhdaari.
     </h1>
-    <HeroVideo />
+    <HeroVideo couplet={quote?.couplet} translation={quote?.translation} attribution={quote?.attribution} />
     <NextGathering />
   </main>
   <SiteFooter />

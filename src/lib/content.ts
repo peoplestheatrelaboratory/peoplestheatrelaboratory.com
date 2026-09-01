@@ -9,6 +9,7 @@ import eventsRaw from '../../content/site/events.json';
 import teamRaw from '../../content/site/team.json';
 import blogRaw from '../../content/site/blog.json';
 import scriptsRaw from '../../content/site/scripts.json';
+import quotesRaw from '../../content/site/quotes.json';
 
 export interface Artist {
   slug: string;
@@ -96,12 +97,24 @@ export interface Script {
   body: string; // html
 }
 
+export interface Quote {
+  couplet: string;
+  translation: string;
+  attribution: string;
+  poet: string; // artist slug, may be empty
+  order: number;
+}
+
 export const artists = artistsRaw as Artist[];
 export const songs = songsRaw as Song[];
 export const events = eventsRaw as Event[];
 export const team = teamRaw as TeamMember[];
 export const posts = blogRaw as Post[];
 export const scripts = scriptsRaw as Script[];
+export const quotes = quotesRaw as Quote[];
+
+/** The couplet on the homepage hero: lowest Order among published quotes. */
+export const heroQuote = (): Quote | undefined => quotes[0];
 
 const index = <T extends { slug: string }>(list: T[]) => new Map(list.map((x) => [x.slug, x]));
 const artistIx = index(artists);

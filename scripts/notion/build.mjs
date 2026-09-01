@@ -1,8 +1,8 @@
 /**
  * Build the PTL Master Library in Notion from content/library.json.
  *
- * Creates six databases under the parent page (Artists, Songs, Events, Team,
- * Blog, Scripts), then inserts artists → songs → events with relations and
+ * Creates seven databases under the parent page (Artists, Songs, Events, Team,
+ * Blog, Scripts, Quotes), then inserts artists → songs → events with relations and
  * page bodies. Idempotent: ids are remembered in content/notion-ids.json, so
  * re-running only creates what is missing.
  *
@@ -169,6 +169,14 @@ async function createDatabases() {
     Productions: rel('events', 'Scripts'),
     Status: STATUS,
   });
+  await ensureDb('quotes', 'Quotes', '🪔', {
+    Couplet: { title: {} },
+    Translation: { rich_text: {} },
+    Attribution: { rich_text: {} },
+    Poet: rel('artists', 'Quotes'),
+    Order: { number: { format: 'number' } },
+    Status: STATUS,
+  });
 }
 
 // ── pages ─────────────────────────────────────────────────────────────────
@@ -260,8 +268,22 @@ async function loadEvents() {
   console.log(`events: ${lib.events.length}`);
 }
 
+async function loadQuotes() {
+  // The homepage hero shows the lowest-Order published quote.
+  await ensurePage('quote:moko-kahan', 'quotes', {
+    Couplet: title('मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।'),
+    Translation: text('Where do you search for me? I am right beside you.'),
+    Attribution: text('Kabir'),
+    Poet: relation([ids.pages['artist:kabir']]),
+    Order: number(1),
+    Status: select('Published'),
+  });
+  console.log('quotes: 1');
+}
+
 await createDatabases();
 await loadArtists();
 await loadSongs();
 await loadEvents();
+await loadQuotes();
 console.log('done →', `https://app.notion.com/p/${PARENT_PAGE.replace(/-/g, '')}`);

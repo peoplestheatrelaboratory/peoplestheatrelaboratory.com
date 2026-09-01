@@ -378,10 +378,28 @@ for (const r of published(await queryAll(ids.ds.scripts))) {
   });
 }
 
+console.log('pull: quotes');
+const quotes = [];
+for (const r of published(await queryAll(ids.ds.quotes))) {
+  const p = r.properties;
+  need(r, 'Quotes', ['Couplet', 'Translation', 'Attribution', 'Poet', 'Order', 'Status']);
+  const couplet = P.title(p.Couplet).trim();
+  if (!couplet) continue;
+  quotes.push({
+    id: r.id,
+    couplet,
+    translation: P.text(p.Translation),
+    attribution: P.text(p.Attribution),
+    poet: P.relation(p.Poet).map((id) => artistById[id]?.slug).filter(Boolean)[0] ?? '',
+    order: P.number(p.Order) ?? 999,
+  });
+}
+quotes.sort((a, b) => a.order - b.order);
+
 // ── write ─────────────────────────────────────────────────────────────────
 fs.mkdirSync(OUT, { recursive: true });
 const strip = (list) => list.map(({ id, ...rest }) => rest);
-for (const [name, data] of Object.entries({ artists, songs, events, team, blog, scripts })) {
+for (const [name, data] of Object.entries({ artists, songs, events, team, blog, scripts, quotes })) {
   fs.writeFileSync(path.join(OUT, `${name}.json`), JSON.stringify(strip(data), null, 2) + '\n');
   console.log(`  ${name}: ${data.length}`);
 }

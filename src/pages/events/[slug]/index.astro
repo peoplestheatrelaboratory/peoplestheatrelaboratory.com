@@ -15,12 +15,6 @@ const event = getEvent(slug!)!;
 const series = seriesOf(event);
 const upcoming = isUpcoming(event);
 
-// neighbours for the earlier/later links, in date order
-const all = eventsSorted();
-const i = all.findIndex((e) => e.slug === event.slug);
-const newer = all[i - 1];
-const older = all[i + 1];
-
 const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
 const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
 ---
@@ -56,22 +50,29 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
     {event.body ? <Fragment set:html={event.body} /> : <p>{event.summary}</p>}
   </section>
 
+  {/* Before the gathering the setlist stays closed — only a way in. After it,
+      the songs themselves are the record of what happened. */}
   {setlist.length > 0 && (
-    <section class="setlist">
-      <h2>{upcoming ? 'Songs we will sing' : 'What was sung'}</h2>
-      <a class="cta songbook" href={`/events/${event.slug}/lyrics/`}>Open songbook →</a>
-      <ol role="list">
-        {setlist.map((s, n) => (
-          <li>
-            <span class="n">{String(n + 1).padStart(2, '0')}</span>
-            <a class="song" href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
-              <span class="song__title" lang="hi">{s!.title}</span>
-              <span class="song__poet">{poetNames(s!)}</span>
-            </a>
-          </li>
-        ))}
-      </ol>
-    </section>
+    upcoming ? (
+      <section class="setlist">
+        <a class="cta songbook" href={`/events/${event.slug}/lyrics/`}>Open songbook →</a>
+      </section>
+    ) : (
+      <section class="setlist">
+        <h2>What was sung</h2>
+        <ol role="list">
+          {setlist.map((s, n) => (
+            <li>
+              <span class="n">{String(n + 1).padStart(2, '0')}</span>
+              <a class="song" href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
+                <span class="song__title" lang="hi">{s!.title}</span>
+                <span class="song__poet">{poetNames(s!)}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
   )}
 
   {performers.length > 0 && (
@@ -94,9 +95,7 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   )}
 
   <nav class="neighbours" aria-label="Other gatherings">
-    {older && <a href={`/events/${older.slug}/`}><span class="eyebrow">Earlier</span>{older.title}</a>}
     <a class="all" href="/events/">All gatherings</a>
-    {newer && <a class="later" href={`/events/${newer.slug}/`}><span class="eyebrow">Later</span>{newer.title}</a>}
   </nav>
 </InteriorLayout>
 
@@ -175,7 +174,8 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
 
   @media (max-width: 40rem) { .setlist ol { columns: 1; } }
 
-  .songbook { margin-block: 0 var(--space-l); }
+  /* alone in its section on an upcoming gathering — no heading to sit under */
+  .songbook { margin-block: 0; font-size: var(--step-1); }
 
   /* ── artists ──────────────────────────────────────────────────── */
   .artists ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--space-l); margin: 0; padding: 0; }
@@ -189,41 +189,21 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   .artists .link { margin-block-start: 0.2rem; font-size: var(--step--1); color: var(--fg-muted); text-decoration: none; border-block-end: 1px solid var(--ink-38); align-self: flex-start; }
   .artists .link:hover { color: var(--ember); border-block-end-color: var(--ember); }
 
-  /* ── neighbours ────────────────────────────────────────────────── */
+  /* ── back to the ledger ────────────────────────────────────────── */
   .neighbours {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: var(--space-l);
     margin-block-start: var(--space-2xl);
     padding-block-start: var(--space-l);
     border-block-start: 1px solid var(--rule);
   }
 
-  .neighbours a {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    line-height: var(--leading-tight);
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .neighbours a:hover { color: var(--ember); }
-  .neighbours .later { grid-column: 3; text-align: end; align-items: flex-end; }
   .neighbours .all {
-    grid-column: 2;
-    align-self: center;
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
+    text-decoration: none;
     color: var(--fg-faint);
   }
 
-  @media (max-width: 40rem) {
-    .neighbours { grid-template-columns: 1fr; }
-    .neighbours .later, .neighbours .all { grid-column: 1; text-align: start; align-items: flex-start; }
-  }
+  .neighbours .all:hover { color: var(--ember); }
 </style>
