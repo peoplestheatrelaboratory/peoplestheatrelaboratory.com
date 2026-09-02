@@ -22,20 +22,22 @@ const {
 <section class="stage" data-hero aria-label="Peoples Theatre Laboratory">
   <div class="stage__hall" aria-hidden="true"></div>
 
+  {/* No `autoplay` and no `<source>` markup: either would pull 2.4 MB of
+      footage while the couplet is still trying to paint. The sources are
+      attached by the script below once the page has loaded. */}
   <video
     class="stage__video"
-    autoplay
     muted
     loop
     playsinline
-    preload="metadata"
+    preload="none"
     poster={poster}
     tabindex="-1"
     aria-hidden="true"
     data-hero-video
+    data-webm={webm}
+    data-mp4={mp4}
   >
-    <source src={webm} type="video/webm" />
-    <source src={mp4} type="video/mp4" />
   </video>
 
   <div class="stage__scrim" aria-hidden="true"></div>
@@ -215,21 +217,59 @@ const {
     paint();
   }
 
-  // Honour reduced-motion: hold on the poster frame instead of looping footage.
+  // The footage is the heaviest thing on the site, so it waits its turn: the
+  // sources are attached only after load, and never at all under reduced-motion
+  // or Data Saver — in those cases the poster frame over the hall stands in.
   const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
 
   if (video) {
-    const apply = () => {
-      if (calm.matches) {
-        video.autoplay = false;
-        video.pause();
-      } else {
-        video.play().catch(() => {
-          /* no source yet, or the browser declined — the hall stands in */
-        });
+    const conn = (navigator as any).connection;
+    const frugal = Boolean(
+      conn && (conn.saveData || /^([23]g|slow-2g)$/.test(conn.effectiveType ?? '')),
+    );
+
+    let attached = false;
+
+    const attach = () => {
+      if (attached) return;
+      attached = true;
+
+      for (const [src, type] of [
+        [video.dataset.webm, 'video/webm'],
+        [video.dataset.mp4, 'video/mp4'],
+      ] as const) {
+        if (!src) continue;
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = type;
+        video.append(source);
       }
+
+      video.load();
     };
-    apply();
+
+    const apply = () => {
+      if (calm.matches || frugal) {
+        video.pause();
+        return;
+      }
+
+      attach();
+      video.play().catch(() => {
+        /* the browser declined — the hall and the poster stand in */
+      });
+    };
+
+    if (document.readyState === 'complete') apply();
+    else window.addEventListener('load', apply, { once: true });
+
     calm.addEventListener('change', apply);
+
+    // Browsers pause a backgrounded tab's video and only resume it themselves
+    // for `autoplay` elements. This one is driven from script, so it has to
+    // pick itself back up.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') apply();
+    });
   }
 </script>

@@ -16,12 +16,7 @@ const year = new Date().getFullYear();
     <div class="page">
       <div class="cards" data-reveal>
         <section class="card">
-          <h3>Call us</h3>
-          <a class="big" href={SITE.phoneHref}>{SITE.phone}</a>
-        </section>
-
-        <section class="card">
-          <h3>Find us</h3>
+          <h2>Find us</h2>
           <ul role="list">
             {SOCIALS.map((s) => (
               <li>
@@ -83,9 +78,10 @@ const year = new Date().getFullYear();
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: clamp(2.25rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3rem);
+    max-width: 32rem;
   }
 
-  .card h3 {
+  .card h2 {
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-wide);
@@ -96,23 +92,6 @@ const year = new Date().getFullYear();
   .card ul { margin: 0; padding: 0; }
 
   .card li + li { margin-block-start: 0.55rem; }
-
-  .big {
-    /* inline-block so the rule under it hugs the number, not the column */
-    display: inline-block;
-    margin-block-start: var(--space-s);
-    font-family: var(--font-body);
-    font-size: var(--step-1);
-    line-height: 1.4;
-    white-space: nowrap;
-    text-decoration: none;
-    border-block-end: 1px solid rgb(185 111 40 / 0.35);
-    color: var(--ember-warm);
-    transition: border-color var(--dur-fast) var(--ease-out);
-  }
-
-  a.big:hover { border-block-end-color: var(--ember-warm); }
-
 
   .card li a {
     display: flex;
@@ -133,7 +112,7 @@ const year = new Date().getFullYear();
   .who {
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    color: var(--ink-38);
+    color: var(--ink-60);
     text-align: end;
     overflow-wrap: anywhere;
   }
@@ -147,7 +126,7 @@ const year = new Date().getFullYear();
     font-size: var(--step--1);
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-38);
+    color: var(--ink-60);
   }
 
 

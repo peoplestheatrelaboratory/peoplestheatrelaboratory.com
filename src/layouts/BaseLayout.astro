@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
 import { SITE } from '../consts';
 
@@ -44,12 +45,14 @@ const ogImage = new URL(image, Astro.site ?? SITE.url);
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400,50;1,9..144,400,50&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Tiro+Devanagari+Hindi&family=Courier+Prime:wght@400&family=Kalam:wght@300;400&display=swap"
-    />
+    {/* Self-hosted (see astro.config.mjs). The body serif and the Devanagari
+        face carry the opening couplet, so those two are preloaded; the rest
+        arrive without holding up the first paint. */}
+    <Font cssVariable="--font-newsreader" preload />
+    <Font cssVariable="--font-tiro" preload />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-courier-prime" />
+    <Font cssVariable="--font-kalam" />
 
     <slot name="head" />
   </head>

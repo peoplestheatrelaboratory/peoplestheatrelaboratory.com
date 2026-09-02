@@ -10,9 +10,14 @@ const { overlay = false } = Astro.props;
 ---
 
 <header class:list={['masthead', { overlay }]} data-masthead>
+  <!-- Exactly one of these two is ever displayed, so neither is hidden from
+       assistive tech — otherwise the narrow-screen link has no name at all.
+       The initials carry the name spelled out, kept out of sight. -->
   <a class="wordmark" href="/">
     <span class="wordmark__full">Peoples Theatre <em>Laboratory</em></span>
-    <span class="wordmark__short" aria-hidden="true">PTL</span>
+    <span class="wordmark__short">PTL<span class="visually-hidden"
+        > — Peoples Theatre Laboratory</span
+      ></span>
   </a>
 
   <button
@@ -220,7 +225,7 @@ const { overlay = false } = Astro.props;
     content: counter(door, decimal-leading-zero);
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    color: var(--paper-38);
+    color: var(--paper-52);
   }
 
   /* label and its note read as one stacked block, not two columns */
@@ -241,7 +246,7 @@ const { overlay = false } = Astro.props;
   .curtain__nav .note {
     font-family: var(--font-hand);
     font-size: var(--step-0);
-    color: var(--paper-38);
+    color: var(--paper-52);
     transform: rotate(-1.2deg);
     transform-origin: left center;
   }

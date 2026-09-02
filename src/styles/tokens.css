@@ -8,6 +8,8 @@
   --paper: #f2eddc;
   --paper-72: rgb(242 237 220 / 0.72);
   --paper-60: rgb(242 237 220 / 0.60);
+  /* the faintest tint still legible: 5.03:1 on ink, so small mono type passes AA */
+  --paper-52: rgb(242 237 220 / 0.52);
   --paper-38: rgb(242 237 220 / 0.38);
   --paper-18: rgb(242 237 220 / 0.18);
   --paper-08: rgb(242 237 220 / 0.08);
@@ -15,6 +17,7 @@
 
   /* ink on paper (concept 3) -------------------------------------------- */
   --ink-72: rgb(10 9 8 / 0.72);
+  /* 5.04:1 on paper — the faint role on the paper world */
   --ink-60: rgb(10 9 8 / 0.60);
   --ink-38: rgb(10 9 8 / 0.38);
   --ink-14: rgb(10 9 8 / 0.14);
@@ -22,23 +25,29 @@
   /* flame ---------------------------------------------------------------- */
   --ember: #d08a3e;        /* ember on ink   */
   --gold: #e3b23c;
-  --ember-warm: #b96f28;   /* ember on paper */
+  /* ember on paper, banked down until small type clears AA: the old #b96f28
+     read at 3.34:1 on cream, which the footer heading and the wordmark's
+     "Laboratory" both set at 14px. This is 4.83:1. */
+  --ember-warm: #945920;
   --gold-deep: #9a7419;
 
   /* roles ---------------------------------------------------------------- */
   --bg: var(--ink);
   --fg: var(--paper);
   --fg-muted: var(--paper-60);
-  --fg-faint: var(--paper-38);
+  --fg-faint: var(--paper-52);
   --rule: var(--paper-18);
   --accent: var(--ember);
 
   /* type ----------------------------------------------------------------- */
-  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --font-body: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --font-deva: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif;
-  --font-mono: 'Courier Prime', ui-monospace, 'SFMono-Regular', monospace;
-  --font-hand: 'Kalam', 'Bradley Hand', cursive;
+  /* The --font-* families below come from the `fonts` block in astro.config.mjs
+     and already carry metric-matched fallbacks. The literals are a safety net
+     for anywhere the generated stack has not been injected. */
+  --font-display: var(--font-fraunces, 'Fraunces', 'Iowan Old Style', Georgia, serif);
+  --font-body: var(--font-newsreader, 'Newsreader', Georgia, 'Times New Roman', serif);
+  --font-deva: var(--font-tiro, 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif);
+  --font-mono: var(--font-courier-prime, 'Courier Prime', ui-monospace, 'SFMono-Regular', monospace);
+  --font-hand: var(--font-kalam, 'Kalam', 'Bradley Hand', cursive);
 
   --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
   --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
