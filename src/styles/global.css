@@ -12,6 +12,9 @@ body {
 :lang(hi),
 .deva { font-family: var(--font-deva); }
 
+:lang(gu),
+.guj { font-family: var(--font-guj); }
+
 .page {
   width: 100%;
   max-width: var(--page-max);

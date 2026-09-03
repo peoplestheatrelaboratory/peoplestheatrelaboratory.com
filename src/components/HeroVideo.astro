@@ -49,6 +49,10 @@ const {
       <cite>— {attribution}</cite>
     </blockquote>
 
+    <a href="#gathering" class="stage__cue" aria-label="Scroll to next gathering">
+      <span class="stage__cue-text">Next gathering</span>
+      <span class="stage__cue-icon" aria-hidden="true">↓</span>
+    </a>
   </div>
 </section>
 
@@ -137,6 +141,50 @@ const {
     padding: var(--gutter);
     padding-block-end: clamp(1.6rem, 5vh, 3rem);
     color: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-l);
+  }
+
+  .stage__cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper-60);
+    padding: 0.5rem 0;
+    transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+
+  .stage__cue:hover,
+  .stage__cue:focus-visible {
+    color: var(--ember);
+    transform: translateY(2px);
+  }
+
+  .stage__cue-icon {
+    display: inline-block;
+    font-size: 1.1em;
+    animation: cue-bounce 2.2s ease-in-out infinite;
+  }
+
+  @keyframes cue-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  @media (max-width: 44rem) {
+    .stage__rail {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-m);
+    }
   }
 
   /* ── couplet ───────────────────────────────────────────────────── */
@@ -185,6 +233,7 @@ const {
   @media (prefers-reduced-motion: reduce) {
     .stage__hall { animation: none; }
     .couplet { animation: none; opacity: 1; transform: none; }
+    .stage__cue-icon { animation: none; }
   }
 </style>
 

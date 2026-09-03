@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { overlay = false } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <header class:list={['masthead', { overlay }]} data-masthead>
@@ -36,16 +37,19 @@ const { overlay = false } = Astro.props;
 <div class="curtain" id="site-menu" data-menu hidden>
   <nav class="curtain__nav" aria-label="Main">
     <ol>
-      {NAV.map((item, i) => (
-        <li style={`--i:${i}`}>
-          <a href={item.href}>
-            <span class="lines">
-              <span class="latin">{item.label}</span>
-              <span class="note">{item.note}</span>
-            </span>
-          </a>
-        </li>
-      ))}
+      {NAV.map((item, i) => {
+        const isActive = currentPath === item.href || currentPath.startsWith(item.href);
+        return (
+          <li style={`--i:${i}`}>
+            <a href={item.href} class:list={[{ 'is-active': isActive }]} aria-current={isActive ? 'page' : undefined}>
+              <span class="lines">
+                <span class="latin">{item.label}</span>
+                <span class="note">{item.note}</span>
+              </span>
+            </a>
+          </li>
+        );
+      })}
     </ol>
   </nav>
 </div>
@@ -94,8 +98,16 @@ const { overlay = false } = Astro.props;
       border-color var(--dur-mid) var(--ease-out);
   }
 
-  /* opaque, not translucent: a blurred bar would smear the hero's black edge
-     across the chrome at the exact moment it inverts */
+  /* while past the hero but still over the dark gathering section */
+  .masthead.overlay.is-scrolled:not(.is-past):not(.is-menu-open) {
+    background: rgb(10 9 8 / 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-block-end: 1px solid var(--paper-18);
+    color: var(--paper);
+  }
+
+  /* over the paper world the chrome inverts to cream */
   .masthead.overlay.is-past:not(.is-menu-open) {
     color: var(--ink);
     background: var(--paper);
@@ -246,13 +258,17 @@ const { overlay = false } = Astro.props;
   .curtain__nav .note {
     font-family: var(--font-hand);
     font-size: var(--step-0);
-    color: var(--paper-52);
+    color: var(--paper-72);
     transform: rotate(-1.2deg);
     transform-origin: left center;
   }
 
   .curtain__nav a:hover .latin,
   .curtain__nav a:focus-visible .latin { color: var(--ember); }
+
+  .curtain__nav a.is-active .latin { color: var(--ember); }
+  .curtain__nav a.is-active::before { color: var(--ember); }
+  .curtain__nav a.is-active .note { color: var(--gold); }
 
   /* staggered reveal, driven by --i */
   .curtain__nav li {
@@ -279,13 +295,30 @@ const { overlay = false } = Astro.props;
   const masthead = document.querySelector<HTMLElement>('[data-masthead]');
   const hero = document.querySelector<HTMLElement>('[data-hero]');
 
-  // Invert the chrome once the dark hero has scrolled past it.
+  const paperFoot = document.querySelector<HTMLElement>('.paperfoot');
+
+  // Transition chrome over dark gathering (is-scrolled) and paper world (is-past)
   if (masthead && hero) {
-    const observer = new IntersectionObserver(
-      ([entry]) => masthead.classList.toggle('is-past', !entry.isIntersecting),
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => masthead.classList.toggle('is-scrolled', !entry.isIntersecting),
       { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
     );
-    observer.observe(hero);
+    heroObserver.observe(hero);
+
+    if (paperFoot) {
+      const paperObserver = new IntersectionObserver(
+        ([entry]) => masthead.classList.toggle('is-past', entry.isIntersecting),
+        { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
+      );
+      paperObserver.observe(paperFoot);
+    } else {
+      heroObserver.disconnect();
+      const fallbackObserver = new IntersectionObserver(
+        ([entry]) => masthead.classList.toggle('is-past', !entry.isIntersecting),
+        { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
+      );
+      fallbackObserver.observe(hero);
+    }
   }
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');

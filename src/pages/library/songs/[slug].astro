@@ -21,8 +21,8 @@ const href = (s: { slug: string }) => `/library/songs/${s.slug}/`;
 
 <InteriorLayout
   title={song.title}
+  romanTitle={song.titleLatin && song.titleLatin !== song.title ? song.titleLatin : undefined}
   eyebrow={poets.length ? poets.map((p) => p!.name).join(' · ') : 'song'}
-  deva={song.titleLatin}
   description={`${song.titleLatin || song.title}${poets.length ? ` — ${poets.map((p) => p!.name).join(', ')}` : ''}. Lyrics${song.meaning ? ' and meaning' : ''}, as sung at Peoples Theatre Laboratory.`}
 >
   <SongSheet

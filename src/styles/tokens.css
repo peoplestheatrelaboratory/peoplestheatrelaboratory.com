@@ -46,6 +46,7 @@
   --font-display: var(--font-fraunces, 'Fraunces', 'Iowan Old Style', Georgia, serif);
   --font-body: var(--font-newsreader, 'Newsreader', Georgia, 'Times New Roman', serif);
   --font-deva: var(--font-tiro, 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif);
+  --font-guj: var(--font-gujarati, 'Noto Serif Gujarati', 'Shruti', 'Gujarati MT', Georgia, serif);
   --font-mono: var(--font-courier-prime, 'Courier Prime', ui-monospace, 'SFMono-Regular', monospace);
   --font-hand: var(--font-kalam, 'Kalam', 'Bradley Hand', cursive);
 

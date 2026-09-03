@@ -6,29 +6,44 @@
 import BaseLayout from './BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { isGujarati, isDevanagari } from '../lib/content';
 
 interface Props {
   title: string;
   description?: string;
   /** Small mono line above the title, echoing the menu's hand-written notes. */
   eyebrow?: string;
-  /** Optional Devanagari word set beside the title. */
+  /** Optional Indic word set beside the title. */
   deva?: string;
+  /** Optional language for the deva prop, e.g. 'gu' for Gujarati */
+  devaLang?: string;
+  /** Optional Latin romanization/transliteration for songs with native script title */
+  romanTitle?: string;
   /** Social share image; defaults to the site card. */
   image?: string;
 }
 
-const { title, description, eyebrow, deva, image } = Astro.props;
+const { title, description, eyebrow, deva, devaLang, romanTitle, image } = Astro.props;
+
+const titleIsGuj = isGujarati(title);
+const titleIsDeva = isDevanagari(title);
+const titleClass = titleIsGuj ? 'guj' : titleIsDeva ? 'deva' : '';
+const titleLang = titleIsGuj ? 'gu' : titleIsDeva ? 'hi' : undefined;
+
+const devaIsGuj = deva ? isGujarati(deva) : false;
+const devaClass = devaIsGuj ? 'guj' : 'deva';
+const effectiveDevaLang = devaLang ?? (devaIsGuj ? 'gu' : 'hi');
 ---
 
-<BaseLayout title={title} description={description} image={image}>
+<BaseLayout title={romanTitle ? `${title} (${romanTitle})` : title} description={description} image={image}>
   <SiteHeader />
   <main id="main" class="interior">
     <header class="page interior__head">
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h1>
-        {title}
-        {deva && <span class="deva interior__deva" lang="hi" aria-hidden="true">{deva}</span>}
+        <span class={titleClass} lang={titleLang}>{title}</span>
+        {romanTitle && <span class="interior__roman">{romanTitle}</span>}
+        {deva && <span class:list={[devaClass, 'interior__deva']} lang={effectiveDevaLang} aria-hidden="true">{deva}</span>}
       </h1>
     </header>
     <div class="page interior__body">
@@ -91,6 +106,14 @@ const { title, description, eyebrow, deva, image } = Astro.props;
   .interior__deva {
     font-size: var(--step-3);
     color: var(--ember);
+  }
+
+  .interior__roman {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-style: italic;
+    color: var(--fg-muted);
+    letter-spacing: 0.01em;
   }
 
   /* one long-form column; sections opt out with their own width */

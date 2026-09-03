@@ -22,8 +22,8 @@ const poets = song.poets.map((p) => getArtist(p)?.name).filter(Boolean).join(' �
 
 <InteriorLayout
   title={song.title}
+  romanTitle={song.titleLatin && song.titleLatin !== song.title ? song.titleLatin : undefined}
   eyebrow={`${event.title} · ${poets || 'song'}`}
-  deva={song.titleLatin}
   description={`${song.titleLatin || song.title} — song ${i + 1} of ${order.length} at ${event.title}. Lyrics to sing along.`}
 >
   <SongSheet

@@ -14,7 +14,7 @@ const e = next ?? last;
 ---
 
 {e && (
-  <section class="next" aria-label={next ? 'Next gathering' : 'Last gathering'}>
+  <section class="next" id="gathering" aria-label={next ? 'Next gathering' : 'Last gathering'}>
     <div class="page next__inner">
       <p class="eyebrow">{next ? 'Next gathering' : 'Last gathering'} · {seriesOf(e).label}</p>
       <h2>

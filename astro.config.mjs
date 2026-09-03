@@ -60,6 +60,14 @@ export default defineConfig({
     },
     {
       provider: google,
+      name: 'Noto Serif Gujarati',
+      cssVariable: '--font-gujarati',
+      weights: [400],
+      styles: ['normal'],
+      fallbacks: ['Shruti', 'Gujarati MT', 'Georgia', 'serif'],
+    },
+    {
+      provider: google,
       name: 'Kalam',
       cssVariable: '--font-kalam',
       weights: [300, 400],

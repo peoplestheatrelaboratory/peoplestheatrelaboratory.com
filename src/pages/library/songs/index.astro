@@ -1,6 +1,6 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { songs, artists, scripts, songsByArtist } from '../../../lib/content';
+import { songs, artists, songsByArtist, isGujarati } from '../../../lib/content';
 
 // songs grouped by poet, poets ordered by how many songs they carry
 const poets = artists
@@ -28,34 +28,64 @@ const performers = artists
     </p>
   </section>
 
+  <section class="filter-bar" aria-label="Search and filter songs">
+    <div class="filter-box">
+      <input
+        type="search"
+        id="song-filter"
+        class="filter-input"
+        placeholder="Search by title, transliteration, or poet..."
+        aria-label="Search songs by title, transliteration, or poet"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="filter-count" id="filter-count" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <p class="filter-empty" id="filter-empty" hidden>
+    No songs found matching your search. <button type="button" id="filter-clear">Show all songs</button>
+  </p>
+
   {poets.map(({ artist, songs: list }) => (
-    <section class="poet">
+    <section class="poet" data-poet-section>
       <h2>
         <a href={`/library/artists/${artist.slug}/`}>{artist.name}</a>
         {artist.nameDeva && <span class="deva" lang="hi">{artist.nameDeva}</span>}
         <span class="count">{list.length} {list.length === 1 ? 'song' : 'songs'}</span>
       </h2>
       <ul class="songs" role="list">
-        {list.map((s) => (
-          <li>
-            <a href={`/library/songs/${s.slug}/`}>
-              <span class="t" lang="hi">{s.title}</span>
-              <span class="l">{s.titleLatin}</span>
-              {s.meaning && <span class="m" title="has a meaning">◐</span>}
-            </a>
-          </li>
-        ))}
+        {list.map((s) => {
+          const isGuj = isGujarati(s.title);
+          return (
+            <li class="song-item" data-title={s.title.toLowerCase()} data-latin={(s.titleLatin || '').toLowerCase()} data-poet={artist.name.toLowerCase()}>
+              <a href={`/library/songs/${s.slug}/`}>
+                <span class:list={['t', { guj: isGuj }]} lang={isGuj ? 'gu' : 'hi'}>{s.title}</span>
+                <span class="l">{s.titleLatin}</span>
+                {s.meaning && <span class="m" title="has a meaning">◐</span>}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
   ))}
 
   {orphans.length > 0 && (
-    <section class="poet">
+    <section class="poet" data-poet-section>
       <h2>Unattributed</h2>
       <ul class="songs" role="list">
-        {orphans.map((s) => (
-          <li><a href={`/library/songs/${s.slug}/`}><span class="t" lang="hi">{s.title}</span><span class="l">{s.titleLatin}</span></a></li>
-        ))}
+        {orphans.map((s) => {
+          const isGuj = isGujarati(s.title);
+          return (
+            <li class="song-item" data-title={s.title.toLowerCase()} data-latin={(s.titleLatin || '').toLowerCase()} data-poet="unattributed">
+              <a href={`/library/songs/${s.slug}/`}>
+                <span class:list={['t', { guj: isGuj }]} lang={isGuj ? 'gu' : 'hi'}>{s.title}</span>
+                <span class="l">{s.titleLatin}</span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
   )}
@@ -117,8 +147,72 @@ const performers = artists
   .songs a:hover .t { color: var(--ember); }
 
   .t { font-size: var(--step-1); line-height: 1.35; transition: color var(--dur-fast) var(--ease-out); }
+  .t.guj { font-family: var(--font-guj); }
   .l { grid-column: 1; font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--fg-faint); }
   .m { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--fg-faint); font-size: var(--step--1); }
+
+  /* ── search filter ─────────────────────────────────────────────── */
+  .filter-bar {
+    max-width: var(--measure);
+    margin-block: var(--space-l) var(--space-xl);
+  }
+
+  .filter-box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    border-block-end: 1px solid var(--rule);
+    padding-block-end: 0.5rem;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .filter-box:focus-within {
+    border-block-end-color: var(--ember);
+  }
+
+  .filter-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    outline: none;
+  }
+
+  .filter-input::placeholder {
+    color: var(--fg-faint);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+  }
+
+  .filter-count {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    color: var(--fg-faint);
+    white-space: nowrap;
+  }
+
+  .filter-empty {
+    max-width: var(--measure);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--fg-muted);
+    padding: var(--space-l) 0;
+  }
+
+  .filter-empty button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--ember);
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+  }
 
   .performers ul { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); margin: 0; padding: 0; }
   .performers a { color: inherit; text-decoration: none; border-block-end: 1px solid var(--ink-38); }
@@ -129,3 +223,64 @@ const performers = artists
   .back a { color: var(--fg-faint); text-decoration: none; }
   .back a:hover { color: var(--ember); }
 </style>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('#song-filter');
+  const count = document.querySelector<HTMLElement>('#filter-count');
+  const empty = document.querySelector<HTMLElement>('#filter-empty');
+  const clearBtn = document.querySelector<HTMLButtonElement>('#filter-clear');
+  const items = document.querySelectorAll<HTMLElement>('.song-item');
+  const sections = document.querySelectorAll<HTMLElement>('[data-poet-section]');
+
+  if (input && items.length) {
+    const total = items.length;
+
+    const filter = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        items.forEach((it) => (it.hidden = false));
+        sections.forEach((sec) => (sec.hidden = false));
+        if (count) count.textContent = '';
+        if (empty) empty.hidden = true;
+        return;
+      }
+
+      let matches = 0;
+      items.forEach((it) => {
+        const title = it.dataset.title || '';
+        const latin = it.dataset.latin || '';
+        const poet = it.dataset.poet || '';
+        const hit = title.includes(q) || latin.includes(q) || poet.includes(q);
+        it.hidden = !hit;
+        if (hit) matches++;
+      });
+
+      sections.forEach((sec) => {
+        const visibleSongs = sec.querySelectorAll<HTMLElement>('.song-item:not([hidden])');
+        sec.hidden = visibleSongs.length === 0;
+      });
+
+      if (count) count.textContent = `${matches} of ${total}`;
+      if (empty) empty.hidden = matches > 0;
+    };
+
+    input.addEventListener('input', filter);
+
+    clearBtn?.addEventListener('click', () => {
+      input.value = '';
+      filter();
+      input.focus();
+    });
+
+    // Pressing '/' focuses search
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== input) {
+        const tag = (document.activeElement?.tagName || '').toLowerCase();
+        if (tag !== 'input' && tag !== 'textarea') {
+          e.preventDefault();
+          input.focus();
+        }
+      }
+    });
+  }
+</script>

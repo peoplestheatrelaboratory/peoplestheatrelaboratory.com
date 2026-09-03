@@ -2,7 +2,7 @@
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../../components/MoonPhase.astro';
 import {
-  eventsSorted, getEvent, getSong, getArtist, formatDate, formatPlace, seriesOf, isUpcoming, poetNames,
+  eventsSorted, getEvent, getSong, getArtist, formatDate, formatPlace, seriesOf, isUpcoming, poetNames, isGujarati,
 } from '../../../lib/content';
 import { SITE } from '../../../consts';
 
@@ -61,15 +61,18 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
       <section class="setlist">
         <h2>What was sung</h2>
         <ol role="list">
-          {setlist.map((s, n) => (
-            <li>
-              <span class="n">{String(n + 1).padStart(2, '0')}</span>
-              <a class="song" href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
-                <span class="song__title" lang="hi">{s!.title}</span>
-                <span class="song__poet">{poetNames(s!)}</span>
-              </a>
-            </li>
-          ))}
+          {setlist.map((s, n) => {
+            const isGuj = isGujarati(s!.title);
+            return (
+              <li>
+                <span class="n">{String(n + 1).padStart(2, '0')}</span>
+                <a class="song" href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
+                  <span class:list={['song__title', { guj: isGuj, deva: !isGuj }]} lang={isGuj ? 'gu' : 'hi'}>{s!.title}</span>
+                  <span class="song__poet">{poetNames(s!)}</span>
+                </a>
+              </li>
+            );
+          })}
         </ol>
       </section>
     )
@@ -166,6 +169,7 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
   .song { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
   .song:hover .song__title { color: var(--ember); }
   .song__title { font-size: var(--step-1); line-height: 1.4; transition: color var(--dur-fast) var(--ease-out); }
+  .song__title.guj { font-family: var(--font-guj); }
   .song__poet { font-size: var(--step--1); color: var(--fg-faint); }
 
   @media (max-width: 40rem) { .setlist ol { columns: 1; } }

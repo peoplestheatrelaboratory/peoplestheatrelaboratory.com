@@ -201,3 +201,25 @@ export const recentPosts = (n = 10) => posts.slice(0, n);
 /** Poets of a song as display names, e.g. "Kabir" or "Kabir · Mira Bai". */
 export const poetNames = (s: Song) =>
   s.poets.map((p) => getArtist(p)?.name ?? p).join(' · ');
+
+/** Check if text contains Gujarati characters */
+export const isGujarati = (text = '') => /[\u0A80-\u0AFF]/.test(text);
+
+/** Check if text contains Devanagari characters */
+export const isDevanagari = (text = '') => /[\u0900-\u097F]/.test(text);
+
+/** Detect appropriate lang code: gu, hi, bn, pa, or en */
+export function songLang(song: Song): string {
+  if (song.language?.some((l) => /gujarati/i.test(l)) || isGujarati(song.title) || song.lyrics.some(isGujarati)) return 'gu';
+  if (song.language?.some((l) => /bengali/i.test(l))) return 'bn';
+  if (song.language?.some((l) => /punjabi/i.test(l))) return 'pa';
+  if (isDevanagari(song.title) || song.lyrics.some(isDevanagari)) return 'hi';
+  return 'en';
+}
+
+/** CSS class for proper font family */
+export function scriptClass(text = ''): string {
+  if (isGujarati(text)) return 'guj';
+  if (isDevanagari(text)) return 'deva';
+  return '';
+}
