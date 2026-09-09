@@ -166,6 +166,22 @@ triggering anything.
 the fallback when no token is present and they make every build reproducible.
 Re-run `pull` and commit when you want the fallback refreshed.
 
+## Adding a gathering's setlist
+After a Baithak, the lyrics doc becomes an import file in `content/imports/`
+(see `2026-09-06-ahmedabad.json`): the event slug, the songs in the order they
+were sung, and title/poet/lyrics for songs new to the library. Then:
+
+```
+NOTION_TOKEN=$(ntn auth token) node scripts/notion/add-setlist.mjs content/imports/<file>.json
+NOTION_TOKEN=$(ntn auth token) node scripts/notion/pull.mjs
+```
+
+Existing songs and artists are matched by Slug and left alone; new songs are
+Published when they have lyrics and Draft when they do not (Draft songs stay in
+the Notion setlist but do not show on the site). Without a token,
+`--snapshot` patches `content/site/*.json` directly so the site can ship now;
+run the Notion step with the same file once `ntn login` has been done.
+
 ## Notion gotchas we handle
 - Image/file URLs expire after 1 h → always downloaded at build.
 - 3 requests/second → fine at build; never call Notion at runtime.

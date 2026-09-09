@@ -1,5 +1,114 @@
 [
   {
+    "slug": "mir-ali-husain",
+    "name": "Mir Ali Husain",
+    "nameDeva": "मीर अली हुसैन",
+    "roles": [
+      "Poet"
+    ],
+    "era": "",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "john-lennon",
+    "name": "John Lennon",
+    "nameDeva": "",
+    "roles": [
+      "Poet",
+      "Singer / Composer"
+    ],
+    "era": "1940–1980 · Liverpool",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "rajendra-shukla",
+    "name": "Rajendra Shukla",
+    "nameDeva": "રાજેન્દ્ર શુક્લ",
+    "roles": [
+      "Poet"
+    ],
+    "era": "b. 1942 · Bantwa, Saurashtra",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "swanand-kirkire",
+    "name": "Swanand Kirkire",
+    "nameDeva": "स्वानंद किरकिरे",
+    "roles": [
+      "Poet"
+    ],
+    "era": "b. 1970 · Indore",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "yogesh",
+    "name": "Yogesh",
+    "nameDeva": "योगेश",
+    "roles": [
+      "Poet"
+    ],
+    "era": "1943–2020 · Lucknow",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "shailendra",
+    "name": "Shailendra",
+    "nameDeva": "शैलेन्द्र",
+    "roles": [
+      "Poet"
+    ],
+    "era": "1923–1966 · Rawalpindi",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "javed-akhtar",
+    "name": "Javed Akhtar",
+    "nameDeva": "जावेद अख़्तर",
+    "roles": [
+      "Poet"
+    ],
+    "era": "b. 1945 · Gwalior",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "anand-bakshi",
+    "name": "Anand Bakshi",
+    "nameDeva": "आनंद बक्शी",
+    "roles": [
+      "Poet"
+    ],
+    "era": "1930–2002 · Rawalpindi",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
+    "slug": "gulzar",
+    "name": "Gulzar",
+    "nameDeva": "गुलज़ार",
+    "roles": [
+      "Poet"
+    ],
+    "era": "b. 1934 · Dina, Punjab",
+    "link": "",
+    "photo": "",
+    "note": ""
+  },
+  {
     "slug": "rigveda",
     "name": "Rigveda",
     "nameDeva": "ऋग्वेद",
