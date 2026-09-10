@@ -27,7 +27,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
 ---
 
 <p class="top">
-  <a class="back" href={back.href}>← {back.label}</a>
+  <a class="back" href={back.href}><span class="arrow" aria-hidden="true">←</span>{back.label}</a>
   {meta && <span class="meta">{meta}</span>}
 </p>
 
@@ -86,7 +86,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
   .top {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-s) var(--space-l);
     margin-block: calc(-1 * var(--space-xl)) var(--space-xl);
     font-family: var(--font-mono);
@@ -95,8 +95,33 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
     text-transform: uppercase;
     color: var(--fg-faint);
   }
-  .top .back { color: var(--fg-muted); text-decoration: none; }
-  .top .back:hover { color: var(--ember); }
+
+  /* A drawn button, not a whisper: this is the way out of a song. */
+  .top .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--paper-38);
+    border-radius: 999px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+  }
+  .top .back .arrow { transition: transform var(--dur-fast) var(--ease-out); }
+  .top .back:hover,
+  .top .back:focus-visible {
+    color: var(--ember);
+    border-color: var(--ember);
+    background-color: var(--paper-08);
+  }
+  .top .back:hover .arrow { transform: translateX(-0.2em); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .top .back .arrow { transition: none; }
+    .top .back:hover .arrow { transform: none; }
+  }
 
   .song--solo { grid-template-columns: minmax(0, 1fr); }
 

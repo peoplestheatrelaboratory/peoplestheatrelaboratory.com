@@ -37,7 +37,7 @@ const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
     })}
   </ol>
 
-  <p class="back"><a href={`/events/${event.slug}/`}>← {event.title}</a></p>
+  <p class="back"><a href={`/events/${event.slug}/`}><span class="arrow" aria-hidden="true">←</span>{event.title}</a></p>
 </InteriorLayout>
 
 <style>
@@ -62,6 +62,31 @@ const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
   .p { font-size: var(--step--1); color: var(--fg-faint); }
 
   .back { margin-block-start: var(--space-2xl); font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
-  .back a { color: var(--fg-faint); text-decoration: none; }
-  .back a:hover { color: var(--ember); }
+
+  /* A drawn button, not a whisper: this is the way back to the evening. */
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--paper-38);
+    border-radius: 999px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+  }
+  .back .arrow { transition: transform var(--dur-fast) var(--ease-out); }
+  .back a:hover,
+  .back a:focus-visible {
+    color: var(--ember);
+    border-color: var(--ember);
+    background-color: var(--paper-08);
+  }
+  .back a:hover .arrow { transform: translateX(-0.2em); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back .arrow { transition: none; }
+    .back a:hover .arrow { transform: none; }
+  }
 </style>
