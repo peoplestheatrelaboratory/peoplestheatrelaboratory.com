@@ -31,6 +31,12 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
   {meta && <span class="meta">{meta}</span>}
 </p>
 
+{next && (
+  <nav class="neighbours neighbours--top" aria-label="Next song">
+    <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang="hi">{next.title}</span></a>
+  </nav>
+)}
+
 <div class:list={['song', { 'song--solo': !singers.length }]}>
   <article class:list={['verses', { guj: isGuj }]} lang={lang}>
     {position && <p class="position" aria-label={`Song ${position.n} of ${position.of}`}>{String(position.n).padStart(2, '0')} / {String(position.of).padStart(2, '0')}</p>}
@@ -77,10 +83,11 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
   </section>
 )}
 
-<nav class="neighbours" aria-label="Other songs">
-  {prev && <a href={prev.href}><span class="eyebrow">Previous</span><span lang="hi">{prev.title}</span></a>}
-  {next && <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang="hi">{next.title}</span></a>}
-</nav>
+{prev && (
+  <nav class="neighbours" aria-label="Previous song">
+    <a href={prev.href}><span class="eyebrow">Previous</span><span lang="hi">{prev.title}</span></a>
+  </nav>
+)}
 
 <style>
   .top {
@@ -103,7 +110,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
     gap: 0.6em;
     min-height: 2.75rem;
     padding: 0.5rem 1.1rem;
-    border: 1px solid var(--paper-38);
+    border: 1px solid var(--ink-38);
     border-radius: 999px;
     color: var(--fg);
     text-decoration: none;
@@ -114,7 +121,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
   .top .back:focus-visible {
     color: var(--ember);
     border-color: var(--ember);
-    background-color: var(--paper-08);
+    background-color: var(--ink-14);
   }
   .top .back:hover .arrow { transform: translateX(-0.2em); }
 
@@ -218,6 +225,8 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
     padding-block-start: var(--space-l);
     border-block-start: 1px solid var(--rule);
   }
+
+  .neighbours--top { margin-block: 0 var(--space-xl); }
 
   .neighbours a { display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--step-1); line-height: var(--leading-tight); text-decoration: none; color: inherit; }
   .neighbours a:hover { color: var(--ember); }
