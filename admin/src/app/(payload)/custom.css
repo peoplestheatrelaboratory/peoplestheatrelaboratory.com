@@ -120,7 +120,7 @@ html[data-theme='light'] {
   .render-fields:not(.render-fields--margins-none) { --spacing-field: 24px; }
 }
 /* Keep the PTL wordmark readable inside Payload's compact breadcrumb slot. */
-.step-nav__home { width: 40px; min-width: 40px; height: 40px; justify-content: center; }
+.step-nav__home { display: flex; align-items: center; width: 40px; min-width: 40px; height: 40px; justify-content: center; }
 .step-nav__home .ptl-brand-icon { font-size: 16px; overflow: visible; }
 
 /* Make actions and list tools clearly distinct from surrounding text. */
@@ -172,3 +172,69 @@ html[data-theme='light'] {
   .step-nav { max-width: 100%; }
   .step-nav > span:last-child { min-width: 0; }
 }
+
+/* ── Lists ─────────────────────────────────────────────────────────── */
+/* The title and its Create button share one line and one centre. */
+.list-header { align-items: center; }
+.list-header__title-and-actions, .list-header__title-actions { align-items: center; }
+.list-create-new-doc__create-new-button { min-height: 40px; padding: 8px 14px; }
+/* Payload stretches the search box to its grid row; keep it a normal field. */
+.search-bar { align-items: center; }
+.search-filter .search-filter__input { height: 48px; }
+
+/* ── Edit screens ──────────────────────────────────────────────────── */
+/* The section blurb belongs on the list, not above every document. */
+.doc-header__after-header .custom-view-description { display: none; }
+/* Paired fields: equal columns that stack on a phone. */
+.field-type.row .row__fields { gap: 24px; }
+
+/* Lists of one value each (setlist songs, lyrics stanzas, tags): one line per
+   row — handle, number, the field, the row menu — with no repeated label. */
+.ptl-compact-rows .array-field__draggable-rows { display: flex; flex-direction: column; gap: 8px; }
+.ptl-compact-rows .array-field__row {
+  display: flex; align-items: center; gap: 12px; margin: 0; padding: 8px 12px;
+  background: var(--theme-elevation-0); border: 1px solid var(--theme-elevation-150); border-radius: 10px;
+}
+/* Flatten Payload's header so its handle, number and menu become items of the row. */
+.ptl-compact-rows .array-field__row > .collapsible__toggle-wrap { display: contents; }
+.ptl-compact-rows .array-field__row .collapsible__toggle,
+.ptl-compact-rows .array-field__row .collapsible__indicator { display: none; }
+.ptl-compact-rows .array-field__row .collapsible__drag { order: 0; flex: none; position: static; }
+.ptl-compact-rows .array-field__row .collapsible__header-wrap {
+  order: 1; flex: none; width: auto; min-width: 5.5rem; padding: 0; position: static;
+  color: var(--theme-elevation-600); font-size: 14px; white-space: nowrap;
+}
+.ptl-compact-rows .array-field__row > [class*='rah-'] { order: 2; flex: 1 1 auto; min-width: 0; }
+.ptl-compact-rows .array-field__row .collapsible__actions-wrap { order: 3; flex: none; position: static; }
+.ptl-compact-rows .array-field__row .collapsible__content { padding: 0; }
+.ptl-compact-rows .array-field__fields { --spacing-field: 0px; }
+.ptl-compact-rows .array-field__fields > .field-type > .field-label,
+.ptl-compact-rows .array-field__fields > .field-type > label { display: none; }
+/* A stanza box is as tall as its lines, not a fixed slab. */
+.ptl-compact-rows .array-field__row .field-type.textarea textarea { min-height: 52px; padding: 12px 16px; field-sizing: content; }
+@media (max-width: 700px) {
+  .ptl-compact-rows .array-field__row { flex-wrap: wrap; }
+  .ptl-compact-rows .array-field__row .collapsible__header-wrap { flex: 1 1 auto; }
+  .ptl-compact-rows .array-field__row > [class*='rah-'] { order: 4; flex-basis: 100%; }
+}
+/* Rows with two short fields (performers, references): keep the header, lose the air. */
+.ptl-tight-rows .array-field__row > .collapsible__toggle-wrap { min-height: 44px; padding-block: 8px; }
+.ptl-tight-rows .array-field__row > .collapsible__content { padding: 16px; }
+.ptl-tight-rows .array-field__draggable-rows { gap: 8px; }
+
+/* ── Home ──────────────────────────────────────────────────────────── */
+/* Every section visible without scrolling on a laptop. */
+.ptl-home { padding-top: 32px; }
+.ptl-home__header { margin-bottom: 28px; }
+.ptl-home h1 { font-size: clamp(26px, 3vw, 34px); }
+.ptl-home__header > p:last-child { font-size: 16px; }
+.ptl-sections { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.ptl-section { padding: 20px; }
+.ptl-section h2 { font-size: 19px; margin-bottom: 6px; }
+.ptl-section > p { font-size: 14px; margin-bottom: 16px; }
+.ptl-link, .ptl-add { font-size: 14px; min-height: 40px; }
+.ptl-add { padding: 6px 14px; }
+.ptl-help { padding: 20px 24px; margin-top: 24px; }
+.ptl-help h2 { font-size: 16px; }
+.ptl-help p { font-size: 14px; }
+.ptl-login-help--small { font-size: 14px; margin-top: -8px; }

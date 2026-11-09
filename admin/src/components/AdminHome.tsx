@@ -22,7 +22,7 @@ export default function AdminHome({ initPageResult }: AdminViewServerProps) {
             <p>{item.description}</p>
             <div className="ptl-section__actions">
               <Link className="ptl-link" href={`/admin/collections/${item.slug}`}>Browse <span className="ptl-sr-only">{item.label}</span><span aria-hidden="true"> →</span></Link>
-              <Link className="ptl-add" href={`/admin/collections/${item.slug}/create`}>Add {item.singular}</Link>
+              <Link className="ptl-add" href={`/admin/collections/${item.slug}/create`}>{item.addLabel ?? `Add ${item.singular}`}</Link>
             </div>
           </article>
         ))}
