@@ -1,13 +1,13 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { artists, getArtist, songs, eventsSorted, poetNames } from '../../../lib/content';
+import { getContent } from '../../../lib/content';
+const { getArtist, songs, eventsSorted, poetNames } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return artists.map((a) => ({ params: { slug: a.slug } }));
-}
+
 
 const { slug } = Astro.params;
-const artist = getArtist(slug!)!;
+const artist = getArtist(slug!);
+if (!artist) return Astro.rewrite("/404/");
 const wrote = songs.filter((s) => s.poets.includes(artist.slug));
 const sang = songs.filter((s) => s.singers.includes(artist.slug));
 const appeared = eventsSorted().filter((e) => e.artists.includes(artist.slug));

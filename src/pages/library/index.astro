@@ -1,6 +1,7 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
-import { songs, scripts, posts, recentSongs, recentScripts, recentPosts, poetNames, formatDate } from '../../lib/content';
+import { getContent, formatDate } from '../../lib/content';
+const { songs, scripts, posts, recentSongs, recentScripts, recentPosts, poetNames } = await getContent(Astro.locals);
 import { SOCIALS } from '../../consts';
 
 const shelves = [

@@ -1,6 +1,7 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { scripts, getArtist } from '../../../lib/content';
+import { getContent } from '../../../lib/content';
+const { scripts, getArtist } = await getContent(Astro.locals);
 ---
 
 <InteriorLayout

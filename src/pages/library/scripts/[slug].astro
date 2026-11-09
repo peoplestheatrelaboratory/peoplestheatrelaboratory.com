@@ -1,13 +1,13 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { scripts, getScript, getArtist, getEvent } from '../../../lib/content';
+import { getContent } from '../../../lib/content';
+const { getScript, getArtist, getEvent } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return scripts.map((s) => ({ params: { slug: s.slug } }));
-}
+
 
 const { slug } = Astro.params;
-const script = getScript(slug!)!;
+const script = getScript(slug!);
+if (!script) return Astro.rewrite("/404/");
 const playwrights = script.playwrights.map((p) => getArtist(p)).filter(Boolean);
 const productions = script.productions.map((p) => getEvent(p)).filter(Boolean);
 ---

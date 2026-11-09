@@ -1,13 +1,13 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
-import { posts, getPost, team, getEvent, formatDate } from '../../lib/content';
+import { getContent, formatDate } from '../../lib/content';
+const { getPost, team, getEvent } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return posts.map((p) => ({ params: { slug: p.slug } }));
-}
+
 
 const { slug } = Astro.params;
-const post = getPost(slug!)!;
+const post = getPost(slug!);
+if (!post) return Astro.rewrite("/404/");
 const authors = post.authors.map((a) => team.find((t) => t.slug === a)).filter(Boolean);
 const event = post.relatedEvent ? getEvent(post.relatedEvent) : undefined;
 ---

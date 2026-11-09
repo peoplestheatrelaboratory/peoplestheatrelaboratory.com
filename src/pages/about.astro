@@ -1,7 +1,8 @@
 ---
 import InteriorLayout from '../layouts/InteriorLayout.astro';
 import { SITE } from '../consts';
-import { team } from '../lib/content';
+import { getContent } from '../lib/content';
+const { team } = await getContent(Astro.locals);
 ---
 
 <InteriorLayout

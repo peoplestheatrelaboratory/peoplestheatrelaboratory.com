@@ -32,13 +32,16 @@ meanwhile make a index page just simple PTL coming soon... something like this, 
 
 ## Development
 
-Astro static site. Package manager: **Bun** (Node >= 22.12 for the Astro toolchain).
+Astro public site with Vercel ISR, plus a separate Payload admin in `admin/`.
+Package manager: **Bun**. Deployment runtime: **Node 24**.
+See [admin setup and launch notes](docs/admin.md) for Neon, R2, permissions,
+environment variables and the Notion migration.
 
 ```sh
 bun install
 bun run dev      # local dev server
-bun run build    # -> dist/
-bun run preview  # serve dist/ exactly as production does
+bun run build    # Vercel server output + cached public routes
+bun run admin:dev # admin on localhost:3001
 bun run check    # astro + typescript check
 ```
 
@@ -53,7 +56,7 @@ Layout:
   and the previous holding page at `/coming-soon/`.
 
 Note: the dev server does not resolve directory indexes inside `public/`
-(`/5/` 404s, `/5/index.html` works). `npm run preview` and production do.
+(`/5/` 404s, `/5/index.html` works).
 
 TypeScript is pinned to 6.0.3 on purpose. TS 7 (the native compiler) does not
 expose the programmatic API `astro check` and the Astro editor extension use —

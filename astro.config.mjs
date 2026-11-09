@@ -1,10 +1,19 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import vercel from '@astrojs/vercel';
+import { existsSync } from 'node:fs';
+import { loadEnvFile } from 'node:process';
+
+// Vercel provides environment variables directly. Local CLI builds need the
+// same bypass token available while the adapter generates ISR configuration.
+if (existsSync('.env.local')) loadEnvFile('.env.local');
 
 const google = fontProviders.google();
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: vercel({ isr: { expiration: 300, bypassToken: process.env.ISR_BYPASS_TOKEN, exclude: [/^\/api\/.+/, '/404'] } }),
   site: 'https://peoplestheatrelaboratory.com',
   trailingSlash: 'always',
   build: {

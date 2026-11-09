@@ -16,6 +16,15 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+.neon
+admin/.next/
+admin/media/
+admin/tsconfig.tsbuildinfo
 
 # macOS-specific files
 .DS_Store
@@ -30,3 +39,5 @@ pnpm-debug.log*
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+admin/.initial-admin.txt

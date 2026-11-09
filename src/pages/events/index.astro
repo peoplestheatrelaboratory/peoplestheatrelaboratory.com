@@ -1,7 +1,8 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../components/MoonPhase.astro';
-import { upcomingEvents, pastEvents, formatDate, formatPlace, SERIES, seriesOf } from '../../lib/content';
+import { getContent, formatDate, formatPlace, SERIES, seriesOf } from '../../lib/content';
+const { upcomingEvents, pastEvents } = await getContent(Astro.locals);
 import { SITE } from '../../consts';
 
 const upcoming = upcomingEvents();

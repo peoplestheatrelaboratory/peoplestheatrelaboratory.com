@@ -1,17 +1,17 @@
 ---
 import InteriorLayout from '../../../../layouts/InteriorLayout.astro';
 import SongSheet from '../../../../components/SongSheet.astro';
-import { eventsSorted, getEvent, getSong, getArtist } from '../../../../lib/content';
+import { getContent } from '../../../../lib/content';
+const { getEvent, getSong, getArtist } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return eventsSorted().flatMap((e) =>
-    e.setlist.filter((s) => getSong(s)).map((song) => ({ params: { slug: e.slug, song } })),
-  );
-}
+
 
 const { slug, song: songSlug } = Astro.params;
-const event = getEvent(slug!)!;
-const song = getSong(songSlug!)!;
+const event = getEvent(slug!);
+if (!event) return Astro.rewrite("/404/");
+const song = getSong(songSlug!);
+if (!song) return Astro.rewrite("/404/");
+if (!event.setlist.includes(song.slug)) return Astro.rewrite("/404/");
 const order = event.setlist.filter((s) => getSong(s));
 const i = order.indexOf(song.slug);
 const prev = i > 0 ? getSong(order[i - 1]) : undefined;

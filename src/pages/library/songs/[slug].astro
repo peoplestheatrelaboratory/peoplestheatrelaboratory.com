@@ -1,14 +1,14 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
 import SongSheet from '../../../components/SongSheet.astro';
-import { songs, getSong, getArtist } from '../../../lib/content';
+import { getContent } from '../../../lib/content';
+const { songs, getSong, getArtist } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return songs.map((s) => ({ params: { slug: s.slug } }));
-}
+
 
 const { slug } = Astro.params;
-const song = getSong(slug!)!;
+const song = getSong(slug!);
+if (!song) return Astro.rewrite("/404/");
 const poets = song.poets.map((p) => getArtist(p)).filter(Boolean);
 
 // neighbours within the same poet, else the whole list

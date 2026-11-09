@@ -4,7 +4,8 @@
  * meaning and references below. Used by the library and by event songbooks;
  * `prev`/`next`/`back` decide what the bottom nav points at.
  */
-import { getArtist, stanzas, songLang, isGujarati, type Song } from '../lib/content';
+import { getContent, stanzas, songLang, isGujarati, type Song } from '../lib/content';
+const { getArtist } = await getContent(Astro.locals);
 
 interface Props {
   song: Song;

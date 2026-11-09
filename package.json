@@ -3,20 +3,26 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "workspaces": ["admin"],
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "pull": "node scripts/notion/pull.mjs",
-    "prebuild": "node scripts/notion/pull.mjs",
+    "admin:dev": "bun run --cwd admin dev",
+    "admin:build": "bun run --cwd admin build",
+    "admin:check": "bun run --cwd admin check",
+    "test": "bun test tests",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "11.0.20",
+    "zod": "^4.3.6",
     "astro": "^7.2.10"
   },
   "devDependencies": {

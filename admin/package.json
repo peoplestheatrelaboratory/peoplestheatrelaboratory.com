@@ -1,0 +1,46 @@
+{
+  "name": "@ptl/admin",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "check": "tsc --noEmit",
+    "payload": "payload",
+    "generate": "payload generate:types && payload generate:importmap",
+    "db:migrate": "payload migrate",
+    "db:create-migration": "payload migrate:create",
+    "import:snapshot": "tsx scripts/import-snapshot.ts",
+    "bootstrap": "tsx scripts/bootstrap.ts",
+    "verify:access": "tsx scripts/verify-access.ts"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "3.93.0",
+    "@payloadcms/email-nodemailer": "3.93.0",
+    "@payloadcms/next": "3.93.0",
+    "@payloadcms/richtext-lexical": "3.93.0",
+    "@payloadcms/storage-s3": "3.93.0",
+    "@smithy/node-http-handler": "^4.14.2",
+    "graphql": "^16.11.0",
+    "next": "16.4.5",
+    "payload": "3.93.0",
+    "pg": "^8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sanitize-html": "^2.17.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/sanitize-html": "^2.16.0",
+    "tsx": "^4.20.0",
+    "typescript": "6.0.3"
+  }
+}

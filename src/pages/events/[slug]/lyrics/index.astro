@@ -1,13 +1,13 @@
 ---
 import InteriorLayout from '../../../../layouts/InteriorLayout.astro';
-import { eventsSorted, getEvent, getSong, poetNames, formatDate, formatPlace, isGujarati } from '../../../../lib/content';
+import { getContent, formatDate, formatPlace, isGujarati } from '../../../../lib/content';
+const { getEvent, getSong, poetNames } = await getContent(Astro.locals);
 
-export function getStaticPaths() {
-  return eventsSorted().filter((e) => e.setlist.length).map((e) => ({ params: { slug: e.slug } }));
-}
+
 
 const { slug } = Astro.params;
-const event = getEvent(slug!)!;
+const event = getEvent(slug!);
+if (!event) return Astro.rewrite("/404/");
 const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
 ---
 

@@ -1,0 +1,40 @@
+import { getPayload } from 'payload';
+import { loadEnvFile } from 'node:process';
+import assert from 'node:assert/strict';
+loadEnvFile('.env');
+const { default: config } = await import('../src/payload.config');
+const payload = await getPayload({ config });
+const context = { skipRevalidation: true, bootstrap: true, trustedImport: true };
+const prefix = `verify-${Date.now()}`;
+const users: number[] = [];
+let eventID: number | undefined;
+try {
+  const superAdmin = (await payload.find({ collection:'users', where:{ role:{ equals:'super-admin' } }, limit:1, overrideAccess:true })).docs[0];
+  assert(superAdmin);
+  const editor = await payload.create({ collection:'users', data:{ name:'Permission check', email:`${prefix}@example.invalid`, password:crypto.randomUUID(), role:'editor', sections:['events'], canPublish:false, enabled:true }, overrideAccess:true, context });
+  users.push(editor.id);
+  await assert.rejects(payload.create({ collection:'users', data:{ name:'Unauthorized', email:`${prefix}-bad@example.invalid`, password:crypto.randomUUID(), role:'contributor' }, overrideAccess:false }));
+  await payload.update({ collection:'users', id:editor.id, data:{ role:'super-admin', canPublish:true, sections:['library'] }, user:editor, overrideAccess:false, context:{ skipRevalidation:true } });
+  const unchanged = await payload.findByID({ collection:'users', id:editor.id, overrideAccess:true });
+  assert.equal(unchanged.role,'editor'); assert.equal(unchanged.canPublish,false); assert.deepEqual(unchanged.sections,['events']);
+  await assert.rejects(payload.create({ collection:'events', data:{ title:'Forbidden publish',slug:`${prefix}-bad`,_status:'published' }, user:editor, overrideAccess:false, context:{skipRevalidation:true} }));
+  const draft = await payload.create({ collection:'events', data:{ title:'Private draft',slug:prefix,_status:'draft' }, draft:true,user:editor,overrideAccess:false,context:{skipRevalidation:true} });eventID=draft.id;
+  const anonymous = await payload.find({collection:'events',where:{slug:{equals:prefix}},draft:true,overrideAccess:false});assert.equal(anonymous.totalDocs,0);
+  const published = await payload.update({collection:'events',id:draft.id,data:{_status:'published'},user:superAdmin,overrideAccess:false,context:{skipRevalidation:true}});assert.equal(published._status,'published');
+  await assert.rejects(payload.update({collection:'events',id:draft.id,data:{title:'Unauthorized published edit'},user:editor,overrideAccess:false,context:{skipRevalidation:true}}));
+  await payload.update({collection:'events',id:draft.id,data:{title:'Draft revision',_status:'draft'},draft:true,user:editor,overrideAccess:false,context:{skipRevalidation:true}});
+  const publicVersion = await payload.findByID({collection:'events',id:draft.id,draft:false,overrideAccess:false});
+  assert.equal(publicVersion.title,'Private draft');
+  const draftVersion = await payload.findByID({collection:'events',id:draft.id,draft:true,user:editor,overrideAccess:false});
+  assert.equal(draftVersion.title,'Draft revision');
+  const contributor = await payload.create({collection:'users',data:{name:'Contributor check',email:`${prefix}-contributor@example.invalid`,password:crypto.randomUUID(),role:'contributor',sections:['events'],enabled:true},overrideAccess:true,context});
+  users.push(contributor.id);
+  await assert.rejects(payload.update({collection:'events',id:draft.id,data:{title:'Someone else’s draft',_status:'draft'},draft:true,user:contributor,overrideAccess:false,context:{skipRevalidation:true}}));
+  await assert.rejects(payload.create({collection:'songs',data:{title:'Wrong section',slug:`${prefix}-song`,_status:'draft'},draft:true,user:editor,overrideAccess:false,context:{skipRevalidation:true}}));
+  console.log('PASS: anonymous registration/draft access blocked; self-promotion blocked; editor scope preserved; publication requires permission.');
+} catch (error) { console.error(error); process.exitCode = 1; } finally {
+  if(eventID)await payload.delete({collection:'events',id:eventID,overrideAccess:true,context});
+  for(const id of users)await payload.delete({collection:'users',id,overrideAccess:true,context});
+  await Promise.race([payload.destroy(), new Promise(resolve => setTimeout(resolve, 3000))]);
+}
+process.exit(process.exitCode || 0);

@@ -7,6 +7,7 @@
  * we require it so the endpoint cannot be used to burn build minutes.
  */
 export async function GET(req: Request): Promise<Response> {
+  if (process.env.CMS_URL) return new Response("ISR handles content refresh", { status: 410 });
   const secret = process.env.CRON_SECRET;
   if (secret && req.headers.get('authorization') !== `Bearer ${secret}`) {
     return new Response('Unauthorized', { status: 401 });

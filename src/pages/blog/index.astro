@@ -1,6 +1,7 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
-import { posts, team, formatDate } from '../../lib/content';
+import { getContent, formatDate } from '../../lib/content';
+const { posts, team } = await getContent(Astro.locals);
 import { SOCIALS } from '../../consts';
 
 const authorName = (slug: string) => team.find((t) => t.slug === slug)?.name ?? '';

@@ -16,6 +16,7 @@ export function GET(): Response {
 }
 
 export async function POST(req: Request): Promise<Response> {
+  if (process.env.CMS_URL) return new Response("Notion publishing retired", { status: 410 });
   const raw = await req.text();
   let body: any = {};
   try { body = JSON.parse(raw); } catch { return new Response('Bad JSON', { status: 400 }); }

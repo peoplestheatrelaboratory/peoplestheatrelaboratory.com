@@ -1,6 +1,7 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { songs, artists, songsByArtist, isGujarati } from '../../../lib/content';
+import { getContent, isGujarati } from '../../../lib/content';
+const { songs, artists, songsByArtist } = await getContent(Astro.locals);
 
 // songs grouped by poet, poets ordered by how many songs they carry
 const poets = artists
