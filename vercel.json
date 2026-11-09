@@ -35,7 +35,7 @@
       ]
     },
     {
-      "source": "/:concept(1|2|3|4|5|6|7|full-site|lyrics|coming-soon)/:path*",
+      "source": "/(1|2|3|4|5|6|7|full-site|lyrics|coming-soon)/(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "source": "/fonts(.html)?",
+      "source": "/fonts(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
