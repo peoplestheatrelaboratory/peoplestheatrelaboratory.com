@@ -7,7 +7,8 @@ import blogRaw from '../../content/site/blog.json';
 import scriptsRaw from '../../content/site/scripts.json';
 import quotesRaw from '../../content/site/quotes.json';
 
-import type { Artist, Song, Event, TeamMember, Post, Script, Quote } from '../../shared/content-types';
+import type { Artist, Song, Event, TeamMember, Post, Script, Quote, MediaInfo } from '../../shared/content-types';
+import type { SiteSettings } from '../../shared/site-settings';
 export type { Artist, Song, Event, TeamMember, Post, Script, Quote } from '../../shared/content-types';
 import { contentSchema } from '../../shared/content-schema';
 export const SERIES: Record<string, { label: string; deva: string; rhythm: string }> = {
@@ -65,6 +66,10 @@ export function songLang(song: Song): string {
   return 'en';
 }
 
+/** BCP 47 code for a run of text, or undefined when it is plain Latin (the page language). */
+export const textLang = (text = ''): 'gu' | 'hi' | undefined =>
+  isGujarati(text) ? 'gu' : isDevanagari(text) ? 'hi' : undefined;
+
 /** CSS class for proper font family */
 export function scriptClass(text = ''): string {
   if (isGujarati(text)) return 'guj';
@@ -73,7 +78,7 @@ export function scriptClass(text = ''): string {
 }
 
 export const snapshotContent = { artists: artistsRaw, songs: songsRaw, events: eventsRaw, team: teamRaw, posts: blogRaw, scripts: scriptsRaw, quotes: quotesRaw };
-export type SiteContent = { artists: Artist[]; songs: Song[]; events: Event[]; team: TeamMember[]; posts: Post[]; scripts: Script[]; quotes: Quote[] };
+export type SiteContent = { artists: Artist[]; songs: Song[]; events: Event[]; team: TeamMember[]; posts: Post[]; scripts: Script[]; quotes: Quote[]; media?: Record<string, MediaInfo> };
 export function createContent(snapshot: SiteContent, now = new Date()) {
 const artists = snapshot.artists;
 const songs = snapshot.songs;
@@ -132,8 +137,24 @@ const recentPosts = (n = 10) => posts.slice(0, n);
 const poetNames = (s: Song) =>
   s.poets.map((p) => getArtist(p)?.name ?? p).join(' · ');
 
+/**
+ * Attributes for an uploaded image: the description its uploader wrote, and its
+ * intrinsic size so the page does not shift when it arrives.
+ */
+const imageAttrs = (url: string) => {
+  const info = snapshot.media?.[url];
+  return { alt: info?.alt ?? '', width: info?.width ?? undefined, height: info?.height ?? undefined };
+};
 
-return { artists, songs, events, team, posts, scripts, quotes, heroQuote, getArtist, getSong, getEvent, getPost, getScript, songsByArtist, eventsForSong, eventsSorted, upcomingEvents, pastEvents, isUpcoming, recentSongs, recentScripts, recentPosts, poetNames };
+/** The gathering the home page leads with, or undefined when there is none to show. */
+const featuredGathering = (settings: Pick<SiteSettings, 'gatheringMode' | 'featuredEvent'>): Event | undefined => {
+  if (settings.gatheringMode === 'hidden') return undefined;
+  if (settings.gatheringMode === 'selected') return getEvent(settings.featuredEvent);
+  return upcomingEvents()[0] ?? pastEvents()[0];
+};
+
+
+return { artists, songs, events, team, posts, scripts, quotes, heroQuote, getArtist, getSong, getEvent, getPost, getScript, songsByArtist, eventsForSong, eventsSorted, upcomingEvents, pastEvents, isUpcoming, recentSongs, recentScripts, recentPosts, poetNames, imageAttrs, featuredGathering };
 }
 
 // One promise per Astro request, never a process-global snapshot or draft cache.

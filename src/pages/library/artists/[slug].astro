@@ -1,7 +1,7 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { getContent } from '../../../lib/content';
-const { getArtist, songs, eventsSorted, poetNames } = await getContent(Astro.locals);
+import { getContent, textLang } from '../../../lib/content';
+const { getArtist, songs, eventsSorted, poetNames, imageAttrs } = await getContent(Astro.locals);
 
 
 
@@ -21,7 +21,7 @@ const appeared = eventsSorted().filter((e) => e.artists.includes(artist.slug));
 >
   {(artist.era || artist.note || artist.link || artist.photo) && (
     <section class="prose intro">
-      {artist.photo && <img class="photo" src={artist.photo} alt="" />}
+      {artist.photo && <img class="photo" src={artist.photo} {...imageAttrs(artist.photo)} />}
       {artist.era && <p class="eyebrow">{artist.era}</p>}
       <Fragment set:html={artist.note} />
       {artist.link && <p><a href={artist.link} rel="noopener" target="_blank">{artist.link.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')} ↗</a></p>}
@@ -32,7 +32,7 @@ const appeared = eventsSorted().filter((e) => e.artists.includes(artist.slug));
     <section>
       <h2>Words</h2>
       <ul class="list" role="list">
-        {wrote.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang="hi">{s.title}</span><span class="l">{s.titleLatin}</span></a></li>)}
+        {wrote.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang={textLang(s.title)}>{s.title}</span><span class="l">{s.titleLatin}</span></a></li>)}
       </ul>
     </section>
   )}
@@ -41,7 +41,7 @@ const appeared = eventsSorted().filter((e) => e.artists.includes(artist.slug));
     <section>
       <h2>Voice</h2>
       <ul class="list" role="list">
-        {sang.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang="hi">{s.title}</span><span class="l">{poetNames(s)}</span></a></li>)}
+        {sang.map((s) => <li><a href={`/library/songs/${s.slug}/`}><span lang={textLang(s.title)}>{s.title}</span><span class="l">{poetNames(s)}</span></a></li>)}
       </ul>
     </section>
   )}

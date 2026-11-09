@@ -4,7 +4,7 @@
  * meaning and references below. Used by the library and by event songbooks;
  * `prev`/`next`/`back` decide what the bottom nav points at.
  */
-import { getContent, stanzas, songLang, isGujarati, type Song } from '../lib/content';
+import { getContent, stanzas, songLang, isGujarati, textLang, type Song } from '../lib/content';
 const { getArtist } = await getContent(Astro.locals);
 
 interface Props {
@@ -34,7 +34,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
 
 {next && (
   <nav class="neighbours neighbours--top" aria-label="Next song">
-    <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang="hi">{next.title}</span></a>
+    <a class="later" href={next.href}><span class="eyebrow">Next</span><span lang={textLang(next.title)}>{next.title}</span></a>
   </nav>
 )}
 
@@ -86,7 +86,7 @@ const isGuj = isGujarati(song.title) || song.lyrics.some(isGujarati);
 
 {prev && (
   <nav class="neighbours" aria-label="Previous song">
-    <a href={prev.href}><span class="eyebrow">Previous</span><span lang="hi">{prev.title}</span></a>
+    <a href={prev.href}><span class="eyebrow">Previous</span><span lang={textLang(prev.title)}>{prev.title}</span></a>
   </nav>
 )}
 

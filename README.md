@@ -34,7 +34,8 @@ meanwhile make a index page just simple PTL coming soon... something like this, 
 
 Astro public site with Vercel ISR, plus a separate Payload admin in `admin/`.
 Package manager: **Bun**. Deployment runtime: **Node 24**.
-See [admin setup and launch notes](docs/admin.md) for Neon, R2, permissions,
+See [AGENTS.md](AGENTS.md) for architecture, conventions and open work, and
+[admin setup and launch notes](docs/admin.md) for Neon, R2, permissions,
 environment variables and the Notion migration.
 
 ```sh

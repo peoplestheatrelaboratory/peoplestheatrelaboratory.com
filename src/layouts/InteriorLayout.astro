@@ -36,6 +36,7 @@ const effectiveDevaLang = devaLang ?? (devaIsGuj ? 'gu' : 'hi');
 ---
 
 <BaseLayout title={romanTitle ? `${title} (${romanTitle})` : title} description={description} image={image}>
+  <slot name="head" slot="head" />
   <SiteHeader />
   <main id="main" class="interior">
     <header class="page interior__head">

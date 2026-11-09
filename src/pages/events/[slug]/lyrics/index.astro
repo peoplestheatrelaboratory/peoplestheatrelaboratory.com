@@ -1,6 +1,6 @@
 ---
 import InteriorLayout from '../../../../layouts/InteriorLayout.astro';
-import { getContent, formatDate, formatPlace, isGujarati } from '../../../../lib/content';
+import { getContent, formatDate, formatPlace, scriptClass, textLang } from '../../../../lib/content';
 const { getEvent, getSong, poetNames } = await getContent(Astro.locals);
 
 
@@ -24,12 +24,11 @@ const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
 
   <ol class="setlist" role="list">
     {setlist.map((s, n) => {
-      const isGuj = isGujarati(s!.title);
       return (
         <li>
           <a href={`/events/${event.slug}/lyrics/${s!.slug}/`}>
             <span class="n">{String(n + 1).padStart(2, '0')}</span>
-            <span class:list={['t', { guj: isGuj }]} lang={isGuj ? 'gu' : 'hi'}>{s!.title}</span>
+            <span class:list={['t', { guj: scriptClass(s!.title) === 'guj' }]} lang={textLang(s!.title)}>{s!.title}</span>
             <span class="p">{poetNames(s!)}</span>
           </a>
         </li>

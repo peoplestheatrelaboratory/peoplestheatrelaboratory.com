@@ -1,7 +1,7 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import { getContent, formatDate } from '../../lib/content';
-const { getPost, team, getEvent } = await getContent(Astro.locals);
+const { getPost, team, getEvent, imageAttrs } = await getContent(Astro.locals);
 
 
 
@@ -18,7 +18,7 @@ const event = post.relatedEvent ? getEvent(post.relatedEvent) : undefined;
   description={post.excerpt || post.title}
   image={post.cover || undefined}
 >
-  {post.cover && <img class="cover" src={post.cover} alt="" />}
+  {post.cover && <img class="cover" src={post.cover} {...imageAttrs(post.cover)} />}
 
   <article class="prose body">
     <Fragment set:html={post.body} />

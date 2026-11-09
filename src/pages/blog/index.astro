@@ -1,7 +1,7 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import { getContent, formatDate } from '../../lib/content';
-const { posts, team } = await getContent(Astro.locals);
+const { posts, team, imageAttrs } = await getContent(Astro.locals);
 import { SOCIALS } from '../../consts';
 
 const authorName = (slug: string) => team.find((t) => t.slug === slug)?.name ?? '';
@@ -18,7 +18,7 @@ const authorName = (slug: string) => team.find((t) => t.slug === slug)?.name ?? 
       {posts.map((p) => (
         <li>
           <a class="post" href={`/blog/${p.slug}/`}>
-            {p.cover && <img src={p.cover} alt="" loading="lazy" />}
+            {p.cover && <img src={p.cover} {...imageAttrs(p.cover)} alt="" loading="lazy" />}
             <span class="post__meta">{formatDate(p.date)}{p.authors.length ? ` · ${p.authors.map(authorName).filter(Boolean).join(', ')}` : ''}</span>
             <span class="post__title">{p.title}</span>
             {p.excerpt && <span class="post__excerpt">{p.excerpt}</span>}

@@ -10,7 +10,7 @@ const settings = unstable_cache(async () => {
   let featuredEvent = '';
   if (doc.featuredEvent) {
     const id = typeof doc.featuredEvent === 'object' ? doc.featuredEvent.id : doc.featuredEvent;
-    const event = await payload.find({collection:'events',where:{id:{equals:id}},limit:1,depth:0,draft:false,overrideAccess:false,user:null});
+    const event = await payload.find({collection:'events',where:{and:[{id:{equals:id}},{_status:{equals:'published'}}]},limit:1,depth:0,draft:false,overrideAccess:true});
     featuredEvent = event.docs[0]?.slug || '';
   }
   return siteSettingsSchema.parse({...doc, poster:doc.poster||'', featuredEvent,

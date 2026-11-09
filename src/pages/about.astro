@@ -2,7 +2,7 @@
 import InteriorLayout from '../layouts/InteriorLayout.astro';
 import { SITE } from '../consts';
 import { getContent } from '../lib/content';
-const { team } = await getContent(Astro.locals);
+const { team, imageAttrs } = await getContent(Astro.locals);
 ---
 
 <InteriorLayout
@@ -57,7 +57,7 @@ const { team } = await getContent(Astro.locals);
       <ul role="list">
         {team.map((m) => (
           <li>
-            {m.photo && <img src={m.photo} alt="" loading="lazy" />}
+            {m.photo && <img src={m.photo} {...imageAttrs(m.photo)} loading="lazy" />}
             <h3>{m.name} {m.nameDeva && <span class="deva" lang="hi">{m.nameDeva}</span>}</h3>
             <p class="eyebrow">{m.role}</p>
             {m.bio && <div class="bio" set:html={m.bio} />}

@@ -1,3 +1,7 @@
+> **Retired.** Content now lives in the Payload admin (see [AGENTS.md](../AGENTS.md)).
+> The Notion webhook and nightly rebuild functions described below have been removed.
+> `bun run pull` remains only to reconcile Notion before the apex cutover.
+
 # Notion as the PTL CMS
 
 Notion is the single source of content. The site is built statically by Astro

@@ -11,4 +11,6 @@ export const contentSchema = z.object({
   posts: z.array(z.object({ slug, title: s, date, authors: strings, excerpt: s, cover: s, tags: strings, relatedEvent: s, body: s })),
   scripts: z.array(z.object({ slug, title: s, titleDeva: s, playwrights: strings, language: strings, year: z.number().nullable(), file: s, synopsis: s, productions: strings, body: s })),
   quotes: z.array(z.object({ couplet: s, translation: s, attribution: s, poet: s, order: z.number() })),
+  // Keyed by the public file URL used in photo/cover fields. Absent in older snapshots.
+  media: z.record(s, z.object({ alt: s, width: z.number().nullable(), height: z.number().nullable() })).default({}),
 });

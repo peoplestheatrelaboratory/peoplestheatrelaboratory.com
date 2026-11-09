@@ -29,6 +29,11 @@ svg {
   max-width: 100%;
 }
 
+/* width/height attributes reserve the space; CSS still decides the size */
+img {
+  height: auto;
+}
+
 input,
 button,
 textarea,

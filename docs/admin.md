@@ -1,5 +1,8 @@
 # PTL content administration
 
+Start with [AGENTS.md](../AGENTS.md) for the current architecture, conventions and
+open work. This file is the longer setup and verification record.
+
 The public site remains Astro. Payload runs separately at `/admin` in the
 `admin/` Next.js workspace. PostgreSQL stores content, accounts, permissions,
 drafts and up to 15 versions per document. R2 stores uploaded files.
@@ -52,6 +55,10 @@ then run `bun run bootstrap` and remove those bootstrap variables.
 | Super admin | Manage accounts, permissions, all content, publication and media visibility. |
 | Editor | Edit assigned sections; publish/delete only when `canPublish` is enabled. |
 | Contributor | Create and edit their own drafts in assigned sections; cannot publish. |
+
+Staff without publishing rights can delete drafts they created, and nothing else.
+The collection REST API is closed to anonymous readers; the public site reads only
+`/api/site-content` and `/api/site-settings`.
 
 Sections: events, library, blog, team and quotes. Staff can upload private media;
 only super admins can modify, release or delete it. Disabled accounts cannot

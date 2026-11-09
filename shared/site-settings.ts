@@ -20,7 +20,7 @@ export const defaultSiteSettings: SiteSettings = {
   description: 'Peoples Theatre Laboratory, Vadodara. Home of Baithak and Kabir Sang Ruhdaari.',
   couplet: 'मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।',
   translation: 'Where do you search for me? I am right beside you.', attribution: 'Kabir',
-  poster: '/media/hero-poster.jpg', videoVariants: [{minWidth: 0, mp4: '/media/hero.mp4', webm: '/media/hero.webm'}],
+  poster: '/media/hero-poster.jpg', videoVariants: [{minWidth: 0, mp4: '/media/hero-mobile.mp4', webm: '/media/hero-mobile.webm'}, {minWidth: 768, mp4: '/media/hero.mp4', webm: '/media/hero.webm'}],
   gatheringMode: 'automatic', featuredEvent: '', nextLabel: 'Next gathering', pastLabel: 'Last gathering', bookingLabel: 'Book a seat →', detailsLabel: 'What was sung →',
   phone: '+91 98240 10483', phoneHref: 'tel:+919824010483', footerHeading: 'Find us', copyrightName: 'Peoples Theatre Laboratory',
   footerLinks: [

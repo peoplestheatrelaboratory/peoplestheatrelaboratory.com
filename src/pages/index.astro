@@ -5,7 +5,10 @@ import HeroVideo from '../components/HeroVideo.astro';
 import NextGathering from '../components/NextGathering.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { getSiteSettings } from '../lib/site-settings';
-const settings = await getSiteSettings(Astro.locals);
+import { getContent } from '../lib/content';
+const [settings, { featuredGathering }] = await Promise.all([getSiteSettings(Astro.locals), getContent(Astro.locals)]);
+// The hero's cue scrolls to the gathering strip, so it only shows when that strip renders.
+const hasGathering = Boolean(featuredGathering(settings));
 ---
 
 <BaseLayout description={settings.description}>
@@ -14,7 +17,7 @@ const settings = await getSiteSettings(Astro.locals);
     <h1 class="visually-hidden">
       {settings.heading}
     </h1>
-    <HeroVideo couplet={settings.couplet} translation={settings.translation} attribution={settings.attribution} poster={settings.poster} variants={settings.videoVariants} cueLabel={settings.nextLabel} showCue={settings.gatheringMode !== 'hidden'} />
+    <HeroVideo couplet={settings.couplet} translation={settings.translation} attribution={settings.attribution} poster={settings.poster} variants={settings.videoVariants} cueLabel={settings.nextLabel} showCue={hasGathering} />
     <NextGathering />
   </main>
   <SiteFooter />

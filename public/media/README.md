@@ -7,6 +7,8 @@ Source: PTL's own Baithak reel — `BAITHAK,25......#vadodara #purnima #garba.mp
 | ----------------- | ------ | ------------------------------------------------------------ |
 | `hero.mp4`        | 5.4 MB | h.264, silent, 21.1s. The universal fallback.                 |
 | `hero.webm`       | 2.5 MB | VP9, same cut. Listed first — browsers that can take it, do.  |
+| `hero-mobile.mp4` | 1.6 MB | The same cut at 960×540 for screens narrower than 768px.       |
+| `hero-mobile.webm`| 1.2 MB | VP9 at 960×540.                                               |
 | `hero-poster.jpg` |  12 KB | Frame 0 exactly, so first paint never flashes.                |
 | `og.jpg`          |  67 KB | Social share card — the rooftop gathering, not the dark moon. |
 
@@ -70,3 +72,16 @@ the component and skip `public/` altogether:
 ```
 
 Keep the mp4 under ~8 MB; the whole Vercel deployment is capped at 100 MB.
+
+## Mobile cut
+
+Made from the finished `hero.mp4`, so it loops identically:
+
+```sh
+ffmpeg -i hero.mp4 -an -vf "scale=960:540:flags=lanczos" -c:v libx264 -preset slow -crf 27 \
+  -profile:v main -pix_fmt yuv420p -movflags +faststart hero-mobile.mp4
+ffmpeg -i hero.mp4 -an -vf "scale=960:540:flags=lanczos" -c:v libvpx-vp9 -crf 38 -b:v 0 hero-mobile.webm
+```
+
+Which file a screen gets is set in the admin under Settings → Homepage & footer →
+Background video (minimum width 0 for the mobile cut, 768 for the full one).

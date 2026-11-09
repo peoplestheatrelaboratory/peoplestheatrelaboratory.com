@@ -92,3 +92,10 @@ export interface Quote {
   poet: string; // artist slug, may be empty
   order: number;
 }
+
+/** Description and intrinsic size of a public upload, keyed by its URL. */
+export interface MediaInfo {
+  alt: string;
+  width: number | null;
+  height: number | null;
+}

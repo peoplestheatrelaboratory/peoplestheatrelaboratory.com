@@ -4,10 +4,12 @@ import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html';
 
 // Public projection is an explicit allowlist. Internal users, permissions, drafts,
 // private uploads and version history never enter the public content response.
+// Collections are closed to anonymous API reads, so this runs with access checks
+// overridden; the `where` and `draft: false` below are what keep it to published rows.
 export async function siteContent(payload: Payload) {
   const names = ['artists', 'songs', 'events', 'team', 'blog', 'scripts', 'quotes', 'media'] as const;
   const entries = await Promise.all(names.map(async collection => {
-    const result = await payload.find({ collection, depth: 0, pagination: false, draft: false, overrideAccess: false, user: null,
+    const result = await payload.find({ collection, depth: 0, pagination: false, draft: false, overrideAccess: true,
       where: collection === 'media' ? { public: { equals: true } } : { _status: { equals: 'published' } }, sort: collection === 'quotes' || collection === 'team' ? 'order' : '-createdAt' });
     return [collection, result.docs] as const;
   }));
@@ -19,10 +21,9 @@ export async function siteContent(payload: Payload) {
   const values = (rows: any[] = []) => rows.map(row => row.value);
   const string = (v: any) => typeof v === 'string' ? v : '';
   const url = (v: any) => /^(https?:\/\/|mailto:|tel:)/i.test(string(v)) ? v : '';
-  const media = (value: any) => {
-    const doc = indexes.media.get(id(value));
-    return doc?.filename ? new URL(`/api/media/file/${encodeURIComponent(doc.filename)}`, process.env.ADMIN_URL || 'http://localhost:3001').href : '';
-  };
+  const fileUrl = (doc: any) => doc?.filename ? new URL(`/api/media/file/${encodeURIComponent(doc.filename)}`, process.env.ADMIN_URL || 'http://localhost:3001').href : '';
+  const media = (value: any) => fileUrl(indexes.media.get(id(value)));
+  const size = (v: any) => typeof v === 'number' && v > 0 ? v : null;
   const html = (doc: any, key: string) => sanitizeHtml(doc[key]?.root ? convertLexicalToHTML({ data: doc[key] }) : string(doc[`${key}Imported`]), {
     allowedTags: ['p','br','strong','em','u','s','blockquote','ul','ol','li','h2','h3','h4','a','hr'],
     allowedAttributes: { a: ['href', 'title'] }, allowedSchemes: ['https','http','mailto','tel'],
@@ -35,6 +36,7 @@ export async function siteContent(payload: Payload) {
     team: db.team.map(d => ({ slug: d.slug, name: d.name, nameDeva: string(d.nameDeva), role: string(d.role), order: d.order || 0, photo: media(d.photo), socials: url(d.socials), bio: html(d, 'bio') })),
     posts: db.blog.map(d => ({ slug: d.slug, title: d.title, titleDeva: string(d.titleDeva), date: day(d.date), authors: relations('team', d.authors), excerpt: string(d.excerpt), cover: media(d.cover), tags: values(d.tags), relatedEvent: slug('events', d.relatedEvent), body: html(d, 'body') })),
     scripts: db.scripts.map(d => ({ slug: d.slug, title: d.title, titleDeva: string(d.titleDeva), playwrights: relations('artists', d.playwrights), language: values(d.language), year: d.year ?? null, file: media(d.file), synopsis: string(d.synopsis), productions: relations('events', d.productions), body: html(d, 'body') })),
+    media: Object.fromEntries(db.media.filter(d => d.filename).map(d => [fileUrl(d), { alt: string(d.alt), width: size(d.width), height: size(d.height) }])),
     quotes: db.quotes.map(d => ({ couplet: d.couplet, translation: string(d.translation), attribution: d.attribution, poet: slug('artists', d.poet), order: d.order || 0 })),
   };
 }

@@ -5,13 +5,11 @@
  * When nothing is scheduled it points at the ledger instead of going quiet.
  */
 import MoonPhase from './MoonPhase.astro';
-import { getContent, formatDate, formatPlace, seriesOf } from '../lib/content';
+import { getContent, formatDate, formatPlace, seriesOf, scriptClass, textLang } from '../lib/content';
 import { getSiteSettings } from '../lib/site-settings';
-const [{ upcomingEvents, pastEvents, getEvent, isUpcoming }, settings] = await Promise.all([getContent(Astro.locals), getSiteSettings(Astro.locals)]);
+const [{ featuredGathering, isUpcoming }, settings] = await Promise.all([getContent(Astro.locals), getSiteSettings(Astro.locals)]);
 
-const next = upcomingEvents()[0];
-const last = pastEvents()[0];
-const e = settings.gatheringMode === 'hidden' ? undefined : settings.gatheringMode === 'selected' ? getEvent(settings.featuredEvent) : next ?? last;
+const e = featuredGathering(settings);
 const upcoming = e && isUpcoming(e);
 ---
 
@@ -21,7 +19,7 @@ const upcoming = e && isUpcoming(e);
       <p class="eyebrow">{upcoming ? settings.nextLabel : settings.pastLabel} · {seriesOf(e).label}</p>
       <h2>
         <a href={`/events/${e.slug}/`}>{e.title}</a>
-        {e.titleDeva && <span class="deva" lang="hi">{e.titleDeva}</span>}
+        {e.titleDeva && <span class:list={[scriptClass(e.titleDeva) || 'deva']} lang={textLang(e.titleDeva) ?? 'hi'}>{e.titleDeva}</span>}
       </h2>
       <p class="when"><MoonPhase date={e.date} /> {formatDate(e.date, e.tithi)} · {formatPlace(e)}</p>
       <p class="summary">{e.summary}</p>

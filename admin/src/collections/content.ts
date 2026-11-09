@@ -1,5 +1,5 @@
 import { APIError, type CollectionConfig, type CollectionSlug, type Field } from 'payload';
-import { canEdit, canPublish, editFilter, isSuper, type Section } from '../lib/permissions';
+import { canEdit, canPublish, deleteFilter, editFilter, isSuper, readFilter, type Section } from '../lib/permissions';
 import { afterChange, afterDelete } from '../lib/publishing';
 import { contentSections } from '../lib/content-sections';
 
@@ -42,9 +42,10 @@ function content(slug: string, section: Section, title: string, fields: Field[])
     versions: { drafts: true, maxPerDoc: 15 },
     access: {
       create: ({ req }) => canEdit(req.user, section),
-      read: ({ req }) => canEdit(req.user, section) ? true : { _status: { equals: 'published' } },
+      // The public site reads /api/site-content, never this API, so anonymous reads are closed.
+      read: ({ req }) => readFilter(req.user, section),
       update: ({ req }) => editFilter(req.user, section),
-      delete: ({ req }) => canPublish(req.user, section),
+      delete: ({ req }) => deleteFilter(req.user, section),
       readVersions: ({ req }) => canEdit(req.user, section),
     },
     hooks: {
