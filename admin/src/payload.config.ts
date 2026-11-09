@@ -6,6 +6,7 @@ import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SiteSettings } from './globals/SiteSettings';
 import { Users } from './collections/Users';
 import { Media } from './collections/Media';
 import { contentCollections } from './collections/content';
@@ -19,13 +20,14 @@ export default buildConfig({
   secret,
   serverURL: process.env.ADMIN_URL || 'http://localhost:3001',
   admin: {
-    user: 'users', meta: { titleSuffix: '— PTL Content studio' }, importMap: { baseDir: dirname },
+    user: 'users', theme: 'light', meta: { titleSuffix: '— PTL Content studio' }, importMap: { baseDir: dirname },
     components: {
       views: { dashboard: { Component: './components/AdminHome' } },
       graphics: { Logo: './components/Brand#Logo', Icon: './components/Brand#Icon' },
       beforeLogin: ['./components/Brand#LoginHelp'],
     },
   },
+  globals: [SiteSettings],
   collections: [Users, Media, ...contentCollections],
   upload: { limits: { fileSize: 3_000_000 }, abortOnLimit: true },
   editor: lexicalEditor(), sharp,

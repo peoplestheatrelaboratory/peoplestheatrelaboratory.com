@@ -120,8 +120,8 @@ CMS and revalidation requests before testing cross-project publication.
 Before production cutover, reconcile current Notion changes, choose the production
 database/bucket pairing, configure stable admin/site origins and SMTP if needed,
 and verify login, publication, file access and cache refresh on deployed URLs.
-The existing public site has not been switched to this backend. Keep its previous
-deployment for rollback; rolling back frontend code does not roll back DB writes.
+The `main.peoplestheatrelaboratory.com` preview now uses this backend. The apex
+domain still uses its previous deployment. Rolling back frontend code does not roll back DB writes.
 
 ## Verification
 
@@ -163,3 +163,47 @@ Verified locally: production build and TypeScript checks, seven permission/conte
 tests, authenticated desktop and mobile screens, no horizontal mobile overflow,
 and event optional-field expansion without browser errors. The same authenticated checks passed on the deployed custom domain. Temporary
 verification accounts were removed afterward.
+
+The admin uses a warm light theme with 16px body text, 48px text inputs,
+roomier table rows and field spacing, and cream content cards. Native Payload
+controls retain their validation, keyboard behavior and permission checks.
+
+## Homepage, footer and event performers
+
+Super admins can edit **Settings → Homepage & footer** at
+https://admin.peoplestheatrelaboratory.com/admin/globals/site-settings.
+It controls the homepage heading, description and quote, background video variants,
+next gathering selection, phone and shared footer links. Other roles cannot read
+or update the raw settings global; the public endpoint returns only display fields.
+Static page copy (such as About), navigation and layout remain in source code.
+
+Add video URLs with minimum screen widths: 0 for the default/mobile video, then
+optional 768/1280px variants. The browser chooses the largest matching width at
+load. Existing hosted video paths work; this does not add video uploads or encoding.
+The gathering can follow the next published event, use a selected published event,
+or be hidden. Drafts never appear publicly.
+
+Settings use a 30-day data cache, cleared when saved. Public pages have five-minute
+ISR so events roll over by date. Saves also call the authenticated Vercel function
+`api/revalidate.ts`, refreshing published routes without rebuilding. This endpoint
+lives beside the existing Vercel API functions because that API namespace takes
+precedence over Astro endpoint routing in the deployed project.
+
+Events have a repeatable **Performers & roles** field with Name and Part / instrument.
+Names and parts are specific to each event, shown on published event pages, and do
+not require creating an artist profile. Existing artist-profile links still work.
+Both schema migrations are additive and were tested on an isolated Neon branch
+before being applied to the live database.
+
+Verification for this update: 13 unit tests, Astro and admin type checks, both
+Vercel builds, settings access checks for super-admin/editor/contributor/anonymous,
+performer draft/public projection checks, and authenticated desktop/mobile UI
+checks. Search, filters, settings tabs and repeatable performer fields work without
+browser errors. Cache tags are expired during the save request before background
+page refresh begins; expiring them inside the background callback would let pages
+re-cache older data.
+The final deployed save/restore check passed without manual invalidation: homepage
+HTML followed both changes, raw global access was denied anonymously, and the
+refresh endpoint rejected unauthenticated requests. The public content cache key
+was advanced for the new performer projection so earlier cached payloads cannot
+hide the new fields.

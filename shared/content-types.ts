@@ -45,6 +45,7 @@ export interface Event {
   cover: string;
   setlist: string[];
   artists: string[];
+  performers?: { name: string; part: string }[];
   body: string; // html
 }
 

@@ -1,5 +1,9 @@
 ---
+import type { SiteSettings } from '../../shared/site-settings';
 interface Props {
+  variants?: SiteSettings['videoVariants'];
+  cueLabel?: string;
+  showCue?: boolean;
   /** Sources are optional — the stage falls back to an ink hall until they land. */
   webm?: string;
   mp4?: string;
@@ -10,6 +14,7 @@ interface Props {
 }
 
 const {
+  variants, cueLabel = 'Next gathering', showCue = true,
   webm = '/media/hero.webm',
   mp4 = '/media/hero.mp4',
   poster = '/media/hero-poster.jpg',
@@ -35,8 +40,7 @@ const {
     tabindex="-1"
     aria-hidden="true"
     data-hero-video
-    data-webm={webm}
-    data-mp4={mp4}
+    data-variants={JSON.stringify(variants ?? [{minWidth:0,webm,mp4}])}
   >
   </video>
 
@@ -49,10 +53,10 @@ const {
       <cite>— {attribution}</cite>
     </blockquote>
 
-    <a href="#gathering" class="stage__cue" aria-label="Scroll to next gathering">
-      <span class="stage__cue-text">Next gathering</span>
+    {showCue && <a href="#gathering" class="stage__cue" aria-label={`Scroll to ${cueLabel}`}>
+      <span class="stage__cue-text">{cueLabel}</span>
       <span class="stage__cue-icon" aria-hidden="true">↓</span>
-    </a>
+    </a>}
   </div>
 </section>
 
@@ -238,6 +242,7 @@ const {
 </style>
 
 <script>
+  import { chooseVideoVariant } from '../../shared/video';
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // The rail drifts away as the paper world arrives. Driven here rather than
@@ -283,9 +288,10 @@ const {
       if (attached) return;
       attached = true;
 
+      const variant = chooseVideoVariant(JSON.parse(video.dataset.variants || '[]'), window.innerWidth);
       for (const [src, type] of [
-        [video.dataset.webm, 'video/webm'],
-        [video.dataset.mp4, 'video/mp4'],
+        [variant?.webm, 'video/webm'],
+        [variant?.mp4, 'video/mp4'],
       ] as const) {
         if (!src) continue;
         const source = document.createElement('source');

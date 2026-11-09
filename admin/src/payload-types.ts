@@ -101,8 +101,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -328,6 +332,16 @@ export interface Event {
   setlist?:
     | {
         song?: (number | null) | Song;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add everyone singing or playing, with their part in this event. For example: Vocals, Tabla, or Harmonium.
+   */
+  performers?:
+    | {
+        name: string;
+        part: string;
         id?: string | null;
       }[]
     | null;
@@ -750,6 +764,13 @@ export interface EventsSelect<T extends boolean = true> {
         song?: T;
         id?: T;
       };
+  performers?:
+    | T
+    | {
+        name?: T;
+        part?: T;
+        id?: T;
+      };
   titleDeva?: T;
   tithi?: T;
   registerUrl?: T;
@@ -887,6 +908,96 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Super admins only. Saving updates the website. Settings are cached for 30 days and refreshed when you save.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  heading: string;
+  description: string;
+  couplet: string;
+  translation: string;
+  attribution: string;
+  poster?: string | null;
+  /**
+   * Add a default size with minimum width 0. Add larger versions for tablet or desktop (e.g. 768 or 1280). Use existing /media/ paths or HTTPS file URLs. Uploading/transcoding videos is not enabled.
+   */
+  videoVariants: {
+    minWidth: number;
+    mp4?: string | null;
+    webm?: string | null;
+    id?: string | null;
+  }[];
+  gatheringMode: 'automatic' | 'selected' | 'hidden';
+  /**
+   * Only published events appear on the website.
+   */
+  featuredEvent?: (number | null) | Event;
+  nextLabel: string;
+  pastLabel: string;
+  bookingLabel: string;
+  detailsLabel: string;
+  phone: string;
+  phoneHref: string;
+  footerHeading: string;
+  copyrightName: string;
+  footerLinks?:
+    | {
+        label: string;
+        detail?: string | null;
+        href: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  couplet?: T;
+  translation?: T;
+  attribution?: T;
+  poster?: T;
+  videoVariants?:
+    | T
+    | {
+        minWidth?: T;
+        mp4?: T;
+        webm?: T;
+        id?: T;
+      };
+  gatheringMode?: T;
+  featuredEvent?: T;
+  nextLabel?: T;
+  pastLabel?: T;
+  bookingLabel?: T;
+  detailsLabel?: T;
+  phone?: T;
+  phoneHref?: T;
+  footerHeading?: T;
+  copyrightName?: T;
+  footerLinks?:
+    | T
+    | {
+        label?: T;
+        detail?: T;
+        href?: T;
+        newTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -23,3 +23,11 @@ test('a deleted event invalidates its former song pages', () => {
   const paths = revalidationPaths({ collection: 'events', documents: [{ slug: 'deleted-event' }] }, contentSchema.parse(snapshotContent));
   expect(paths).toContain(`/events/deleted-event/lyrics/${snapshotContent.songs[0].slug}/`);
 });
+
+test('event performers preserve event-specific parts and older events remain valid', () => {
+  const event = { ...snapshotContent.events[0], performers: [{ name: 'A singer', part: 'Vocals' }, { name: 'A musician', part: 'Tabla' }] };
+  const parsed = contentSchema.parse({ ...snapshotContent, events: [event] });
+  expect(createContent(parsed).getEvent(event.slug)?.performers).toEqual(event.performers);
+  const { performers, ...legacy } = event;
+  expect(contentSchema.parse({ ...snapshotContent, events: [legacy] }).events[0].performers).toEqual([]);
+});

@@ -1,6 +1,8 @@
 ---
 import InteriorLayout from '../layouts/InteriorLayout.astro';
-import { SITE, SOCIALS } from '../consts';
+import { SITE } from '../consts';
+import { getSiteSettings } from '../lib/site-settings';
+const settings = await getSiteSettings(Astro.locals);
 ---
 
 <InteriorLayout
@@ -12,18 +14,18 @@ import { SITE, SOCIALS } from '../consts';
   <section class="reach">
     <div class="card">
       <h2 class="eyebrow">Call us</h2>
-      <a class="big" href={SITE.phoneHref}>{SITE.phone}</a>
+      <a class="big" href={settings.phoneHref}>{settings.phone}</a>
       <p class="hint">{SITE.city}, {SITE.region}</p>
     </div>
 
     <div class="card">
       <h2 class="eyebrow">Write to us</h2>
       <ul role="list">
-        {SOCIALS.map((s) => (
+        {settings.footerLinks.map((s) => (
           <li>
-            <a href={s.href} target="_blank" rel="me noopener">
+            <a href={s.href} target={s.newTab ? '_blank' : undefined} rel={s.newTab ? 'noopener noreferrer' : undefined}>
               <span class="what">{s.label}</span>
-              <span class="who">{s.handle}</span>
+              <span class="who">{s.detail}</span>
             </a>
           </li>
         ))}

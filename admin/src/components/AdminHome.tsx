@@ -36,7 +36,7 @@ export default function AdminHome({ initPageResult }: AdminViewServerProps) {
             : 'Save a draft while you work, then ask an editor with publishing access to review it.'}</p>
           <p>Photos and files stay private until a super admin makes them public.</p>
         </div>
-        {isSuper(user) && <Link className="ptl-link" href="/admin/collections/users">Manage staff & access <span aria-hidden="true">→</span></Link>}
+        {isSuper(user) && <div><Link className="ptl-link" href="/admin/globals/site-settings">Homepage &amp; footer →</Link><br /><Link className="ptl-link" href="/admin/collections/users">Manage staff & access <span aria-hidden="true">→</span></Link></div>}
       </aside>
     </div>
   );

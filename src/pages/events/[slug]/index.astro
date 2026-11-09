@@ -14,7 +14,7 @@ const series = seriesOf(event);
 const upcoming = isUpcoming(event);
 
 const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
-const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
+const artistProfiles = event.artists.map((a) => getArtist(a)).filter(Boolean);
 ---
 
 <InteriorLayout
@@ -76,11 +76,22 @@ const performers = event.artists.map((a) => getArtist(a)).filter(Boolean);
     )
   )}
 
-  {performers.length > 0 && (
+  {(event.performers?.length ?? 0) > 0 && (
+    <section class="artists">
+      <h2>Performers</h2>
+      <ul role="list">
+        {event.performers!.map((performer) => (
+          <li><div><span class="name">{performer.name}</span><span class="role">{performer.part}</span></div></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {artistProfiles.length > 0 && (
     <section class="artists">
       <h2>Artists</h2>
       <ul role="list">
-        {performers.map((a) => (
+        {artistProfiles.map((a) => (
           <li>
             {a!.photo && <img src={a!.photo} alt="" loading="lazy" />}
             <div>

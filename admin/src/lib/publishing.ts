@@ -2,14 +2,13 @@ import { after } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload';
 
-async function notify(req: Parameters<CollectionAfterChangeHook>[0]['req'], collection: string, documents: unknown[]) {
+export async function notifyWebsite(req: Parameters<CollectionAfterChangeHook>[0]['req'], collection: string, documents: unknown[]) {
   if (req.context.skipRevalidation) return;
-  revalidateTag('ptl-public-content', { expire: 0 });
   if (!process.env.SITE_URL || !process.env.ISR_BYPASS_TOKEN) return;
   try {
     const response = await fetch(new URL('/api/revalidate/', process.env.SITE_URL), {
       method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.ISR_BYPASS_TOKEN}` },
-      body: JSON.stringify({ collection, documents }), signal: AbortSignal.timeout(20000),
+      body: JSON.stringify({ collection, documents }), signal: AbortSignal.timeout(60000),
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
   } catch (error) {
@@ -18,10 +17,16 @@ async function notify(req: Parameters<CollectionAfterChangeHook>[0]['req'], coll
   }
 }
 export const afterChange: CollectionAfterChangeHook = async ({ doc, previousDoc, req, collection }) => {
-  if (collection.slug === 'media' || doc._status === 'published' || previousDoc?._status === 'published') !req.context.skipRevalidation && after(() => notify(req, collection.slug, [doc, previousDoc].filter(Boolean).map(({ slug }) => slug ? { slug } : {})));
+  if (!req.context.skipRevalidation && (collection.slug === 'media' || doc._status === 'published' || previousDoc?._status === 'published')) {
+    revalidateTag('ptl-public-content', { expire: 0 });
+    after(() => notifyWebsite(req, collection.slug, [doc, previousDoc].filter(Boolean).map(({ slug }) => slug ? { slug } : {})));
+  }
   return doc;
 };
 export const afterDelete: CollectionAfterDeleteHook = async ({ doc, req, collection }) => {
-  if (collection.slug === 'media' || doc._status === 'published') !req.context.skipRevalidation && after(() => notify(req, collection.slug, doc.slug ? [{ slug: doc.slug }] : []));
+  if (!req.context.skipRevalidation && (collection.slug === 'media' || doc._status === 'published')) {
+    revalidateTag('ptl-public-content', { expire: 0 });
+    after(() => notifyWebsite(req, collection.slug, doc.slug ? [{ slug: doc.slug }] : []));
+  }
   return doc;
 };

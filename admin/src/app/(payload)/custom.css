@@ -39,3 +39,136 @@
   .ptl-sections { grid-template-columns: minmax(0, 1fr); }
   .ptl-help { flex-direction: column; gap: 8px; padding: 16px; }
 }
+
+/* Comfortable density throughout Payload, including its native editing screens. */
+html {
+  --base-px: 24;
+  --base-body-size: 16;
+  --style-radius-s: 8px;
+  --style-radius-m: 10px;
+  --style-radius-l: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+html[data-theme='light'] {
+  --theme-elevation-0: #fffdf8;
+  --theme-elevation-50: #f6f1e7;
+  --theme-elevation-100: #eee7db;
+  --theme-elevation-150: #e3d9ca;
+  --theme-elevation-200: #d5c9b8;
+  --theme-elevation-250: #c5b7a4;
+  --theme-elevation-300: #ab9c89;
+  --theme-elevation-350: #93836f;
+  --theme-elevation-400: #796b5a;
+  --theme-elevation-450: #706251;
+  --theme-elevation-500: #675a4b;
+  --theme-elevation-550: #5e5143;
+  --theme-elevation-600: #554939;
+  --theme-elevation-650: #4b4032;
+  --theme-elevation-700: #42382d;
+  --theme-elevation-750: #382f26;
+  --theme-elevation-800: #30281f;
+  --theme-elevation-850: #282118;
+  --theme-elevation-900: #211b14;
+  --theme-elevation-950: #19150f;
+  --theme-elevation-1000: #14110c;
+  --theme-bg: #faf6ee;
+  --theme-input-bg: #fffdf8;
+  --theme-text: #30281f;
+  --accessibility-outline: 2px solid var(--ptl-ember);
+}
+.render-fields:not(.render-fields--margins-none) { --spacing-field: 32px; }
+.render-fields.render-fields--margins-small { --spacing-field: 24px; }
+.field-label { font-size: 16px; line-height: 1.5; padding-bottom: 10px; font-weight: 500; }
+.field-description { font-size: 14px; line-height: 1.6; }
+.field-type.text:not(.has-many) input,
+.field-type.email input,
+.field-type.password input,
+.field-type.number input,
+.react-datepicker__input-container input {
+  height: 48px;
+  font-size: 16px;
+  padding: 12px 16px;
+  box-shadow: none;
+}
+.field-type.textarea textarea { min-height: 144px; padding: 16px; line-height: 1.6; box-shadow: none; }
+.react-select .rs__control { min-height: 48px; padding: 8px 12px; box-shadow: none; }
+.react-select .rs__option { font-size: 16px; padding: 12px 16px; }
+.btn--size-medium, .btn--size-large { min-height: 44px; border-radius: 8px; }
+.table:not(.table--appearance-condensed) :is(th, td) { padding-block: 20px; line-height: 1.5; }
+.table thead { color: var(--theme-elevation-600); }
+.collapsible__toggle-wrap { min-height: 56px; padding-block: 16px; }
+.nav__link { min-height: 44px; padding-block: 10px; line-height: 1.5; }
+.nav-group { margin-bottom: 24px; }
+.nav-group__toggle { color: var(--theme-elevation-600); margin-bottom: 12px; }
+.ptl-home { max-width: 1240px; padding-top: 48px; }
+.ptl-home__header { margin-bottom: 40px; }
+.ptl-home__header > p:last-child { font-size: 18px; }
+.ptl-sections { gap: 24px; }
+.ptl-section { padding: 32px; background: var(--theme-elevation-0); border: 1px solid var(--theme-elevation-150); border-radius: 12px; }
+.ptl-section h2 { font-size: 24px; margin-bottom: 12px; }
+.ptl-section > p { margin-bottom: 24px; }
+.ptl-link, .ptl-add { font-size: 16px; min-height: 48px; }
+.ptl-add { border-radius: 8px; }
+.ptl-help { padding: 32px; margin-top: 32px; border-radius: 12px; }
+@media (max-width: 700px) {
+  .ptl-home { padding-top: 32px; }
+  .ptl-home__header > p:last-child { font-size: 16px; }
+  .ptl-section, .ptl-help { padding: 24px; }
+  .ptl-section h2 { font-size: 22px; }
+  .ptl-help > a { flex-shrink: 1; }
+  .render-fields:not(.render-fields--margins-none) { --spacing-field: 24px; }
+}
+/* Keep the PTL wordmark readable inside Payload's compact breadcrumb slot. */
+.step-nav__home { width: 40px; min-width: 40px; height: 40px; justify-content: center; }
+.step-nav__home .ptl-brand-icon { font-size: 16px; overflow: visible; }
+
+/* Make actions and list tools clearly distinct from surrounding text. */
+.btn--style-primary:not(.btn--disabled) {
+  --bg-color: #7b451d; --color: #fffdf8;
+  --hover-bg: #603316; --hover-color: #fffdf8;
+  --btn-font-weight: 600;
+  box-shadow: 0 2px 3px rgb(48 40 31 / .12);
+}
+.btn--style-secondary:not(.btn--disabled), .btn--style-subtle:not(.btn--disabled) {
+  --bg-color: #fffdf8; --color: #30281f;
+  --btn-border: 1px solid #ab9c89;
+  --hover-bg: #eee7db; --hover-color: #30281f;
+  --hover-btn-border: 1px solid #796b5a;
+  --btn-font-weight: 600;
+}
+.ptl-add { background: #7b451d; color: #fffdf8; border-color: #7b451d; }
+.ptl-add:hover { background: #603316; }
+.search-filter .search-filter__input {
+  min-height: 48px; padding: 12px 16px 12px 44px;
+  font-size: 16px; background: #fffdf8; border: 1px solid #ab9c89; border-radius: 8px;
+}
+.search-filter .search-filter__input:focus { outline: 2px solid var(--ptl-ember); outline-offset: 2px; }
+.search-filter .search-filter__input::placeholder { color: #796b5a; }
+.search-bar__actions { gap: 8px; }
+.search-bar__actions .pill--has-action {
+  min-height: 44px; padding: 8px 14px; border: 1px solid #ab9c89;
+  border-radius: 8px; background: #fffdf8; color: #30281f; font-weight: 600;
+}
+.search-bar__actions .pill--has-action:hover { background: #eee7db; }
+.search-bar__actions .pill--style-dark,
+.search-bar__actions .pill--has-action[aria-expanded='true'] { background: #7b451d; color: #fffdf8; border-color: #7b451d; }
+.list-controls .where-builder, .list-controls .sort-complex, .list-controls .pill-selector {
+  padding: 20px; background: #fffdf8; border: 1px solid #d5c9b8; border-radius: 10px;
+}
+@media (max-width: 700px) {
+  .search-bar__actions { flex-wrap: wrap; }
+  .list-controls .where-builder, .list-controls .sort-complex, .list-controls .pill-selector { padding: 12px; }
+}
+/* Collection creation is a primary action, including its compact header link. */
+.list-create-new-doc__create-new-button {
+  min-height: 44px; padding: 10px 16px; border-radius: 8px;
+  background: #7b451d; color: #fffdf8; border: 1px solid #7b451d; font-weight: 600;
+}
+.list-create-new-doc__create-new-button:hover { background: #603316; }
+@media (max-width: 700px) {
+  .app-header__wrapper, .app-header__step-nav-wrapper, .step-nav { min-width: 0; }
+  .app-header__step-nav-wrapper { overflow: hidden; }
+  .step-nav { max-width: 100%; }
+  .step-nav > span:last-child { min-width: 0; }
+}

@@ -1,7 +1,7 @@
 import type { Event } from './content-types';
 export type Change = { collection: string; documents: { slug?: string }[] };
 export function revalidationPaths(change: Change, content: { events: Event[]; songs?: { slug: string }[] }) {
-  const paths = new Set(['/','/events/','/library/','/library/songs/','/library/scripts/','/blog/','/about/']);
+  const paths = new Set(['/','/events/','/library/','/library/songs/','/library/scripts/','/blog/','/about/','/contact/']);
   const prefixes: Record<string,string> = { events: '/events/', songs: '/library/songs/', scripts: '/library/scripts/', artists: '/library/artists/', blog: '/blog/' };
   for (const doc of change.documents) {
     if (!doc.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(doc.slug)) continue;

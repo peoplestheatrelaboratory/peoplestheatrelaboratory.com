@@ -6,18 +6,19 @@
  */
 import MoonPhase from './MoonPhase.astro';
 import { getContent, formatDate, formatPlace, seriesOf } from '../lib/content';
-const { upcomingEvents, pastEvents } = await getContent(Astro.locals);
-import { SITE } from '../consts';
+import { getSiteSettings } from '../lib/site-settings';
+const [{ upcomingEvents, pastEvents, getEvent, isUpcoming }, settings] = await Promise.all([getContent(Astro.locals), getSiteSettings(Astro.locals)]);
 
 const next = upcomingEvents()[0];
 const last = pastEvents()[0];
-const e = next ?? last;
+const e = settings.gatheringMode === 'hidden' ? undefined : settings.gatheringMode === 'selected' ? getEvent(settings.featuredEvent) : next ?? last;
+const upcoming = e && isUpcoming(e);
 ---
 
 {e && (
-  <section class="next" id="gathering" aria-label={next ? 'Next gathering' : 'Last gathering'}>
+  <section class="next" id="gathering" aria-label={upcoming ? settings.nextLabel : settings.pastLabel}>
     <div class="page next__inner">
-      <p class="eyebrow">{next ? 'Next gathering' : 'Last gathering'} · {seriesOf(e).label}</p>
+      <p class="eyebrow">{upcoming ? settings.nextLabel : settings.pastLabel} · {seriesOf(e).label}</p>
       <h2>
         <a href={`/events/${e.slug}/`}>{e.title}</a>
         {e.titleDeva && <span class="deva" lang="hi">{e.titleDeva}</span>}
@@ -25,10 +26,10 @@ const e = next ?? last;
       <p class="when"><MoonPhase date={e.date} /> {formatDate(e.date, e.tithi)} · {formatPlace(e)}</p>
       <p class="summary">{e.summary}</p>
       <p class="actions">
-        {next ? (
-          <a class="cta" href={e.registerUrl || SITE.phoneHref}>{e.registerUrl ? 'Book a seat →' : `Call ${SITE.phone}`}</a>
+        {upcoming ? (
+          <a class="cta" href={e.registerUrl || settings.phoneHref}>{e.registerUrl ? settings.bookingLabel : `Call ${settings.phone}`}</a>
         ) : (
-          <a class="cta" href={`/events/${e.slug}/`}>What was sung →</a>
+          <a class="cta" href={`/events/${e.slug}/`}>{settings.detailsLabel}</a>
         )}
       </p>
     </div>

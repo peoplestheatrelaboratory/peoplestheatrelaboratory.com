@@ -1,5 +1,6 @@
 ---
-import { SITE, SOCIALS } from '../consts';
+import { getSiteSettings } from '../lib/site-settings';
+const settings = await getSiteSettings(Astro.locals);
 
 const year = new Date().getFullYear();
 ---
@@ -16,13 +17,13 @@ const year = new Date().getFullYear();
     <div class="page">
       <div class="cards" data-reveal>
         <section class="card">
-          <h2>Find us</h2>
+          <h2>{settings.footerHeading}</h2>
           <ul role="list">
-            {SOCIALS.map((s) => (
+            {settings.footerLinks.map((s) => (
               <li>
-                <a href={s.href} target="_blank" rel="me noopener">
+                <a href={s.href} target={s.newTab ? '_blank' : undefined} rel={s.newTab ? 'noopener noreferrer' : undefined}>
                   <span class="what">{s.label}</span>
-                  <span class="who">{s.handle}</span>
+                  <span class="who">{s.detail}</span>
                 </a>
               </li>
             ))}
@@ -31,7 +32,7 @@ const year = new Date().getFullYear();
       </div>
 
       <div class="colophon" data-reveal>
-        <p>© {year} {SITE.name}</p>
+        <p>© {year} {settings.copyrightName}</p>
       </div>
     </div>
   </div>

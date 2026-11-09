@@ -4,19 +4,17 @@ import SiteHeader from '../components/SiteHeader.astro';
 import HeroVideo from '../components/HeroVideo.astro';
 import NextGathering from '../components/NextGathering.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { getContent } from '../lib/content';
-const { heroQuote } = await getContent(Astro.locals);
-
-const quote = heroQuote();
+import { getSiteSettings } from '../lib/site-settings';
+const settings = await getSiteSettings(Astro.locals);
 ---
 
-<BaseLayout>
+<BaseLayout description={settings.description}>
   <SiteHeader overlay />
   <main id="main">
     <h1 class="visually-hidden">
-      Peoples Theatre Laboratory — Vadodara. Home of Baithak and Kabir Sang Ruhdaari.
+      {settings.heading}
     </h1>
-    <HeroVideo couplet={quote?.couplet} translation={quote?.translation} attribution={quote?.attribution} />
+    <HeroVideo couplet={settings.couplet} translation={settings.translation} attribution={settings.attribution} poster={settings.poster} variants={settings.videoVariants} cueLabel={settings.nextLabel} showCue={settings.gatheringMode !== 'hidden'} />
     <NextGathering />
   </main>
   <SiteFooter />
