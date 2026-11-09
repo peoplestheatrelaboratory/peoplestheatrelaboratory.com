@@ -18,7 +18,14 @@ if (!secret) throw new Error('PAYLOAD_SECRET is required. See admin/.env.example
 export default buildConfig({
   secret,
   serverURL: process.env.ADMIN_URL || 'http://localhost:3001',
-  admin: { user: 'users', meta: { titleSuffix: '— PTL Admin' }, importMap: { baseDir: dirname } },
+  admin: {
+    user: 'users', meta: { titleSuffix: '— PTL Content studio' }, importMap: { baseDir: dirname },
+    components: {
+      views: { dashboard: { Component: './components/AdminHome' } },
+      graphics: { Logo: './components/Brand#Logo', Icon: './components/Brand#Icon' },
+      beforeLogin: ['./components/Brand#LoginHelp'],
+    },
+  },
   collections: [Users, Media, ...contentCollections],
   upload: { limits: { fileSize: 3_000_000 }, abortOnLimit: true },
   editor: lexicalEditor(), sharp,

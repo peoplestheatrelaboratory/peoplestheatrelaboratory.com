@@ -6,6 +6,17 @@ drafts and up to 15 versions per document. R2 stores uploaded files.
 
 ## Provisioned resources
 
+- Live admin: https://admin.peoplestheatrelaboratory.com/admin
+- Vercel project: `ptl-admin`, under `yash-chauhans-projects-4e7a9e14`,
+  Next.js root directory `admin`, Node 24, production deployment from `8d1f236`.
+  GitHub repository connected for future deployments.
+- The deployed admin uses the existing populated `admin-development` database
+  branch and its existing R2 quota ledger. Treat this branch as live data now;
+  do not reset it or run destructive development checks against it.
+- The public Astro deployment is not yet connected to this admin. `CMS_URL`
+  and the paired publication webhook configuration remain a separate cutover.
+  SMTP is also not configured; super admins can set user passwords directly.
+
 - Neon organisation: `peoplestheatrelaboratory` (`org-royal-thunder-14335552`).
 - Project: `ptl` (`divine-butterfly-22412170`), Singapore, PostgreSQL 17.
 - Development branch: `admin-development` (`br-tiny-scene-aohavk92`). The main
@@ -109,7 +120,7 @@ CMS and revalidation requests before testing cross-project publication.
 Before production cutover, reconcile current Notion changes, choose the production
 database/bucket pairing, configure stable admin/site origins and SMTP if needed,
 and verify login, publication, file access and cache refresh on deployed URLs.
-The existing live site has not been switched to this backend. Keep its previous
+The existing public site has not been switched to this backend. Keep its previous
 deployment for rollback; rolling back frontend code does not roll back DB writes.
 
 ## Verification
@@ -129,7 +140,26 @@ access denial, authenticated download, public release and deletion passed using
 a 90-byte PNG (2 write/delete and 4 read requests); no test media remains.
 Deployed ISR behavior is still a launch verification step.
 
+Live admin verified on 2026-11-10: HTTPS login page, super-admin login,
+anonymous account-list denial, all 91 published records, draft privacy,
+publication and deletion invalidating the public API cache, R2 upload,
+anonymous private-file denial, and byte-for-byte authenticated download.
+Temporary content and the tiny test image were deleted. These checks verify
+the deployed admin; public Astro page refresh still awaits CMS cutover.
+
 The existing Cloudflare MCP login was extended with `account-api-tokens.write`
 after the API reported that missing scope. Existing scopes were retained. R2
 credentials were generated through MCP and saved directly to the ignored
 environment file. Temporary credential files were removed after verification.
+
+## Admin experience
+
+The home screen gives every accessible content section equal space, with Browse
+and Add actions. Labels describe editorial tasks; staff management is grouped
+under Settings. Optional editorial fields are collapsed without changing stored
+field paths. Existing server permissions still govern every operation.
+
+Verified locally: production build and TypeScript checks, seven permission/content
+tests, authenticated desktop and mobile screens, no horizontal mobile overflow,
+and event optional-field expansion without browser errors. The same authenticated checks passed on the deployed custom domain. Temporary
+verification accounts were removed afterward.

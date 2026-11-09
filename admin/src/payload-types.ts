@@ -132,6 +132,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Invite your team by creating an account, choosing their sections and setting a password. Share login details privately.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -139,11 +141,17 @@ export interface User {
   id: number;
   name: string;
   role: 'super-admin' | 'editor' | 'contributor';
+  /**
+   * Choose only the sections this person is responsible for.
+   */
   sections?: ('events' | 'library' | 'blog' | 'team' | 'quotes')[] | null;
   /**
    * Editors only. Contributors always submit drafts for review.
    */
   canPublish?: boolean | null;
+  /**
+   * Turn off to prevent this person from signing in.
+   */
   enabled?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -166,11 +174,16 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Upload JPG, PNG, WebP or PDF files up to 3 MB. New files are private until a super admin makes them public.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
+  /**
+   * A short, helpful description for people who cannot see the image.
+   */
   alt: string;
   /**
    * Public files can be downloaded without signing in. Only a super admin can release them.
@@ -191,23 +204,24 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * The voices and people behind the work.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "artists".
  */
 export interface Artist {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   name: string;
-  nameDeva?: string | null;
   roles?:
     | {
         value: string;
         id?: string | null;
       }[]
     | null;
-  era?: string | null;
-  link?: string | null;
-  photo?: (number | null) | Media;
   note?: {
     root: {
       type: string;
@@ -224,21 +238,40 @@ export interface Artist {
     [k: string]: unknown;
   } | null;
   noteImported?: string | null;
+  nameDeva?: string | null;
+  era?: string | null;
+  link?: string | null;
+  photo?: (number | null) | Media;
   createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Lyrics, meanings, poets and musical references.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "songs".
  */
 export interface Song {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   title: string;
-  titleLatin?: string | null;
   poets?: (number | Artist)[] | null;
+  /**
+   * One stanza per row. Keep line breaks within each stanza.
+   */
+  lyrics?:
+    | {
+        stanza: string;
+        id?: string | null;
+      }[]
+    | null;
+  meaning?: string | null;
+  titleLatin?: string | null;
   singers?: (number | Artist)[] | null;
   language?:
     | {
@@ -259,16 +292,6 @@ export interface Song {
       }[]
     | null;
   raag?: string | null;
-  /**
-   * One stanza per row. Keep line breaks within each stanza.
-   */
-  lyrics?:
-    | {
-        stanza: string;
-        id?: string | null;
-      }[]
-    | null;
-  meaning?: string | null;
   references?:
     | {
         label: string;
@@ -282,22 +305,23 @@ export interface Song {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Baithaks, gatherings, dates and performance setlists.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   title: string;
-  titleDeva?: string | null;
   series?: ('Baithak' | 'Kabir Sang Ruhdaari' | 'Production' | 'Workshop') | null;
   date?: string | null;
-  tithi?: string | null;
   venue?: string | null;
   city?: string | null;
   summary?: string | null;
-  registerUrl?: string | null;
-  cover?: (number | null) | Media;
   /**
    * Drag rows to change performance order.
    */
@@ -307,6 +331,10 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
+  titleDeva?: string | null;
+  tithi?: string | null;
+  registerUrl?: string | null;
+  cover?: (number | null) | Media;
   artists?: (number | Artist)[] | null;
   body?: {
     root: {
@@ -330,18 +358,20 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Introduce the people who make PTL possible.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team".
  */
 export interface Team {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   name: string;
-  nameDeva?: string | null;
   role?: string | null;
-  order?: number | null;
   photo?: (number | null) | Media;
-  socials?: string | null;
   bio?: {
     root: {
       type: string;
@@ -358,30 +388,29 @@ export interface Team {
     [k: string]: unknown;
   } | null;
   bioImported?: string | null;
+  nameDeva?: string | null;
+  order?: number | null;
+  socials?: string | null;
   createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Stories, reflections and news from PTL.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog".
  */
 export interface Blog {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   title: string;
   date?: string | null;
-  authors?: (number | Team)[] | null;
   excerpt?: string | null;
-  cover?: (number | null) | Media;
-  tags?:
-    | {
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  relatedEvent?: (number | null) | Event;
   body?: {
     root: {
       type: string;
@@ -398,21 +427,37 @@ export interface Blog {
     [k: string]: unknown;
   } | null;
   bodyImported?: string | null;
+  authors?: (number | Team)[] | null;
+  cover?: (number | null) | Media;
+  tags?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  relatedEvent?: (number | null) | Event;
   createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Plays, playwrights and script downloads.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "scripts".
  */
 export interface Script {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   title: string;
-  titleDeva?: string | null;
   playwrights?: (number | Artist)[] | null;
+  file?: (number | null) | Media;
+  synopsis?: string | null;
+  titleDeva?: string | null;
   language?:
     | {
         value: string;
@@ -420,8 +465,6 @@ export interface Script {
       }[]
     | null;
   year?: number | null;
-  file?: (number | null) | Media;
-  synopsis?: string | null;
   productions?: (number | Event)[] | null;
   body?: {
     root: {
@@ -445,11 +488,16 @@ export interface Script {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Couplets, translations and words to share.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "quotes".
  */
 export interface Quote {
   id: number;
+  /**
+   * The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.
+   */
   slug: string;
   couplet: string;
   translation?: string | null;
@@ -619,18 +667,18 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ArtistsSelect<T extends boolean = true> {
   slug?: T;
   name?: T;
-  nameDeva?: T;
   roles?:
     | T
     | {
         value?: T;
         id?: T;
       };
+  note?: T;
+  noteImported?: T;
+  nameDeva?: T;
   era?: T;
   link?: T;
   photo?: T;
-  note?: T;
-  noteImported?: T;
   createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -643,8 +691,15 @@ export interface ArtistsSelect<T extends boolean = true> {
 export interface SongsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
-  titleLatin?: T;
   poets?: T;
+  lyrics?:
+    | T
+    | {
+        stanza?: T;
+        id?: T;
+      };
+  meaning?: T;
+  titleLatin?: T;
   singers?: T;
   language?:
     | T
@@ -665,13 +720,6 @@ export interface SongsSelect<T extends boolean = true> {
         id?: T;
       };
   raag?: T;
-  lyrics?:
-    | T
-    | {
-        stanza?: T;
-        id?: T;
-      };
-  meaning?: T;
   references?:
     | T
     | {
@@ -691,21 +739,21 @@ export interface SongsSelect<T extends boolean = true> {
 export interface EventsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
-  titleDeva?: T;
   series?: T;
   date?: T;
-  tithi?: T;
   venue?: T;
   city?: T;
   summary?: T;
-  registerUrl?: T;
-  cover?: T;
   setlist?:
     | T
     | {
         song?: T;
         id?: T;
       };
+  titleDeva?: T;
+  tithi?: T;
+  registerUrl?: T;
+  cover?: T;
   artists?: T;
   body?: T;
   bodyImported?: T;
@@ -721,13 +769,13 @@ export interface EventsSelect<T extends boolean = true> {
 export interface TeamSelect<T extends boolean = true> {
   slug?: T;
   name?: T;
-  nameDeva?: T;
   role?: T;
-  order?: T;
   photo?: T;
-  socials?: T;
   bio?: T;
   bioImported?: T;
+  nameDeva?: T;
+  order?: T;
+  socials?: T;
   createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -741,8 +789,10 @@ export interface BlogSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
   date?: T;
-  authors?: T;
   excerpt?: T;
+  body?: T;
+  bodyImported?: T;
+  authors?: T;
   cover?: T;
   tags?:
     | T
@@ -751,8 +801,6 @@ export interface BlogSelect<T extends boolean = true> {
         id?: T;
       };
   relatedEvent?: T;
-  body?: T;
-  bodyImported?: T;
   createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -765,8 +813,10 @@ export interface BlogSelect<T extends boolean = true> {
 export interface ScriptsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
-  titleDeva?: T;
   playwrights?: T;
+  file?: T;
+  synopsis?: T;
+  titleDeva?: T;
   language?:
     | T
     | {
@@ -774,8 +824,6 @@ export interface ScriptsSelect<T extends boolean = true> {
         id?: T;
       };
   year?: T;
-  file?: T;
-  synopsis?: T;
   productions?: T;
   body?: T;
   bodyImported?: T;

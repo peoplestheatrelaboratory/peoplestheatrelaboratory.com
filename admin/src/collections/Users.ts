@@ -3,7 +3,8 @@ import { isStaff, isSuper, sections } from '../lib/permissions';
 
 export const Users: CollectionConfig = {
   slug: 'users',
-  admin: { useAsTitle: 'name', group: 'Administration', defaultColumns: ['name', 'email', 'role', 'enabled'] },
+  labels: { singular: 'Staff member', plural: 'Staff & access' },
+  admin: { useAsTitle: 'name', group: 'Settings', hideAPIURL: true, hidden: ({ user }) => !isSuper(user), description: 'Invite your team by creating an account, choosing their sections and setting a password. Share login details privately.', defaultColumns: ['name', 'email', 'role', 'enabled'] },
   auth: { tokenExpiration: 7200, maxLoginAttempts: 5, lockTime: 600000 },
   access: {
     admin: ({ req }) => isStaff(req.user),
@@ -31,8 +32,8 @@ export const Users: CollectionConfig = {
     { name: 'role', type: 'select', required: true, defaultValue: 'contributor', options: [
       { label: 'Super admin', value: 'super-admin' }, { label: 'Editor', value: 'editor' }, { label: 'Contributor (own drafts)', value: 'contributor' },
     ], access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
-    { name: 'sections', type: 'select', hasMany: true, options: [...sections], access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
-    { name: 'canPublish', type: 'checkbox', defaultValue: false, admin: { description: 'Editors only. Contributors always submit drafts for review.' }, access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
-    { name: 'enabled', type: 'checkbox', defaultValue: true, access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
+    { name: 'sections', label: 'Sections they can edit', type: 'select', hasMany: true, options: sections.map(value => ({ value, label: ({ events: 'Events', library: 'Songs, artists & scripts', blog: 'Articles', team: 'Team', quotes: 'Quotes' })[value] })), admin: { condition: (_, siblingData) => siblingData.role !== 'super-admin', description: 'Choose only the sections this person is responsible for.' }, access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
+    { name: 'canPublish', label: 'Allow publishing and deleting content', type: 'checkbox', defaultValue: false, admin: { condition: (_, siblingData) => siblingData.role === 'editor', description: 'Editors only. Contributors always submit drafts for review.' }, access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
+    { name: 'enabled', label: 'Account active', type: 'checkbox', defaultValue: true, admin: { description: 'Turn off to prevent this person from signing in.' }, access: { create: ({ req }) => isSuper(req.user), update: ({ req }) => isSuper(req.user) } },
   ],
 };

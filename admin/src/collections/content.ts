@@ -1,6 +1,7 @@
 import { APIError, type CollectionConfig, type CollectionSlug, type Field } from 'payload';
 import { canEdit, canPublish, editFilter, isSuper, type Section } from '../lib/permissions';
 import { afterChange, afterDelete } from '../lib/publishing';
+import { contentSections } from '../lib/content-sections';
 
 const text = (name: string, required = false): Field => ({ name, type: 'text', required });
 const many = (name: string): Field => ({ name, type: 'array', fields: [text('value', true)] });
@@ -10,9 +11,34 @@ const body = (name: string): Field[] => [
   { name, type: 'richText' },
   { name: `${name}Imported`, type: 'textarea', admin: { hidden: true }, access: { update: ({ req }) => isSuper(req.user) } },
 ];
+const fieldLabels: Record<string, string> = {
+  nameDeva: 'Name in Devanagari', titleDeva: 'Title in Devanagari', titleLatin: 'Title in Latin script',
+  registerUrl: 'Registration link', setlist: 'Songs in performance order', raag: 'Raag',
+  note: 'About this person', body: 'Full text', bio: 'About this team member', socials: 'Social profile link',
+  couplet: 'Quote or couplet', attribution: 'Attributed to', order: 'Display order',
+};
+const essentialFields: Record<string, string[]> = {
+  events: ['title', 'series', 'date', 'venue', 'city', 'summary', 'setlist'],
+  songs: ['title', 'poets', 'lyrics', 'meaning'], artists: ['name', 'roles', 'note', 'noteImported'],
+  team: ['name', 'role', 'photo', 'bio', 'bioImported'], blog: ['title', 'date', 'excerpt', 'body', 'bodyImported'],
+  scripts: ['title', 'playwrights', 'file', 'synopsis'], quotes: ['couplet', 'attribution', 'translation'],
+};
+function organiseFields(slug: string, fields: Field[]): Field[] {
+  const labelled = fields.map(field => 'name' in field && field.name && fieldLabels[field.name]
+    ? { ...field, label: fieldLabels[field.name] } : field);
+  const main = labelled.filter(field => 'name' in field && essentialFields[slug].includes(field.name!));
+  const optional = labelled.filter(field => !main.includes(field));
+  return [...main, ...(optional.length ? [{ type: 'collapsible' as const, label: 'More details (optional)', admin: { initCollapsed: true }, fields: optional }] : [])];
+}
 function content(slug: string, section: Section, title: string, fields: Field[]): CollectionConfig {
+  const info = contentSections.find(item => item.slug === slug)!;
   return {
-    slug, admin: { useAsTitle: title, group: section === 'library' ? 'Library' : 'Website', defaultColumns: [title, '_status', 'updatedAt'] },
+    slug, labels: { singular: info.singular[0].toUpperCase() + info.singular.slice(1), plural: info.label },
+    admin: {
+      useAsTitle: title, group: 'Content', description: info.description, hideAPIURL: true,
+      hidden: ({ user }) => !canEdit(user, section),
+      defaultColumns: [title, '_status', 'updatedAt'],
+    },
     versions: { drafts: true, maxPerDoc: 15 },
     access: {
       create: ({ req }) => canEdit(req.user, section),
@@ -38,8 +64,8 @@ function content(slug: string, section: Section, title: string, fields: Field[])
       afterChange: [afterChange], afterDelete: [afterDelete],
     },
     fields: [
-      { name: 'slug', type: 'text', required: true, unique: true, index: true, validate: (value: unknown) => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) || 'Use lowercase letters, numbers and hyphens.' },
-      ...fields,
+      { name: 'slug', label: 'Page address', type: 'text', required: true, unique: true, index: true, admin: { position: 'sidebar', description: 'The short name used in the link, e.g. november-baithak. Keep it unchanged after sharing the page.' }, validate: (value: unknown) => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) || 'Use lowercase letters, numbers and hyphens.' },
+      ...organiseFields(slug, fields),
       { name: 'createdBy', type: 'relationship', relationTo: 'users', admin: { hidden: true }, access: { read: ({ req }) => Boolean(req.user), update: () => false } },
     ],
   };
