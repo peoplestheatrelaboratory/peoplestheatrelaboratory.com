@@ -32,7 +32,7 @@ const { team, imageAttrs } = await getContent(Astro.locals);
     <ul class="gatherings" role="list">
       <li>
         <p class="eyebrow">Every month</p>
-        <h3><span class="deva" lang="hi">बैठक</span> Baithak</h3>
+        <h3>Baithak<span class="deva" lang="hi">बैठक</span></h3>
         <p>
           Our monthly sitting in Vadodara. Music, readings and work-in-progress,
           shared in a room small enough that nobody is only an audience.
@@ -40,7 +40,7 @@ const { team, imageAttrs } = await getContent(Astro.locals);
       </li>
       <li>
         <p class="eyebrow">Every year · Jyestha Poornima</p>
-        <h3><span class="deva" lang="hi">कबीर संग रुहदारी</span> Kabir Sang Ruhdaari</h3>
+        <h3>Kabir Sang Ruhdaari<span class="deva" lang="hi">कबीर संग रुहदारी</span></h3>
         <p>
           An intimate, contribution-based gathering around the voices of Kabir,
           Meera, Bulleh Shah, Raidas and Lalon Fakir — original compositions,
@@ -89,7 +89,7 @@ const { team, imageAttrs } = await getContent(Astro.locals);
 <style>
   .gatherings {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-xl) var(--space-l);
     margin: 0;
     padding: 0;
@@ -97,8 +97,8 @@ const { team, imageAttrs } = await getContent(Astro.locals);
 
   .gatherings h3 {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-xs) var(--space-s);
     margin-block: var(--space-s) var(--space-s);
     font-family: var(--font-display);
@@ -108,6 +108,7 @@ const { team, imageAttrs } = await getContent(Astro.locals);
   }
 
   .gatherings h3 .deva {
+    font-size: var(--step-1);
     color: var(--ember);
   }
 

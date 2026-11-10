@@ -93,9 +93,7 @@ const currentPath = Astro.url.pathname;
     background: transparent;
     border-block-end: 1px solid transparent;
     transition:
-      color var(--dur-mid) var(--ease-out),
-      background-color var(--dur-mid) var(--ease-out),
-      border-color var(--dur-mid) var(--ease-out);
+      color var(--dur-fast) var(--ease-out);
   }
 
   /* while past the hero but still over the dark gathering section */
@@ -203,12 +201,19 @@ const currentPath = Astro.url.pathname;
     overflow-y: auto;
     background: var(--ink);
     color: var(--paper);
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path var(--dur-curtain) var(--ease-curtain);
+    opacity: 0;
+    transform: translateY(-0.75rem);
+    pointer-events: none;
+    transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
   }
 
   .curtain[hidden] { display: none; }
-  .curtain.is-open { clip-path: inset(0 0 0 0); }
+  .curtain.is-open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition-duration: 240ms;
+  }
 
   .curtain__nav ol {
     margin: 0;
@@ -280,14 +285,14 @@ const currentPath = Astro.url.pathname;
     opacity: 1;
     transform: none;
     transition:
-      opacity var(--dur-slow) var(--ease-out),
-      transform var(--dur-slow) var(--ease-out);
-    transition-delay: calc(240ms + var(--i) * 70ms);
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
+    transition-delay: calc(var(--i) * 20ms);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .curtain,
-    .curtain.is-open .curtain__nav li { transition-duration: 1ms; }
+    .curtain.is-open .curtain__nav li { transition-duration: 1ms; transition-delay: 0ms; }
   }
 </style>
 
@@ -330,12 +335,20 @@ const currentPath = Astro.url.pathname;
       curtain.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
 
     let lastFocused: HTMLElement | null = null;
+    let revealFrame = 0;
+    let hideTimer: ReturnType<typeof setTimeout> | undefined;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const open = () => {
       lastFocused = document.activeElement as HTMLElement;
+      clearTimeout(hideTimer);
+      cancelAnimationFrame(revealFrame);
       curtain.hidden = false;
-      // let the browser register `hidden` removal before animating
-      requestAnimationFrame(() => curtain.classList.add('is-open'));
+      curtain.inert = false;
+      // Paint the initial state before starting the entrance, even on first open.
+      revealFrame = requestAnimationFrame(() => {
+        revealFrame = requestAnimationFrame(() => curtain.classList.add('is-open'));
+      });
       toggle.setAttribute('aria-expanded', 'true');
       masthead?.classList.add('is-menu-open');
       label.textContent = 'Close';
@@ -344,18 +357,19 @@ const currentPath = Astro.url.pathname;
     };
 
     const close = () => {
+      cancelAnimationFrame(revealFrame);
       curtain.classList.remove('is-open');
+      curtain.inert = true;
       toggle.setAttribute('aria-expanded', 'false');
       masthead?.classList.remove('is-menu-open');
       label.textContent = 'Menu';
       document.documentElement.style.overflow = '';
-      // only the curtain's own transition counts, and only if it is still closed
-      const done = (e: TransitionEvent) => {
-        if (e.target !== curtain) return;
-        curtain.removeEventListener('transitionend', done);
-        if (!curtain.classList.contains('is-open')) curtain.hidden = true;
-      };
-      curtain.addEventListener('transitionend', done);
+      // Match the exit duration; cancel this when reopened so rapid toggles
+      // cannot hide an open menu. Also settle when transitions are disabled.
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        curtain.hidden = true;
+      }, reducedMotion.matches ? 0 : 160);
       // body is not focusable — fall back to the toggle so focus is never lost
       const restore =
         lastFocused && lastFocused !== document.body ? lastFocused : toggle;

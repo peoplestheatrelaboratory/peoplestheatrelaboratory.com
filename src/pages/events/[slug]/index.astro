@@ -1,7 +1,7 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../../components/MoonPhase.astro';
-import { getContent, formatDate, formatPlace, seriesOf, scriptClass, textLang } from '../../../lib/content';
+import { getContent, formatDate, formatPlace, scriptClass, textLang } from '../../../lib/content';
 import { getSiteSettings } from '../../../lib/site-settings';
 import { SITE } from '../../../consts';
 const [{ getEvent, getSong, getArtist, isUpcoming, poetNames, imageAttrs }, settings] = await Promise.all([getContent(Astro.locals), getSiteSettings(Astro.locals)]);
@@ -11,7 +11,6 @@ const [{ getEvent, getSong, getArtist, isUpcoming, poetNames, imageAttrs }, sett
 const { slug } = Astro.params;
 const event = getEvent(slug!);
 if (!event) return Astro.rewrite("/404/");
-const series = seriesOf(event);
 const upcoming = isUpcoming(event);
 
 const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
@@ -47,7 +46,6 @@ const structuredJson = structured && JSON.stringify(structured).replace(/</g, '\
 
 <InteriorLayout
   title={event.title}
-  eyebrow={[series.label, series.rhythm].filter(Boolean).join(' · ')}
   deva={event.titleDeva}
   description={`${event.title} — ${formatDate(event.date, event.tithi)}, ${formatPlace(event)}. ${event.summary}`}
   image={event.cover || undefined}

@@ -24,7 +24,6 @@ for (const e of past) {
 <InteriorLayout
   title="Events"
   eyebrow="when we gather"
-  deva="बैठक"
   description={`Gatherings of Peoples Theatre Laboratory, ${SITE.city} — the monthly Baithak and the annual Kabir Sang Ruhdaari.`}
 >
   <!-- the calendar strip: only the days that hold a gathering -->
@@ -95,14 +94,14 @@ for (const e of past) {
       <li>
         <MoonPhase date={null} size={40} />
         <div>
-          <h3><span class="deva" lang="hi">{SERIES.Baithak.deva}</span> {SERIES.Baithak.label}</h3>
+          <h3>{SERIES.Baithak.label}<span class="deva" lang="hi">{SERIES.Baithak.deva}</span></h3>
           <p>Monthly, mostly on a Poornima. Homes, studios and courtyards — a room small enough that nobody is only an audience.</p>
         </div>
       </li>
       <li>
         <MoonPhase date={null} size={40} />
         <div>
-          <h3><span class="deva" lang="hi">{SERIES['Kabir Sang Ruhdaari'].deva}</span> {SERIES['Kabir Sang Ruhdaari'].label}</h3>
+          <h3>{SERIES['Kabir Sang Ruhdaari'].label}<span class="deva" lang="hi">{SERIES['Kabir Sang Ruhdaari'].deva}</span></h3>
           <p>Once a year on Jyestha Poornima, Kabir's birthday. Contribution-based, limited seating, live painting. Not a presentation — a shared space of reflection.</p>
         </div>
       </li>
@@ -189,7 +188,7 @@ for (const e of past) {
 
   .next__card h3 a { color: inherit; text-decoration: none; }
   .next__card h3 a:hover { color: var(--ember); }
-  .next__card h3 .deva { color: var(--ember); font-size: var(--step-2); }
+  .next__card h3 .deva { display: block; margin-block-start: var(--space-xs); color: var(--ember); font-size: var(--step-2); }
 
   .when {
     display: flex;
@@ -268,9 +267,9 @@ for (const e of past) {
   }
 
   /* ── rhythms ───────────────────────────────────────────────────── */
-  .rhythm ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--space-xl) var(--space-l); margin: 0; padding: 0; }
+  .rhythm ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--space-xl) var(--space-l); margin: 0; padding: 0; }
   .rhythm li { display: flex; gap: var(--space-m); align-items: flex-start; color: var(--fg); }
-  .rhythm h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-xs) var(--space-s); margin-block-end: var(--space-s); font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); line-height: var(--leading-tight); }
+  .rhythm h3 { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xs) var(--space-s); margin-block-end: var(--space-s); font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); line-height: var(--leading-tight); }
   .rhythm h3 .deva { color: var(--ember); }
   .rhythm p { max-width: 40ch; color: var(--fg-muted); line-height: var(--leading-body); }
 </style>
