@@ -1,0 +1,68 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { SITE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Social share card. Defaults to the Baithak rooftop still. */
+  image?: string;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = '/media/og.jpg',
+} = Astro.props;
+
+const isHome = Astro.url.pathname === '/';
+
+const pageTitle = title ? `${title} — ${SITE.shortName}` : SITE.name;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
+const ogImage = new URL(image, Astro.site ?? SITE.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0A0908" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {/* Prioritize the first screen: interior headings use Fraunces, while
+        the homepage couplet uses italic Newsreader. Select individual faces
+        instead of preloading every weight/style (some share the same file). */}
+    <Font cssVariable="--font-fraunces" preload={isHome ? false : [{ weight: 400, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-newsreader" preload={isHome
+      ? [{ weight: 300, style: 'normal', subset: 'latin' }, { weight: 300, style: 'italic', subset: 'latin' }]
+      : [{ weight: 300, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-tiro" preload={[{ weight: 400, style: 'normal', subset: 'devanagari' }]} />
+    <Font cssVariable="--font-gujarati" />
+    <Font cssVariable="--font-courier-prime" />
+    <Font cssVariable="--font-kalam" />
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>

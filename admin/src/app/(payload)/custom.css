@@ -1,0 +1,240 @@
+/* PTL's paper, ink and ember, with Payload's theme retained for native controls. */
+:root {
+  --ptl-ember: #945920;
+  --ptl-paper: #f2eddc;
+  --ptl-ink: #171513;
+  --ptl-heading: 'Iowan Old Style', Georgia, serif;
+}
+[data-theme='dark'] { --ptl-ember: #dca45d; }
+.ptl-home { max-width: 1120px; margin: 0 auto; padding: 32px var(--gutter-h, 24px) 64px; }
+.ptl-home__header { margin-bottom: 32px; }
+.ptl-eyebrow { color: var(--ptl-ember); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.ptl-home h1 { font-family: var(--ptl-heading); font-size: clamp(28px, 4vw, 40px); font-weight: 500; line-height: 1.15; letter-spacing: -.02em; margin: 8px 0 12px; text-wrap: balance; }
+.ptl-home__header > p:last-child, .ptl-section > p, .ptl-help p { color: var(--theme-elevation-700); line-height: 1.6; }
+.ptl-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.ptl-section { padding: 24px 0; border-top: 1px solid var(--theme-elevation-150); display: flex; flex-direction: column; min-width: 0; }
+.ptl-section h2 { font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
+.ptl-section h2 a { text-decoration: none; }
+.ptl-section > p { margin: 0 0 16px; max-width: 42ch; }
+.ptl-section__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: auto; }
+.ptl-link, .ptl-add { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: none; }
+.ptl-link { color: var(--ptl-ember); }
+.ptl-add { border: 1px solid var(--theme-elevation-250); border-radius: 4px; padding: 8px 16px; }
+.ptl-add:hover { background: var(--theme-elevation-100); }
+.ptl-link:hover, .ptl-section h2 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.ptl-home a:focus-visible { outline: 2px solid var(--ptl-ember); outline-offset: 4px; border-radius: 2px; }
+.ptl-home a:active { opacity: .75; }
+.ptl-help { margin-top: 24px; padding: 24px; background: var(--theme-elevation-50); border-radius: 4px; display: flex; align-items: start; justify-content: space-between; gap: 24px; }
+.ptl-help h2 { font-size: 18px; margin: 0 0 8px; }
+.ptl-help p { margin: 0 0 8px; max-width: 60ch; }
+.ptl-help > a { flex-shrink: 0; }
+.ptl-brand { text-align: center; color: var(--ptl-ember); }
+.ptl-brand > span { font-family: var(--ptl-heading); font-size: 56px; letter-spacing: -.04em; }
+.ptl-brand p { font-size: 16px; color: var(--theme-text); margin: 8px 0 0; }
+.ptl-brand-icon { font-family: var(--ptl-heading); font-weight: bold; font-size: 12px; letter-spacing: -.04em; color: var(--ptl-ember); }
+.ptl-login-help { text-align: center; color: var(--theme-elevation-700); margin-bottom: 24px; line-height: 1.5; }
+.ptl-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 700px) {
+  .ptl-home { padding-top: 24px; }
+  .ptl-sections { grid-template-columns: minmax(0, 1fr); }
+  .ptl-help { flex-direction: column; gap: 8px; padding: 16px; }
+}
+
+/* Comfortable density throughout Payload, including its native editing screens. */
+html {
+  --base-px: 24;
+  --base-body-size: 16;
+  --style-radius-s: 8px;
+  --style-radius-m: 10px;
+  --style-radius-l: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+html[data-theme='light'] {
+  --theme-elevation-0: #fffdf8;
+  --theme-elevation-50: #f6f1e7;
+  --theme-elevation-100: #eee7db;
+  --theme-elevation-150: #e3d9ca;
+  --theme-elevation-200: #d5c9b8;
+  --theme-elevation-250: #c5b7a4;
+  --theme-elevation-300: #ab9c89;
+  --theme-elevation-350: #93836f;
+  --theme-elevation-400: #796b5a;
+  --theme-elevation-450: #706251;
+  --theme-elevation-500: #675a4b;
+  --theme-elevation-550: #5e5143;
+  --theme-elevation-600: #554939;
+  --theme-elevation-650: #4b4032;
+  --theme-elevation-700: #42382d;
+  --theme-elevation-750: #382f26;
+  --theme-elevation-800: #30281f;
+  --theme-elevation-850: #282118;
+  --theme-elevation-900: #211b14;
+  --theme-elevation-950: #19150f;
+  --theme-elevation-1000: #14110c;
+  --theme-bg: #faf6ee;
+  --theme-input-bg: #fffdf8;
+  --theme-text: #30281f;
+  --accessibility-outline: 2px solid var(--ptl-ember);
+}
+.render-fields:not(.render-fields--margins-none) { --spacing-field: 32px; }
+.render-fields.render-fields--margins-small { --spacing-field: 24px; }
+.field-label { font-size: 16px; line-height: 1.5; padding-bottom: 10px; font-weight: 500; }
+.field-description { font-size: 14px; line-height: 1.6; }
+.field-type.text:not(.has-many) input,
+.field-type.email input,
+.field-type.password input,
+.field-type.number input,
+.react-datepicker__input-container input {
+  height: 48px;
+  font-size: 16px;
+  padding: 12px 16px;
+  box-shadow: none;
+}
+.field-type.textarea textarea { min-height: 144px; padding: 16px; line-height: 1.6; box-shadow: none; }
+.react-select .rs__control { min-height: 48px; padding: 8px 12px; box-shadow: none; }
+.react-select .rs__option { font-size: 16px; padding: 12px 16px; }
+.btn--size-medium, .btn--size-large { min-height: 44px; border-radius: 8px; }
+.table:not(.table--appearance-condensed) :is(th, td) { padding-block: 20px; line-height: 1.5; }
+.table thead { color: var(--theme-elevation-600); }
+.collapsible__toggle-wrap { min-height: 56px; padding-block: 16px; }
+.nav__link { min-height: 44px; padding-block: 10px; line-height: 1.5; }
+.nav-group { margin-bottom: 24px; }
+.nav-group__toggle { color: var(--theme-elevation-600); margin-bottom: 12px; }
+.ptl-home { max-width: 1240px; padding-top: 48px; }
+.ptl-home__header { margin-bottom: 40px; }
+.ptl-home__header > p:last-child { font-size: 18px; }
+.ptl-sections { gap: 24px; }
+.ptl-section { padding: 32px; background: var(--theme-elevation-0); border: 1px solid var(--theme-elevation-150); border-radius: 12px; }
+.ptl-section h2 { font-size: 24px; margin-bottom: 12px; }
+.ptl-section > p { margin-bottom: 24px; }
+.ptl-link, .ptl-add { font-size: 16px; min-height: 48px; }
+.ptl-add { border-radius: 8px; }
+.ptl-help { padding: 32px; margin-top: 32px; border-radius: 12px; }
+@media (max-width: 700px) {
+  .ptl-home { padding-top: 32px; }
+  .ptl-home__header > p:last-child { font-size: 16px; }
+  .ptl-section, .ptl-help { padding: 24px; }
+  .ptl-section h2 { font-size: 22px; }
+  .ptl-help > a { flex-shrink: 1; }
+  .render-fields:not(.render-fields--margins-none) { --spacing-field: 24px; }
+}
+/* Keep the PTL wordmark readable inside Payload's compact breadcrumb slot. */
+.step-nav__home { display: flex; align-items: center; width: 40px; min-width: 40px; height: 40px; justify-content: center; }
+.step-nav__home .ptl-brand-icon { font-size: 16px; overflow: visible; }
+
+/* Make actions and list tools clearly distinct from surrounding text. */
+.btn--style-primary:not(.btn--disabled) {
+  --bg-color: #7b451d; --color: #fffdf8;
+  --hover-bg: #603316; --hover-color: #fffdf8;
+  --btn-font-weight: 600;
+  box-shadow: 0 2px 3px rgb(48 40 31 / .12);
+}
+.btn--style-secondary:not(.btn--disabled), .btn--style-subtle:not(.btn--disabled) {
+  --bg-color: #fffdf8; --color: #30281f;
+  --btn-border: 1px solid #ab9c89;
+  --hover-bg: #eee7db; --hover-color: #30281f;
+  --hover-btn-border: 1px solid #796b5a;
+  --btn-font-weight: 600;
+}
+.ptl-add { background: #7b451d; color: #fffdf8; border-color: #7b451d; }
+.ptl-add:hover { background: #603316; }
+.search-filter .search-filter__input {
+  min-height: 48px; padding: 12px 16px 12px 44px;
+  font-size: 16px; background: #fffdf8; border: 1px solid #ab9c89; border-radius: 8px;
+}
+.search-filter .search-filter__input:focus { outline: 2px solid var(--ptl-ember); outline-offset: 2px; }
+.search-filter .search-filter__input::placeholder { color: #796b5a; }
+.search-bar__actions { gap: 8px; }
+.search-bar__actions .pill--has-action {
+  min-height: 44px; padding: 8px 14px; border: 1px solid #ab9c89;
+  border-radius: 8px; background: #fffdf8; color: #30281f; font-weight: 600;
+}
+.search-bar__actions .pill--has-action:hover { background: #eee7db; }
+.search-bar__actions .pill--style-dark,
+.search-bar__actions .pill--has-action[aria-expanded='true'] { background: #7b451d; color: #fffdf8; border-color: #7b451d; }
+.list-controls .where-builder, .list-controls .sort-complex, .list-controls .pill-selector {
+  padding: 20px; background: #fffdf8; border: 1px solid #d5c9b8; border-radius: 10px;
+}
+@media (max-width: 700px) {
+  .search-bar__actions { flex-wrap: wrap; }
+  .list-controls .where-builder, .list-controls .sort-complex, .list-controls .pill-selector { padding: 12px; }
+}
+/* Collection creation is a primary action, including its compact header link. */
+.list-create-new-doc__create-new-button {
+  min-height: 44px; padding: 10px 16px; border-radius: 8px;
+  background: #7b451d; color: #fffdf8; border: 1px solid #7b451d; font-weight: 600;
+}
+.list-create-new-doc__create-new-button:hover { background: #603316; }
+@media (max-width: 700px) {
+  .app-header__wrapper, .app-header__step-nav-wrapper, .step-nav { min-width: 0; }
+  .app-header__step-nav-wrapper { overflow: hidden; }
+  .step-nav { max-width: 100%; }
+  .step-nav > span:last-child { min-width: 0; }
+}
+
+/* ── Lists ─────────────────────────────────────────────────────────── */
+/* The title and its Create button share one line and one centre. */
+.list-header { align-items: center; }
+.list-header__title-and-actions, .list-header__title-actions { align-items: center; }
+.list-create-new-doc__create-new-button { min-height: 40px; padding: 8px 14px; }
+/* Payload stretches the search box to its grid row; keep it a normal field. */
+.search-bar { align-items: center; }
+.search-filter .search-filter__input { height: 48px; }
+
+/* ── Edit screens ──────────────────────────────────────────────────── */
+/* The section blurb belongs on the list, not above every document. */
+.doc-header__after-header .custom-view-description { display: none; }
+/* Paired fields: equal columns that stack on a phone. */
+.field-type.row .row__fields { gap: 24px; }
+
+/* Lists of one value each (setlist songs, lyrics stanzas, tags): one line per
+   row — handle, number, the field, the row menu — with no repeated label. */
+.ptl-compact-rows .array-field__draggable-rows { display: flex; flex-direction: column; gap: 8px; }
+.ptl-compact-rows .array-field__row {
+  display: flex; align-items: center; gap: 12px; margin: 0; padding: 8px 12px;
+  background: var(--theme-elevation-0); border: 1px solid var(--theme-elevation-150); border-radius: 10px;
+}
+/* Flatten Payload's header so its handle, number and menu become items of the row. */
+.ptl-compact-rows .array-field__row > .collapsible__toggle-wrap { display: contents; }
+.ptl-compact-rows .array-field__row .collapsible__toggle,
+.ptl-compact-rows .array-field__row .collapsible__indicator { display: none; }
+.ptl-compact-rows .array-field__row .collapsible__drag { order: 0; flex: none; position: static; }
+.ptl-compact-rows .array-field__row .collapsible__header-wrap {
+  order: 1; flex: none; width: auto; min-width: 5.5rem; padding: 0; position: static;
+  color: var(--theme-elevation-600); font-size: 14px; white-space: nowrap;
+}
+.ptl-compact-rows .array-field__row > [class*='rah-'] { order: 2; flex: 1 1 auto; min-width: 0; }
+.ptl-compact-rows .array-field__row .collapsible__actions-wrap { order: 3; flex: none; position: static; }
+.ptl-compact-rows .array-field__row .collapsible__content { padding: 0; }
+.ptl-compact-rows .array-field__fields { --spacing-field: 0px; }
+.ptl-compact-rows .array-field__fields > .field-type > .field-label,
+.ptl-compact-rows .array-field__fields > .field-type > label { display: none; }
+/* A stanza box is as tall as its lines, not a fixed slab. */
+.ptl-compact-rows .array-field__row .field-type.textarea textarea { min-height: 52px; padding: 12px 16px; field-sizing: content; }
+@media (max-width: 700px) {
+  .ptl-compact-rows .array-field__row { flex-wrap: wrap; }
+  .ptl-compact-rows .array-field__row .collapsible__header-wrap { flex: 1 1 auto; }
+  .ptl-compact-rows .array-field__row > [class*='rah-'] { order: 4; flex-basis: 100%; }
+}
+/* Rows with two short fields (performers, references): keep the header, lose the air. */
+.ptl-tight-rows .array-field__row > .collapsible__toggle-wrap { min-height: 44px; padding-block: 8px; }
+.ptl-tight-rows .array-field__row > .collapsible__content { padding: 16px; }
+.ptl-tight-rows .array-field__draggable-rows { gap: 8px; }
+
+/* ── Home ──────────────────────────────────────────────────────────── */
+/* Every section visible without scrolling on a laptop. */
+.ptl-home { padding-top: 32px; }
+.ptl-home__header { margin-bottom: 28px; }
+.ptl-home h1 { font-size: clamp(26px, 3vw, 34px); }
+.ptl-home__header > p:last-child { font-size: 16px; }
+.ptl-sections { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.ptl-section { padding: 20px; }
+.ptl-section h2 { font-size: 19px; margin-bottom: 6px; }
+.ptl-section > p { font-size: 14px; margin-bottom: 16px; }
+.ptl-link, .ptl-add { font-size: 14px; min-height: 40px; }
+.ptl-add { padding: 6px 14px; }
+.ptl-help { padding: 20px 24px; margin-top: 24px; }
+.ptl-help h2 { font-size: 16px; }
+.ptl-help p { font-size: 14px; }
+.ptl-login-help--small { font-size: 14px; margin-top: -8px; }

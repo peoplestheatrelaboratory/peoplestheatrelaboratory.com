@@ -1,0 +1,34 @@
+---
+import InteriorLayout from '../../../layouts/InteriorLayout.astro';
+import SongSheet from '../../../components/SongSheet.astro';
+import { getContent } from '../../../lib/content';
+const { songs, getSong, getArtist } = await getContent(Astro.locals);
+
+
+
+const { slug } = Astro.params;
+const song = getSong(slug!);
+if (!song) return Astro.rewrite("/404/");
+const poets = song.poets.map((p) => getArtist(p)).filter(Boolean);
+
+// neighbours within the same poet, else the whole list
+const pool = poets.length ? songs.filter((s) => s.poets[0] === song.poets[0]) : songs;
+const i = pool.findIndex((s) => s.slug === song.slug);
+const prev = pool[i - 1];
+const next = pool[i + 1];
+const href = (s: { slug: string }) => `/library/songs/${s.slug}/`;
+---
+
+<InteriorLayout
+  title={song.title}
+  romanTitle={song.titleLatin && song.titleLatin !== song.title ? song.titleLatin : undefined}
+  eyebrow={poets.length ? poets.map((p) => p!.name).join(' · ') : 'song'}
+  description={`${song.titleLatin || song.title}${poets.length ? ` — ${poets.map((p) => p!.name).join(', ')}` : ''}. Lyrics${song.meaning ? ' and meaning' : ''}, as sung at Peoples Theatre Laboratory.`}
+>
+  <SongSheet
+    song={song}
+    prev={prev && { href: href(prev), title: prev.title }}
+    next={next && { href: href(next), title: next.title }}
+    back={{ href: '/library/songs/', label: 'All songs' }}
+  />
+</InteriorLayout>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import NextGathering from '../components/NextGathering.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { homepageQuotes } from '../../shared/site-settings';
+import { getSiteSettings } from '../lib/site-settings';
+import { getContent } from '../lib/content';
+const [settings, { featuredGathering, isUpcoming }] = await Promise.all([getSiteSettings(Astro.locals), getContent(Astro.locals)]);
+// The hero's cue scrolls to the gathering strip, so it only shows when that strip renders.
+const gathering = featuredGathering(settings);
+const hasGathering = Boolean(gathering);
+// The cue names the strip it scrolls to, which is the last gathering when none is ahead.
+const cueLabel = gathering && !isUpcoming(gathering) ? settings.pastLabel : settings.nextLabel;
+---
+
+<BaseLayout description={settings.description}>
+  <SiteHeader overlay />
+  <main id="main">
+    <h1 class="visually-hidden">
+      {settings.heading}
+    </h1>
+    <HeroVideo quotes={homepageQuotes(settings)} poster={settings.poster} variants={settings.videoVariants} cueLabel={cueLabel} showCue={hasGathering} />
+    <NextGathering />
+  </main>
+  <SiteFooter />
+</BaseLayout>

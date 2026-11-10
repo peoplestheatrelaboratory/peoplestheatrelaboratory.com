@@ -1,0 +1,58 @@
+# Nightly encrypted dump of the live database.
+#
+# This repository is public, and so are its workflow artifacts to anyone signed
+# in to GitHub. The dump is therefore encrypted before upload and is useless
+# without BACKUP_PASSPHRASE. Restore steps are in AGENTS.md.
+#
+# Secrets (Settings → Secrets and variables → Actions):
+#   BACKUP_DATABASE_URL  direct (non-pooled) Neon connection string
+#   BACKUP_PASSPHRASE    long random passphrase; keep a copy somewhere safe
+name: Database backup
+on:
+  schedule:
+    - cron: '30 20 * * *' # 02:00 IST
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BACKUP_DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+    steps:
+      - name: Check configuration
+        id: config
+        run: |
+          if [ -z "$BACKUP_DATABASE_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then
+            echo "::warning::Backup skipped: BACKUP_DATABASE_URL and BACKUP_PASSPHRASE are not both set."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install PostgreSQL 17 client
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17
+      - name: Dump and encrypt
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          /usr/lib/postgresql/17/bin/pg_dump --format=custom --no-owner --no-privileges --dbname="$BACKUP_DATABASE_URL" --file=ptl.dump
+          # A dump that cannot be listed is not a backup.
+          /usr/lib/postgresql/17/bin/pg_restore --list ptl.dump > /dev/null
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$BACKUP_PASSPHRASE" \
+            --symmetric --cipher-algo AES256 --output "ptl-$(date -u +%Y-%m-%d).dump.gpg" ptl.dump
+          rm ptl.dump
+      - uses: actions/upload-artifact@v4
+        if: steps.config.outputs.ready == 'true'
+        with:
+          name: ptl-database-${{ github.run_id }}
+          path: ptl-*.dump.gpg
+          retention-days: 30
+          if-no-files-found: error

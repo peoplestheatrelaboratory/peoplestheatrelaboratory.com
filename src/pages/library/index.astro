@@ -1,0 +1,73 @@
+---
+import InteriorLayout from '../../layouts/InteriorLayout.astro';
+import { getContent, formatDate } from '../../lib/content';
+const { songs, scripts, posts, recentSongs, recentScripts, recentPosts, poetNames } = await getContent(Astro.locals);
+import { SOCIALS } from '../../consts';
+
+const shelves = [
+  {
+    title: 'Songs', deva: 'गीत', href: '/library/songs/', total: songs.length,
+    items: recentSongs().map((s) => ({ href: `/library/songs/${s.slug}/`, title: s.title, sub: poetNames(s) || s.titleLatin, lang: 'hi' })),
+    empty: '',
+  },
+  {
+    title: 'Scripts', deva: 'नाटक', href: '/library/scripts/', total: scripts.length,
+    items: recentScripts().map((s) => ({ href: `/library/scripts/${s.slug}/`, title: s.title, sub: [s.titleDeva, s.year].filter(Boolean).join(' · '), lang: 'en' })),
+    empty: 'The playscripts are being typed up. Toba Tek Singh and Ulti Va will land here first.',
+  },
+  {
+    title: 'Blog', deva: 'टिप्पणियाँ', href: '/blog/', total: posts.length,
+    items: recentPosts().map((p) => ({ href: `/blog/${p.slug}/`, title: p.title, sub: formatDate(p.date), lang: 'en' })),
+    empty: `Nothing written down yet — the freshest word is on Instagram.`,
+  },
+];
+---
+
+<InteriorLayout
+  title="Library"
+  eyebrow="songs, poetry, scripts, notes"
+  description={`${songs.length} songs with lyrics and meanings, the playscripts, and notes from the room — everything Peoples Theatre Laboratory keeps.`}
+>
+  {shelves.map((sh) => (
+    <section class="shelf">
+      <h2>
+        <a href={sh.href}>{sh.title}</a>
+        <span class="deva" lang="hi">{sh.deva}</span>
+      </h2>
+      {sh.items.length ? (
+        <ol class="items" role="list">
+          {sh.items.map((it) => (
+            <li>
+              <a href={it.href}>
+                <span class="t" lang={it.lang}>{it.title}</span>
+                {it.sub && <span class="s">{it.sub}</span>}
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="empty">{sh.empty.replace('Instagram.', '')}{sh.empty.includes('Instagram') && <a href={SOCIALS[0].href} rel="me noopener">Instagram</a>}</p>
+      )}
+      {sh.total > 0 && <a class="all" href={sh.href}>View all {sh.total} →</a>}
+    </section>
+  ))}
+</InteriorLayout>
+
+<style>
+  .shelf h2 { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xs) var(--space-m); }
+  .shelf h2 a { color: inherit; text-decoration: none; }
+  .shelf h2 a:hover { color: var(--ember); }
+  .shelf h2 .deva { color: var(--ember); font-size: var(--step-1); }
+  .shelf .all { display: inline-block; margin-block-start: var(--space-m); padding-block: var(--space-xs); text-decoration: none; font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--fg-faint); }
+
+  .shelf .all:hover, .shelf .all:focus-visible { color: var(--ember); }
+
+  .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0 var(--space-l); margin: 0; padding: 0; }
+  .items a { display: flex; flex-direction: column; gap: 0.1rem; padding-block: 0.6rem; border-block-start: 1px solid var(--rule); text-decoration: none; color: inherit; }
+  .items a:hover .t { color: var(--ember); }
+  .t { font-size: var(--step-1); line-height: 1.35; transition: color var(--dur-fast) var(--ease-out); }
+  .s { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--fg-faint); }
+
+  .empty { font-family: var(--font-hand); color: var(--fg-faint); transform: rotate(-0.8deg); transform-origin: left center; }
+  .empty a { color: inherit; }
+</style>

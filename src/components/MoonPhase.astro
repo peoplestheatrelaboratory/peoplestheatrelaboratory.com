@@ -1,0 +1,55 @@
+---
+/**
+ * A small moon drawn for a given date. The shadowed side is currentColor and
+ * the lit side is --moon-lit (paper by default), so a full moon is an open
+ * disc and a new moon is solid — the way it reads in a night sky.
+ */
+import { moonPhase, phaseName } from '../lib/moon';
+
+interface Props {
+  date: string | null;
+  size?: number;
+  class?: string;
+}
+
+const { date, size = 28, class: cls } = Astro.props;
+const f = date ? moonPhase(new Date(date + 'T12:00:00Z')) : 0.5;
+const name = date ? phaseName(f) : 'full moon';
+
+// terminator: an ellipse whose x-radius swings from +r (new) through 0 to -r (full)
+const r = 10;
+const waxing = f <= 0.5;
+const k = Math.cos(f * 2 * Math.PI); // 1 at new, -1 at full
+const rx = Math.abs(k) * r;
+// build the lit region as two half-arcs
+const litSide = waxing ? 1 : -1;
+const sweepOuter = waxing ? 1 : 0;
+const terminatorSweep = k > 0 ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
+const d = [
+  `M 12 ${12 - r}`,
+  `A ${r} ${r} 0 0 ${sweepOuter} 12 ${12 + r}`,
+  `A ${rx} ${r} 0 0 ${terminatorSweep} 12 ${12 - r}`,
+  'Z',
+].join(' ');
+---
+
+<svg
+  class:list={['moon', cls]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  role="img"
+  aria-label={name}
+  data-lit={litSide}
+>
+  <circle cx="12" cy="12" r={r} class="moon__shadow" />
+  <path d={d} class="moon__lit" />
+  <circle cx="12" cy="12" r={r} class="moon__rim" />
+</svg>
+
+<style>
+  .moon { display: inline-block; vertical-align: middle; flex: none; }
+  .moon__shadow { fill: currentColor; }
+  .moon__lit { fill: var(--moon-lit, var(--paper)); }
+  .moon__rim { fill: none; stroke: currentColor; stroke-opacity: 0.45; stroke-width: 0.75; }
+</style>

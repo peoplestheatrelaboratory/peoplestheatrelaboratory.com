@@ -1,0 +1,8 @@
+.agents/
+skills-lock.json
+admin/.initial-admin.txt
+admin/media/
+admin/.env*
+.env*
+tests/
+docs/

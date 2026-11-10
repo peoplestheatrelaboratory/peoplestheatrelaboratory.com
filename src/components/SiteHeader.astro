@@ -1,0 +1,413 @@
+---
+import { NAV } from '../consts';
+
+interface Props {
+  /** Transparent chrome for pages that open on full-bleed media. */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<header class:list={['masthead', { overlay }]} data-masthead>
+  <!-- Exactly one of these two is ever displayed, so neither is hidden from
+       assistive tech — otherwise the narrow-screen link has no name at all.
+       The initials carry the name spelled out, kept out of sight. -->
+  <a class="wordmark" href="/">
+    <span class="wordmark__full">Peoples Theatre <em>Laboratory</em></span>
+    <span class="wordmark__short">PTL<span class="visually-hidden"
+        > — Peoples Theatre Laboratory</span
+      ></span>
+  </a>
+
+  <button
+    type="button"
+    class="menu-toggle"
+    aria-expanded="false"
+    aria-controls="site-menu"
+    data-menu-toggle
+  >
+    <span class="menu-toggle__label" data-menu-label>Menu</span>
+    <span class="menu-toggle__rules" aria-hidden="true"><i></i><i></i></span>
+  </button>
+</header>
+
+<!-- the ink curtain -->
+<div class="curtain" id="site-menu" data-menu hidden>
+  <nav class="curtain__nav" aria-label="Main">
+    <ol>
+      {NAV.map((item, i) => {
+        const isActive = currentPath === item.href || currentPath.startsWith(item.href);
+        return (
+          <li style={`--i:${i}`}>
+            <a href={item.href} class:list={[{ 'is-active': isActive }]} aria-current={isActive ? 'page' : undefined}>
+              <span class="lines">
+                <span class="latin">{item.label}</span>
+                <span class="note">{item.note}</span>
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ol>
+  </nav>
+</div>
+
+<style>
+  .masthead {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    min-height: var(--header-h);
+    padding-inline: var(--gutter);
+    color: var(--paper);
+    mix-blend-mode: normal;
+  }
+
+  /* solid chrome for future interior pages */
+  .masthead:not(.overlay) {
+    color: var(--ink);
+    background: var(--paper);
+    border-block-end: 1px solid var(--ink-14);
+  }
+
+  .masthead:not(.overlay) .wordmark em { color: var(--ember-warm); }
+
+  /* the curtain is ink, so the chrome reads in paper while it is open */
+  .masthead.is-menu-open {
+    color: var(--paper);
+    background: transparent;
+    border-block-end-color: transparent;
+  }
+
+  .masthead.is-menu-open .wordmark em { color: var(--ember); }
+
+  /* over the paper world the chrome inverts, so it never goes cream-on-cream */
+  .masthead.overlay {
+    background: transparent;
+    border-block-end: 1px solid transparent;
+    transition:
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  /* while past the hero but still over the dark gathering section */
+  .masthead.overlay.is-scrolled:not(.is-past):not(.is-menu-open) {
+    background: rgb(10 9 8 / 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-block-end: 1px solid var(--paper-18);
+    color: var(--paper);
+  }
+
+  /* over the paper world the chrome inverts to cream */
+  .masthead.overlay.is-past:not(.is-menu-open) {
+    color: var(--ink);
+    background: var(--paper);
+    border-block-end-color: var(--ink-14);
+  }
+
+  .masthead.overlay.is-past:not(.is-menu-open) .wordmark em {
+    color: var(--ember-warm);
+  }
+
+  .wordmark {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .wordmark em {
+    font-style: italic;
+    letter-spacing: 0.06em;
+    color: var(--ember);
+  }
+
+  .wordmark__short { display: none; }
+
+  @media (max-width: 30rem) {
+    .wordmark__full { display: none; }
+    .wordmark__short {
+      display: inline;
+      font-size: var(--step-0);
+      letter-spacing: 0.22em;
+    }
+  }
+
+  /* ── menu toggle ───────────────────────────────────────────────── */
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .menu-toggle__rules {
+    display: grid;
+    gap: 5px;
+    width: 26px;
+  }
+
+  .menu-toggle__rules i {
+    display: block;
+    height: 1px;
+    background: currentColor;
+    transition:
+      transform var(--dur-mid) var(--ease-out),
+      width var(--dur-mid) var(--ease-out);
+  }
+
+  .menu-toggle__rules i:last-child { width: 62%; margin-inline-start: auto; }
+  .menu-toggle:hover .menu-toggle__rules i:last-child { width: 100%; }
+
+  .menu-toggle[aria-expanded='true'] .menu-toggle__rules i {
+    width: 100%;
+    transform-origin: center;
+  }
+  .menu-toggle[aria-expanded='true'] .menu-toggle__rules i:first-child {
+    transform: translateY(3px) rotate(11deg);
+  }
+  .menu-toggle[aria-expanded='true'] .menu-toggle__rules i:last-child {
+    transform: translateY(-3px) rotate(-11deg);
+  }
+
+  /* ── curtain ───────────────────────────────────────────────────── */
+  .curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xl);
+    padding: calc(var(--header-h) + var(--space-l)) var(--gutter) var(--space-xl);
+    overflow-y: auto;
+    background: var(--ink);
+    color: var(--paper);
+    opacity: 0;
+    transform: translateY(-0.75rem);
+    pointer-events: none;
+    transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
+  }
+
+  .curtain[hidden] { display: none; }
+  .curtain.is-open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition-duration: 400ms;
+  }
+
+  .curtain__nav ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: door;
+  }
+
+  .curtain__nav li {
+    counter-increment: door;
+    border-block-end: 1px solid var(--paper-18);
+  }
+
+  .curtain__nav li:first-child { border-block-start: 1px solid var(--paper-18); }
+
+  .curtain__nav a {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(0.9rem, 3vw, 2.2rem);
+    padding-block: clamp(0.9rem, 2.4vh, 1.5rem);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .curtain__nav a::before {
+    content: counter(door, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--paper-52);
+  }
+
+  /* label and its note read as one stacked block, not two columns */
+  .curtain__nav .lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .curtain__nav .latin {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .curtain__nav .note {
+    font-family: var(--font-hand);
+    font-size: var(--step-0);
+    color: var(--paper-72);
+    transform: rotate(-1.2deg);
+    transform-origin: left center;
+  }
+
+  .curtain__nav a:hover .latin,
+  .curtain__nav a:focus-visible .latin { color: var(--ember); }
+
+  .curtain__nav a.is-active .latin { color: var(--ember); }
+  .curtain__nav a.is-active::before { color: var(--ember); }
+  .curtain__nav a.is-active .note { color: var(--gold); }
+
+  /* staggered reveal, driven by --i */
+  .curtain__nav li {
+    opacity: 0;
+    transform: translateY(0.9rem);
+  }
+
+  .curtain.is-open .curtain__nav li {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 280ms var(--ease-out),
+      transform 280ms var(--ease-out);
+    transition-delay: calc(var(--i) * 30ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .curtain,
+    .curtain.is-open .curtain__nav li { transition-duration: 1ms; transition-delay: 0ms; }
+  }
+</style>
+
+<script>
+  const masthead = document.querySelector<HTMLElement>('[data-masthead]');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+
+  const paperFoot = document.querySelector<HTMLElement>('.paperfoot');
+
+  // Transition chrome over dark gathering (is-scrolled) and paper world (is-past)
+  if (masthead && hero) {
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => masthead.classList.toggle('is-scrolled', !entry.isIntersecting),
+      { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
+    );
+    heroObserver.observe(hero);
+
+    if (paperFoot) {
+      const paperObserver = new IntersectionObserver(
+        ([entry]) => masthead.classList.toggle('is-past', entry.isIntersecting),
+        { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
+      );
+      paperObserver.observe(paperFoot);
+    } else {
+      heroObserver.disconnect();
+      const fallbackObserver = new IntersectionObserver(
+        ([entry]) => masthead.classList.toggle('is-past', !entry.isIntersecting),
+        { rootMargin: `-${Math.round(masthead.offsetHeight)}px 0px 0px 0px`, threshold: 0 },
+      );
+      fallbackObserver.observe(hero);
+    }
+  }
+
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const curtain = document.querySelector<HTMLElement>('[data-menu]');
+  const label = document.querySelector<HTMLElement>('[data-menu-label]');
+
+  if (toggle && curtain && label) {
+    const focusable = () =>
+      curtain.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+
+    let lastFocused: HTMLElement | null = null;
+    let revealFrame = 0;
+    let hideTimer: ReturnType<typeof setTimeout> | undefined;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const open = () => {
+      lastFocused = document.activeElement as HTMLElement;
+      clearTimeout(hideTimer);
+      cancelAnimationFrame(revealFrame);
+      curtain.hidden = false;
+      curtain.inert = false;
+      // Paint the initial state before starting the entrance, even on first open.
+      revealFrame = requestAnimationFrame(() => {
+        revealFrame = requestAnimationFrame(() => curtain.classList.add('is-open'));
+      });
+      toggle.setAttribute('aria-expanded', 'true');
+      masthead?.classList.add('is-menu-open');
+      label.textContent = 'Close';
+      document.documentElement.style.overflow = 'hidden';
+      focusable()[0]?.focus();
+    };
+
+    const close = () => {
+      cancelAnimationFrame(revealFrame);
+      curtain.classList.remove('is-open');
+      curtain.inert = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      masthead?.classList.remove('is-menu-open');
+      label.textContent = 'Menu';
+      document.documentElement.style.overflow = '';
+      // Match the exit duration; cancel this when reopened so rapid toggles
+      // cannot hide an open menu. Also settle when transitions are disabled.
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        curtain.hidden = true;
+      }, reducedMotion.matches ? 0 : 260);
+      // body is not focusable — fall back to the toggle so focus is never lost
+      const restore =
+        lastFocused && lastFocused !== document.body ? lastFocused : toggle;
+      restore.focus();
+    };
+
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+
+    toggle.addEventListener('click', () => (isOpen() ? close() : open()));
+
+    document.addEventListener('keydown', (e) => {
+      if (!isOpen()) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const items = Array.from(focusable());
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // in-page links (e.g. #contact) should close the curtain behind them
+    curtain.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement).closest('a');
+      if (link?.getAttribute('href')?.startsWith('#')) close();
+    });
+  }
+</script>
