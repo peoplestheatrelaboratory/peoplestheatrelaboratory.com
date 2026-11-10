@@ -36,5 +36,10 @@
         }
       ]
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "prod": false
+    }
+  }
 }

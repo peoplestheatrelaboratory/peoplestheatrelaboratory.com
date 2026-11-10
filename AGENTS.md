@@ -178,7 +178,8 @@ Defined in `admin/src/lib/permissions.ts`, tested in `tests/permissions.test.ts`
 - Pushing to `main` deploys the admin to production and the site to its
   preview. To release the site, merge `main` into `prod` and push `prod`.
   The site has separate environment variables for Preview (`main`) and
-  Production; set both. Do not deploy from an uncommitted
+  Production; set both. The admin does not build on `prod`
+  (`git.deploymentEnabled` in `admin/vercel.json`). Do not deploy from an uncommitted
   working tree with the CLI: the next push would silently roll the code back
   while the database keeps the newer schema.
 - Migrations and bootstrap are manual steps. They are never build commands.
@@ -249,8 +250,9 @@ These need a person with the right account, or a decision. None is blocked by co
    with `/media/hero.mp4` and `/media/hero.webm`.
 5. **Serve public media from a CDN** (an R2 custom domain or public bucket for
    released files) before the site carries many photos.
-6. **Apex cutover.** `peoplestheatrelaboratory.com` still serves the old
-   deployment. Before switching: reconcile Notion changes made since the
-   import, then move the domain to the new deployment.
+6. **Notion reconciliation.** The apex went live on 10 November 2026 without
+   comparing Notion against the import, because the stored `NOTION_TOKEN` is
+   no longer valid. If anyone edited Notion after 9 September 2026, carry
+   those edits into the admin by hand.
 7. **Revalidation cost.** Each publish re-renders every page. This grows with
    events × songs; narrow it to affected paths if publishes become slow.
