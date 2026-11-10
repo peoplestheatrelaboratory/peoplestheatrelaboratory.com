@@ -179,10 +179,23 @@ controls retain their validation, keyboard behavior and permission checks.
 
 Super admins can edit **Settings → Homepage & footer** at
 https://admin.peoplestheatrelaboratory.com/admin/globals/site-settings.
-It controls the homepage heading, description and quote, background video variants,
+It controls the homepage heading, description and quote list, background video variants,
 next gathering selection, phone and shared footer links. Other roles cannot read
 or update the raw settings global; the public endpoint returns only display fields.
 Static page copy (such as About), navigation and layout remain in source code.
+
+Under **Homepage → Homepage quotes**, add one or more quotes. Only the quote text
+is required; translation and attribution may be left blank. One entry is chosen
+randomly on each page load, including when the HTML comes from ISR. It stays fixed
+for that visit; without JavaScript the first entry is shown. Text supports Latin,
+Devanagari and Gujarati with the matching font and language attributes.
+
+Migration `20261110_062228_homepage_quotes` adds the list and
+copies the existing homepage quote into its first entry, retaining the old columns
+for compatibility. The migration and optional-field saves were verified on the
+expiring `homepage-quotes-verification` branch. Applied to the live
+`admin-development` branch on 2026-11-10; the existing quote and optional fields
+were verified unchanged after migration.
 
 Add video URLs with minimum screen widths: 0 for the default/mobile video, then
 optional 768/1280px variants. The browser chooses the largest matching width at

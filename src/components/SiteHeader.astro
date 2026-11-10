@@ -204,7 +204,7 @@ const currentPath = Astro.url.pathname;
     opacity: 0;
     transform: translateY(-0.75rem);
     pointer-events: none;
-    transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+    transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
   }
 
   .curtain[hidden] { display: none; }
@@ -212,7 +212,7 @@ const currentPath = Astro.url.pathname;
     opacity: 1;
     transform: none;
     pointer-events: auto;
-    transition-duration: 240ms;
+    transition-duration: 400ms;
   }
 
   .curtain__nav ol {
@@ -285,9 +285,9 @@ const currentPath = Astro.url.pathname;
     opacity: 1;
     transform: none;
     transition:
-      opacity 180ms var(--ease-out),
-      transform 180ms var(--ease-out);
-    transition-delay: calc(var(--i) * 20ms);
+      opacity 280ms var(--ease-out),
+      transform 280ms var(--ease-out);
+    transition-delay: calc(var(--i) * 30ms);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -369,7 +369,7 @@ const currentPath = Astro.url.pathname;
       clearTimeout(hideTimer);
       hideTimer = setTimeout(() => {
         curtain.hidden = true;
-      }, reducedMotion.matches ? 0 : 160);
+      }, reducedMotion.matches ? 0 : 260);
       // body is not focusable — fall back to the toggle so focus is never lost
       const restore =
         lastFocused && lastFocused !== document.body ? lastFocused : toggle;

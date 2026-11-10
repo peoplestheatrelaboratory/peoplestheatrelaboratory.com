@@ -919,9 +919,18 @@ export interface SiteSetting {
   id: number;
   heading: string;
   description: string;
-  couplet: string;
-  translation: string;
-  attribution: string;
+  /**
+   * One quote is chosen at random each time someone visits the homepage. Translation and attribution are optional.
+   */
+  heroQuotes: {
+    couplet: string;
+    translation?: string | null;
+    attribution?: string | null;
+    id?: string | null;
+  }[];
+  couplet?: string | null;
+  translation?: string | null;
+  attribution?: string | null;
   poster?: string | null;
   /**
    * Add a default size with minimum width 0. Add larger versions for tablet or desktop (e.g. 768 or 1280). Use existing /media/ paths or HTTPS file URLs. Uploading/transcoding videos is not enabled.
@@ -964,6 +973,14 @@ export interface SiteSetting {
 export interface SiteSettingsSelect<T extends boolean = true> {
   heading?: T;
   description?: T;
+  heroQuotes?:
+    | T
+    | {
+        couplet?: T;
+        translation?: T;
+        attribution?: T;
+        id?: T;
+      };
   couplet?: T;
   translation?: T;
   attribution?: T;

@@ -1,8 +1,22 @@
 import {describe,expect,test} from 'bun:test';
-import {chooseVideoVariant,defaultSiteSettings,safeLink,safeAsset,siteSettingsSchema} from '../shared/site-settings';
+import {chooseVideoVariant,defaultSiteSettings,safeLink,safeAsset,siteSettingsSchema,homepageQuotes,heroQuoteSchema} from '../shared/site-settings';
 import {revalidationPaths} from '../shared/revalidation';
 describe('site settings',()=>{
  test('default settings satisfy public contract',()=>expect(siteSettingsSchema.parse(defaultSiteSettings)).toEqual(defaultSiteSettings));
+ test('homepage quotes accept missing translations and attributions, but reject blank quotes',()=>{
+  expect(heroQuoteSchema.parse({couplet:' A quote '})).toEqual({couplet:'A quote',translation:'',attribution:''});
+  expect(heroQuoteSchema.parse({couplet:'A quote',translation:null,attribution:'  '})).toEqual({couplet:'A quote',translation:'',attribution:''});
+  expect(heroQuoteSchema.safeParse({couplet:'   '}).success).toBe(false);
+ });
+ test('older cached settings keep the original quote until a list is saved',()=>{
+  const {heroQuotes,...legacy}=defaultSiteSettings;
+  const settings=siteSettingsSchema.parse({...legacy,couplet:'Saved quote',translation:'',attribution:''});
+  expect(settings.heroQuotes).toEqual([]);
+  expect(homepageQuotes(settings)).toEqual([{couplet:'Saved quote',translation:'',attribution:''}]);
+  const quotes=[{couplet:'First',translation:'',attribution:''},{couplet:'Second',translation:'Translation',attribution:'Author'}];
+  expect(homepageQuotes({...settings,heroQuotes:quotes})).toEqual(quotes);
+  expect(homepageQuotes({...settings,couplet:''})).toEqual(defaultSiteSettings.heroQuotes);
+ });
  test('video sources select the largest fitting screen without mutating saved order',()=>{
   const variants=[{minWidth:1280,mp4:'desktop',webm:''},{minWidth:0,mp4:'mobile',webm:''},{minWidth:768,mp4:'tablet',webm:''}];
   expect(chooseVideoVariant(variants,390)?.mp4).toBe('mobile');expect(chooseVideoVariant(variants,1024)?.mp4).toBe('tablet');expect(chooseVideoVariant(variants,1600)?.mp4).toBe('desktop');expect(variants[0].minWidth).toBe(1280);

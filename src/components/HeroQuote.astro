@@ -1,0 +1,60 @@
+---
+import type { HeroQuote } from '../../shared/site-settings';
+import { scriptClass, textLang } from '../lib/content';
+interface Props { quote: HeroQuote }
+const { quote } = Astro.props;
+---
+
+<blockquote class="couplet">
+  <p class:list={['couplet__text', scriptClass(quote.couplet)]} lang={textLang(quote.couplet)}>{quote.couplet}</p>
+  {quote.translation && <p class:list={['couplet__trans', scriptClass(quote.translation)]} lang={textLang(quote.translation)}>{quote.translation}</p>}
+  {quote.attribution && <cite><span aria-hidden="true">— </span><span class={scriptClass(quote.attribution)} lang={textLang(quote.attribution)}>{quote.attribution}</span></cite>}
+</blockquote>
+
+<style>
+  /* ── couplet ───────────────────────────────────────────────────── */
+  .couplet {
+    max-width: 34ch;
+    margin: 0;
+  }
+
+  .couplet__text {
+    font-size: var(--step-2);
+    line-height: 1.7;
+    text-wrap: balance;
+  }
+
+  .couplet__trans {
+    margin-block-start: 0.5rem;
+    font-style: italic;
+    font-size: var(--step-0);
+    color: var(--paper-60);
+  }
+
+  .couplet cite {
+    display: block;
+    margin-block-start: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-style: normal;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--ember);
+  }
+
+
+  /* ── entrance ──────────────────────────────────────────────────── */
+  .couplet {
+    animation: rise 900ms var(--ease-out) both;
+    animation-delay: 240ms;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(1.1rem); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .couplet { animation: none; opacity: 1; transform: none; }
+  }
+</style>

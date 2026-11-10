@@ -14,8 +14,9 @@ const settings = unstable_cache(async () => {
     featuredEvent = event.docs[0]?.slug || '';
   }
   return siteSettingsSchema.parse({...doc, poster:doc.poster||'', featuredEvent,
+    heroQuotes:(doc.heroQuotes||[]).map(q=>({couplet:q.couplet,translation:q.translation||'',attribution:q.attribution||''})),
     videoVariants:(doc.videoVariants||[]).map(v=>({minWidth:v.minWidth,mp4:v.mp4||'',webm:v.webm||''})),
     footerLinks:(doc.footerLinks||[]).map(v=>({label:v.label,detail:v.detail||'',href:v.href,newTab:Boolean(v.newTab)})),
   });
-}, ['ptl-site-settings-v1'], { tags: ['ptl-site-settings', 'ptl-public-content'], revalidate: 2592000 });
+}, ['ptl-site-settings-v2'], { tags: ['ptl-site-settings', 'ptl-public-content'], revalidate: 2592000 });
 export async function GET() { return Response.json(await settings(), {headers:{'Cache-Control':'no-store'}}); }

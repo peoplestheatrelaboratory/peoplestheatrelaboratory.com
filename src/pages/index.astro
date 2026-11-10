@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import HeroVideo from '../components/HeroVideo.astro';
 import NextGathering from '../components/NextGathering.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { homepageQuotes } from '../../shared/site-settings';
 import { getSiteSettings } from '../lib/site-settings';
 import { getContent } from '../lib/content';
 const [settings, { featuredGathering }] = await Promise.all([getSiteSettings(Astro.locals), getContent(Astro.locals)]);
@@ -17,7 +18,7 @@ const hasGathering = Boolean(featuredGathering(settings));
     <h1 class="visually-hidden">
       {settings.heading}
     </h1>
-    <HeroVideo couplet={settings.couplet} translation={settings.translation} attribution={settings.attribution} poster={settings.poster} variants={settings.videoVariants} cueLabel={settings.nextLabel} showCue={hasGathering} />
+    <HeroVideo quotes={homepageQuotes(settings)} poster={settings.poster} variants={settings.videoVariants} cueLabel={settings.nextLabel} showCue={hasGathering} />
     <NextGathering />
   </main>
   <SiteFooter />

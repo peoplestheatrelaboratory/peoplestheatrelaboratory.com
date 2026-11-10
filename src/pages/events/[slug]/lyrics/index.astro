@@ -14,7 +14,6 @@ const setlist = event.setlist.map((s) => getSong(s)).filter(Boolean);
 <InteriorLayout
   title="Songbook"
   eyebrow={`${event.title} · ${formatDate(event.date, event.tithi)}`}
-  deva="गीत"
   description={`The ${setlist.length} songs of ${event.title}, ${formatPlace(event)}, in the order they are sung — with lyrics to sing along.`}
 >
   <p class="lead">

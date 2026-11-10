@@ -1,4 +1,6 @@
 ---
+import HeroQuote from './HeroQuote.astro';
+import { defaultSiteSettings, type HeroQuote as Quote } from '../../shared/site-settings';
 import type { SiteSettings } from '../../shared/site-settings';
 interface Props {
   variants?: SiteSettings['videoVariants'];
@@ -8,9 +10,7 @@ interface Props {
   webm?: string;
   mp4?: string;
   poster?: string;
-  couplet?: string;
-  translation?: string;
-  attribution?: string;
+  quotes?: Quote[];
 }
 
 const {
@@ -18,10 +18,9 @@ const {
   webm = '/media/hero.webm',
   mp4 = '/media/hero.mp4',
   poster = '/media/hero-poster.jpg',
-  couplet = 'मोको कहाँ ढूंढे बन्दे, मैं तो तेरे पास में।',
-  translation = 'Where do you search for me? I am right beside you.',
-  attribution = 'Kabir',
+  quotes = defaultSiteSettings.heroQuotes,
 } = Astro.props;
+const heroQuotes = quotes.length ? quotes : defaultSiteSettings.heroQuotes;
 ---
 
 <section class="stage" data-hero aria-label="Peoples Theatre Laboratory">
@@ -47,11 +46,22 @@ const {
   <div class="stage__scrim" aria-hidden="true"></div>
 
   <div class="stage__rail" data-hero-rail>
-    <blockquote class="couplet">
-      <p class="couplet__deva" lang="hi">{couplet}</p>
-      <p class="couplet__trans">{translation}</p>
-      <cite>— {attribution}</cite>
-    </blockquote>
+    <div data-hero-quotes>
+      <HeroQuote quote={heroQuotes[0]!} />
+      {heroQuotes.length > 1 && <>
+        {heroQuotes.map(quote => <template data-hero-quote><HeroQuote quote={quote} /></template>)}
+        {/* Runs during parsing, before paint. Every visit gets a fresh choice,
+            even when Vercel serves cached HTML. No timer or mid-visit changes. */}
+        <script is:inline>
+          (() => {
+            const container = document.currentScript.parentElement;
+            const choices = container.querySelectorAll('template[data-hero-quote]');
+            const choice = choices[Math.floor(Math.random() * choices.length)];
+            if (choice) container.querySelector('blockquote').replaceWith(choice.content.cloneNode(true));
+          })();
+        </script>
+      </>}
+    </div>
 
     {showCue && <a href="#gathering" class="stage__cue" aria-label={`Scroll to ${cueLabel}`}>
       <span class="stage__cue-text">{cueLabel}</span>
@@ -191,52 +201,8 @@ const {
     }
   }
 
-  /* ── couplet ───────────────────────────────────────────────────── */
-  .couplet {
-    max-width: 34ch;
-    margin: 0;
-  }
-
-  .couplet__deva {
-    font-family: var(--font-deva);
-    font-size: var(--step-2);
-    line-height: 1.7;
-    text-wrap: balance;
-  }
-
-  .couplet__trans {
-    margin-block-start: 0.5rem;
-    font-style: italic;
-    font-size: var(--step-0);
-    color: var(--paper-60);
-  }
-
-  .couplet cite {
-    display: block;
-    margin-block-start: 0.7rem;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    font-style: normal;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--ember);
-  }
-
-
-  /* ── entrance ──────────────────────────────────────────────────── */
-  .couplet {
-    animation: rise 900ms var(--ease-out) both;
-    animation-delay: 240ms;
-  }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(1.1rem); }
-    to { opacity: 1; transform: none; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .stage__hall { animation: none; }
-    .couplet { animation: none; opacity: 1; transform: none; }
     .stage__cue-icon { animation: none; }
   }
 </style>
