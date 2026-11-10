@@ -37,7 +37,7 @@
   ],
   "redirects": [
     {
-      "source": "/lyrics/:path*",
+      "source": "/lyrics(/.*)?",
       "destination": "/library/songs/",
       "permanent": true
     }
