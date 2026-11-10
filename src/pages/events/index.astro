@@ -1,8 +1,9 @@
 ---
 import InteriorLayout from '../../layouts/InteriorLayout.astro';
 import MoonPhase from '../../components/MoonPhase.astro';
-import { getContent, formatDate, formatPlace, SERIES, seriesOf } from '../../lib/content';
-const { upcomingEvents, pastEvents } = await getContent(Astro.locals);
+import { getContent, formatDate, formatPlace, SERIES, seriesOf, textLang } from '../../lib/content';
+import { getSiteSettings } from '../../lib/site-settings';
+const [{ upcomingEvents, pastEvents }, settings] = await Promise.all([getContent(Astro.locals), getSiteSettings(Astro.locals)]);
 import { SITE } from '../../consts';
 
 const upcoming = upcomingEvents();
@@ -54,10 +55,10 @@ for (const e of past) {
       {upcoming.map((e) => (
         <article class="next__card">
           <p class="eyebrow">{seriesOf(e).label}{seriesOf(e).rhythm ? ` · ${seriesOf(e).rhythm}` : ''}</p>
-          <h3><a href={`/events/${e.slug}/`}>{e.title}</a> {e.titleDeva && <span class="deva" lang="hi">{e.titleDeva}</span>}</h3>
+          <h3><a href={`/events/${e.slug}/`}>{e.title}</a> {e.titleDeva && <span class="deva" lang={textLang(e.titleDeva) ?? 'hi'}>{e.titleDeva}</span>}</h3>
           <p class="when"><MoonPhase date={e.date} /> {formatDate(e.date, e.tithi)} · {formatPlace(e)}</p>
           <p class="summary">{e.summary}</p>
-          <a class="cta" href={e.registerUrl || SITE.phoneHref}>{e.registerUrl ? 'Book a seat →' : `Call ${SITE.phone} to reserve a seat`}</a>
+          <a class="cta" href={e.registerUrl || settings.phoneHref}>{e.registerUrl ? settings.bookingLabel : `Call ${settings.phone} to reserve a seat`}</a>
         </article>
       ))}
     </section>
@@ -76,7 +77,7 @@ for (const e of past) {
                 <span class="row__when">{formatDate(e.date, e.tithi)}</span>
                 <span class="row__title">
                   <span class="row__latin">{e.title}</span>
-                  <span class="row__deva deva" lang="hi">{e.titleDeva}</span>
+                  <span class="row__deva deva" lang={textLang(e.titleDeva) ?? 'hi'}>{e.titleDeva}</span>
                 </span>
                 <span class="row__where">{formatPlace(e)}</span>
                 <span class="row__songs">{e.setlist.length ? `${e.setlist.length} songs` : ''}</span>

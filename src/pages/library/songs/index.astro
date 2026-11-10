@@ -1,6 +1,6 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { getContent, isGujarati } from '../../../lib/content';
+import { getContent, isGujarati, textLang } from '../../../lib/content';
 const { songs, artists, songsByArtist } = await getContent(Astro.locals);
 
 // songs grouped by poet, poets ordered by how many songs they carry
@@ -51,7 +51,7 @@ const performers = artists
     <section class="poet" data-poet-section>
       <h2>
         <a href={`/library/artists/${artist.slug}/`}>{artist.name}</a>
-        {artist.nameDeva && <span class="deva" lang="hi">{artist.nameDeva}</span>}
+        {artist.nameDeva && <span class="deva" lang={textLang(artist.nameDeva) ?? 'hi'}>{artist.nameDeva}</span>}
         <span class="count">{list.length} {list.length === 1 ? 'song' : 'songs'}</span>
       </h2>
       <ul class="songs" role="list">

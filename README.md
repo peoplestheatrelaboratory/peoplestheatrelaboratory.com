@@ -52,12 +52,8 @@ Layout:
 - `src/layouts/BaseLayout.astro` — html shell, meta/OG, fonts
 - `src/styles/` — `tokens.css` (PTL design tokens), `reset.css`, `global.css`
 - `src/consts.ts` — site metadata and social links
-- `public/` — copied verbatim to the site root. Holds the earlier static
-  concepts at their original URLs: `/1/`–`/7/`, `/lyrics/`, `/full-site/`,
-  and the previous holding page at `/coming-soon/`.
-
-Note: the dev server does not resolve directory indexes inside `public/`
-(`/5/` 404s, `/5/index.html` works).
+- `public/` — copied verbatim to the site root: the hero video, favicons and
+  `robots.txt`.
 
 TypeScript is pinned to 6.0.3 on purpose. TS 7 (the native compiler) does not
 expose the programmatic API `astro check` and the Astro editor extension use —

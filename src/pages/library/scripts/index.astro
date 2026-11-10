@@ -1,6 +1,6 @@
 ---
 import InteriorLayout from '../../../layouts/InteriorLayout.astro';
-import { getContent } from '../../../lib/content';
+import { getContent, textLang } from '../../../lib/content';
 const { scripts, getArtist } = await getContent(Astro.locals);
 ---
 
@@ -14,7 +14,7 @@ const { scripts, getArtist } = await getContent(Astro.locals);
       {scripts.map((s) => (
         <li>
           <a href={`/library/scripts/${s.slug}/`}>
-            <span class="t">{s.title} {s.titleDeva && <span class="deva" lang="hi">{s.titleDeva}</span>}</span>
+            <span class="t">{s.title} {s.titleDeva && <span class="deva" lang={textLang(s.titleDeva) ?? 'hi'}>{s.titleDeva}</span>}</span>
             <span class="s">{[s.playwrights.map((p) => getArtist(p)?.name).filter(Boolean).join(', '), s.year].filter(Boolean).join(' · ')}</span>
             {s.synopsis && <span class="syn">{s.synopsis}</span>}
           </a>

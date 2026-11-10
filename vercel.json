@@ -33,24 +33,13 @@
           "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
-    },
+    }
+  ],
+  "redirects": [
     {
-      "source": "/(1|2|3|4|5|6|7|full-site|lyrics|coming-soon)/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
-      "source": "/fonts(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
+      "source": "/lyrics/:path*",
+      "destination": "/library/songs/",
+      "permanent": true
     }
   ]
 }

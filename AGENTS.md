@@ -20,14 +20,17 @@ screen of video with a couplet, then the next gathering.
 | Directory | repo root (`src/`, `api/`, `public/`) | `admin/` (Bun workspace) |
 | Framework | Astro 7, server output, Vercel ISR | Payload CMS 3 on Next.js 16 |
 | Vercel project | `peoplestheatrelaboratory-com` | `ptl-admin` (root directory `admin`) |
-| URL | https://main.peoplestheatrelaboratory.com (new site), https://peoplestheatrelaboratory.com (apex, still the old deployment) | https://admin.peoplestheatrelaboratory.com/admin |
+| URL | https://peoplestheatrelaboratory.com (production, branch `prod`), https://main.peoplestheatrelaboratory.com (preview of `main`) | https://admin.peoplestheatrelaboratory.com/admin |
 | Data | none of its own | Neon Postgres 17, Cloudflare R2 bucket `ptl-media` |
 
 `shared/` holds the contract between them: Zod schemas and types that both
 sides import. Change a shape there and both builds see it.
 
-Both Vercel projects are connected to this GitHub repository and deploy from
-`main`, in the Singapore region (`sin1`), on Node 24.
+Both Vercel projects are connected to this GitHub repository, in the Singapore
+region (`sin1`), on Node 24. The admin's production branch is `main`. The
+public site's production branch is `prod`: `main` builds a preview at
+`main.peoplestheatrelaboratory.com`, and the apex only changes when `main` is
+merged into `prod`.
 
 ## How content reaches a visitor
 
@@ -172,7 +175,10 @@ Defined in `admin/src/lib/permissions.ts`, tested in `tests/permissions.test.ts`
 
 ## Deploying
 
-- Pushing to `main` deploys both projects. Do not deploy from an uncommitted
+- Pushing to `main` deploys the admin to production and the site to its
+  preview. To release the site, merge `main` into `prod` and push `prod`.
+  The site has separate environment variables for Preview (`main`) and
+  Production; set both. Do not deploy from an uncommitted
   working tree with the CLI: the next push would silently roll the code back
   while the database keeps the newer schema.
 - Migrations and bootstrap are manual steps. They are never build commands.
@@ -219,9 +225,9 @@ R2 files are not in this backup.
 - **A local dev server needs the admin running too** if `.env.local` sets
   `CMS_URL=http://localhost:3001`. With the admin stopped every page is a 500.
 - **Astro allows one dev server per checkout.**
-- **`public/1/`–`public/7/`, `full-site/`, `lyrics/`, `coming-soon/` and
-  `fonts.html`** are earlier design concepts kept at their old URLs. They are
-  served with `noindex`. They are not part of the site; do not link to them.
+- **The earlier design concepts** (`/1/`–`/7/`, `/full-site/`, `/coming-soon/`,
+  `/fonts.html`) have been removed. The old `/lyrics/` songbook redirects to
+  `/library/songs/` in `vercel.json`.
 - **`scripts/notion/` and `content/`** are the old Notion pipeline. `bun run pull`
   still works and is only needed to reconcile Notion before the apex cutover.
   The Notion webhook and nightly rebuild functions have been removed.
